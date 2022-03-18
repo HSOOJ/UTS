@@ -19,13 +19,11 @@ export const UstRouter = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<About />} />
-        <Route path="/artist" element={<Artist />}>
-          <Route path=":artist-id" element={<ArtistDetail />} />
-        </Route>
-        <Route path="/badge" element={<Badge />}>
-          <Route path=":badge-id" element={<BadgeDetail />} />
-        </Route>
-        <Route path="/edition/:edition-id" element={<Edition />} />
+        <Route path="/artist" element={<Artist />} />
+        <Route path="/artist/:artist_id" element={<ArtistDetail />} />
+        <Route path="/badge" element={<Badge />} />
+        <Route path="/badge/:badge_id" element={<BadgeDetail />} />
+        <Route path="/edition/:edition_id" element={<Edition />} />
         <Route path="/user" element={<User />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/minting" element={<Minting />} />
