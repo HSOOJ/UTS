@@ -1,34 +1,29 @@
-import { useState } from "react";
 import Login from "../../../components/contents/user/login";
 import SignUp from "../../../components/contents/user/signUp";
 import FindId from "../../../components/contents/user/findId";
 import FindPw from "../../../components/contents/user/findPw";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../recoil/user";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const User = () => {
-  const [loginState, setLoginState] = useState(true);
-  const [signUpState, setSignUpState] = useState(false);
-  const [findIdState, setFindIdState] = useState(false);
-  const [findPwState, setFindPwState] = useState(false);
+  // recoil
+  const { login, signUp, findId, findPw } = useRecoilValue(userState);
+
+  // router navigate
+  let navigate = useNavigate();
+  const moveProfileUrl = () => {
+    if (login) navigate("/profile");
+  };
+  useEffect(moveProfileUrl, [login]);
 
   return (
     <>
-      {loginState ? (
-        <Login
-          setLoginState={setLoginState}
-          setSignUpState={setSignUpState}
-          setFindIdState={setFindIdState}
-          setFindPwState={setFindPwState}
-        />
-      ) : null}
-      {signUpState ? (
-        <SignUp setLoginState={setLoginState} setSignUpState={setSignUpState} />
-      ) : null}
-      {findIdState ? (
-        <FindId setLoginState={setLoginState} setFindIdState={setFindIdState} />
-      ) : null}
-      {findPwState ? (
-        <FindPw setLoginState={setLoginState} setFindPwState={setFindPwState} />
-      ) : null}
+      {login ? null : <Login />}
+      {signUp ? <SignUp /> : null}
+      {findId ? <FindId /> : null}
+      {findPw ? <FindPw /> : null}
     </>
   );
 };

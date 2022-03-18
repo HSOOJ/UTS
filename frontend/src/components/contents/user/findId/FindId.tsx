@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-
-interface FindIdProps {
-  setLoginState(b: boolean): void;
-  setFindIdState(b: boolean): void;
-}
+import { useRecoilState } from "recoil";
+import { userState } from "../../../../recoil/user";
 
 interface FormData {
   walletAddr: string;
 }
 
-export const FindId = ({ setLoginState, setFindIdState }: FindIdProps) => {
+export const FindId = () => {
+  // recoil
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
+
+  // state
   const [formData, setFormData] = useState<FormData>({
     walletAddr: "",
   });
 
+  // form on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -29,12 +31,12 @@ export const FindId = ({ setLoginState, setFindIdState }: FindIdProps) => {
     clickBack();
   };
 
+  // click button
   const clickBack = () => {
-    setLoginState(true);
-    setFindIdState(false);
+    setUserStateVal({ ...userStateVal, findId: false });
   };
   const clickFindId = () => {
-    alert(`SUCCESS FindId\n${JSON.stringify(formData)}`);
+    console.log(`SUCCESS FindId\n${JSON.stringify(formData)}`);
   };
 
   return (

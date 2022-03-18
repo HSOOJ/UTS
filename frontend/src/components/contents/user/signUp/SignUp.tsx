@@ -1,9 +1,6 @@
 import { useState } from "react";
-
-interface SignUpProps {
-  setLoginState(b: boolean): void;
-  setSignUpState(b: boolean): void;
-}
+import { useRecoilState } from "recoil";
+import { userState } from "../../../../recoil/user";
 
 interface FormData {
   email: string;
@@ -12,7 +9,11 @@ interface FormData {
   walletAddr: string;
 }
 
-export const SignUp = ({ setLoginState, setSignUpState }: SignUpProps) => {
+export const SignUp = () => {
+  // recoil
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
+
+  // state
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -20,6 +21,7 @@ export const SignUp = ({ setLoginState, setSignUpState }: SignUpProps) => {
     walletAddr: "",
   });
 
+  // form on method
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -38,15 +40,15 @@ export const SignUp = ({ setLoginState, setSignUpState }: SignUpProps) => {
     clickBack();
   };
 
+  // click button
   const clickBack = () => {
-    setLoginState(true);
-    setSignUpState(false);
+    setUserStateVal({ ...userStateVal, signUp: false });
   };
   const clickCheckWallet = () => {
-    alert(`Check Wallet Address\n${JSON.stringify(formData.walletAddr)}`);
+    console.log(`Check Wallet Address\n${JSON.stringify(formData.walletAddr)}`);
   };
   const clickSignUp = () => {
-    alert(
+    console.log(
       `If you're Artist visit this site and submit your portfolio!!\nwww.naver.com\n${JSON.stringify(
         formData
       )}`

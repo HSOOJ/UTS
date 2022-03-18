@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-
-interface FindPwProps {
-  setLoginState(b: boolean): void;
-  setFindPwState(b: boolean): void;
-}
+import { useRecoilState } from "recoil";
+import { userState } from "../../../../recoil/user";
 
 interface FormData {
   walletAddr: string;
   email: string;
 }
 
-export const FindPw = ({ setLoginState, setFindPwState }: FindPwProps) => {
+export const FindPw = () => {
+  // recoil
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
+
+  // state
   const [formData, setFormData] = useState<FormData>({
     walletAddr: "",
     email: "",
   });
 
+  // form on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -35,9 +37,9 @@ export const FindPw = ({ setLoginState, setFindPwState }: FindPwProps) => {
     clickBack();
   };
 
+  // click button
   const clickBack = () => {
-    setLoginState(true);
-    setFindPwState(false);
+    setUserStateVal({ ...userStateVal, findPw: false });
   };
   const clickFindPw = () => {
     alert(`SUCCESS FindPw\n${JSON.stringify(formData)}`);
