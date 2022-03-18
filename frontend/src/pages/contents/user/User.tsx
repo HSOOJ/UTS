@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export const User = () => {
   // recoil
-  const { login, signUp, findId, findPw } = useRecoilValue(userState);
+  const { login, loginForm, signUp, findId, findPw } =
+    useRecoilValue(userState);
 
   // router navigate
   let navigate = useNavigate();
@@ -20,7 +21,7 @@ export const User = () => {
 
   return (
     <>
-      {login ? null : <Login />}
+      {loginForm ? <Login /> : null}
       {signUp ? <SignUp /> : null}
       {findId ? <FindId /> : null}
       {findPw ? <FindPw /> : null}

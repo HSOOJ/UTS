@@ -21,12 +21,12 @@ export const ProfileCompo = () => {
   const clickDelete = () => {
     console.log(`SUCCESS Delete Account\n${token}`);
     localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false });
+    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
   };
   const clickLogout = () => {
     console.log(`LOGOUT & Clear localStorage\n${token}`);
     localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false });
+    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
   };
 
   return (

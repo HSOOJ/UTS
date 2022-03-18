@@ -3,8 +3,8 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/user";
 
 interface FormData {
-  id: string;
-  password: string;
+  userId: string;
+  userPwd: string;
 }
 
 export const Login = () => {
@@ -13,8 +13,8 @@ export const Login = () => {
 
   // state
   const [formData, setFormData] = useState<FormData>({
-    id: "",
-    password: "",
+    userId: "",
+    userPwd: "",
   });
   const [token, setToken] = useState("");
 
@@ -30,8 +30,8 @@ export const Login = () => {
     console.log(formData);
 
     setFormData({
-      id: "",
-      password: "",
+      userId: "",
+      userPwd: "",
     });
     setItem("token", token);
   };
@@ -44,43 +44,42 @@ export const Login = () => {
   // click button
   const clickLogin = () => {
     console.log(`SUCCESS LOGIN\n${JSON.stringify(formData)}`);
-    setToken(formData.id);
-    setUserStateVal({ ...userStateVal, login: true });
+    setToken(formData.userId);
+    setUserStateVal({ ...userStateVal, login: true, loginForm: false });
   };
   const clickSignUp = () => {
-    setUserStateVal({ ...userStateVal, signUp: true });
+    setUserStateVal({ ...userStateVal, loginForm: false, signUp: true });
   };
   const clickFindId = () => {
-    setUserStateVal({ ...userStateVal, findId: true });
+    setUserStateVal({ ...userStateVal, loginForm: false, findId: true });
   };
   const clickFindPw = () => {
-    setUserStateVal({ ...userStateVal, findPw: true });
+    setUserStateVal({ ...userStateVal, loginForm: false, findPw: true });
   };
 
   return (
     <>
       <h1>Login Component</h1>
-      <>
-        <form onSubmit={onSubmit}>
-          <input
-            name="id"
-            value={formData.id}
-            onChange={onChange}
-            placeholder="ID"
-          />
-          <input
-            name="password"
-            value={formData.password}
-            onChange={onChange}
-            type="password"
-            placeholder="PassWord"
-          />
-          <button onClick={clickLogin}>Login</button>
-        </form>
-        <button onClick={clickSignUp}>SignUp</button>
-        <button onClick={clickFindId}>FindId</button>
-        <button onClick={clickFindPw}>FindPw</button>
-      </>
+
+      <form onSubmit={onSubmit}>
+        <input
+          name="userId"
+          value={formData.userId}
+          onChange={onChange}
+          placeholder="ID"
+        />
+        <input
+          name="userPwd"
+          value={formData.userPwd}
+          onChange={onChange}
+          type="password"
+          placeholder="PassWord"
+        />
+        <button onClick={clickLogin}>Login</button>
+      </form>
+      <button onClick={clickSignUp}>SignUp</button>
+      <button onClick={clickFindId}>FindId</button>
+      <button onClick={clickFindPw}>FindPw</button>
     </>
   );
 };

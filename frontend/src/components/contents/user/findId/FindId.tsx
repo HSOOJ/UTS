@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/user";
 
 interface FormData {
-  walletAddr: string;
+  userWalletAddress: string;
 }
 
 export const FindId = () => {
@@ -12,7 +12,7 @@ export const FindId = () => {
 
   // state
   const [formData, setFormData] = useState<FormData>({
-    walletAddr: "",
+    userWalletAddress: "",
   });
 
   // form on method
@@ -26,14 +26,14 @@ export const FindId = () => {
     e.preventDefault();
     console.log(formData);
     setFormData({
-      walletAddr: "",
+      userWalletAddress: "",
     });
     clickBack();
   };
 
   // click button
   const clickBack = () => {
-    setUserStateVal({ ...userStateVal, findId: false });
+    setUserStateVal({ ...userStateVal, loginForm: true, findId: false });
   };
   const clickFindId = () => {
     console.log(`SUCCESS FindId\n${JSON.stringify(formData)}`);
@@ -44,8 +44,8 @@ export const FindId = () => {
       <h1>FindId Component</h1>
       <form onSubmit={onSubmit}>
         <input
-          name="walletAddr"
-          value={formData.walletAddr}
+          name="userWalletAddress"
+          value={formData.userWalletAddress}
           onChange={onChange}
           placeholder="wallet address"
         />

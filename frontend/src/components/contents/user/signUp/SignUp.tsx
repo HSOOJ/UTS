@@ -3,10 +3,10 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/user";
 
 interface FormData {
-  email: string;
-  password: string;
-  nickname: string;
-  walletAddr: string;
+  userId: string;
+  userPwd: string;
+  userNickname: string;
+  userWalletAddress: string;
 }
 
 export const SignUp = () => {
@@ -15,10 +15,10 @@ export const SignUp = () => {
 
   // state
   const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-    nickname: "",
-    walletAddr: "",
+    userId: "",
+    userPwd: "",
+    userNickname: "",
+    userWalletAddress: "",
   });
 
   // form on method
@@ -32,20 +32,22 @@ export const SignUp = () => {
     event.preventDefault();
     console.log(formData);
     setFormData({
-      email: "",
-      password: "",
-      nickname: "",
-      walletAddr: "",
+      userId: "",
+      userPwd: "",
+      userNickname: "",
+      userWalletAddress: "",
     });
     clickBack();
   };
 
   // click button
   const clickBack = () => {
-    setUserStateVal({ ...userStateVal, signUp: false });
+    setUserStateVal({ ...userStateVal, loginForm: true, signUp: false });
   };
   const clickCheckWallet = () => {
-    console.log(`Check Wallet Address\n${JSON.stringify(formData.walletAddr)}`);
+    console.log(
+      `Check Wallet Address\n${JSON.stringify(formData.userWalletAddress)}`
+    );
   };
   const clickSignUp = () => {
     console.log(
@@ -60,27 +62,27 @@ export const SignUp = () => {
       <h1>SignUp Component</h1>
       <form onSubmit={onSubmit}>
         <input
-          name="email"
-          value={formData.email}
+          name="userId"
+          value={formData.userId}
           onChange={onChange}
           placeholder="email"
         />
         <input
-          name="password"
-          value={formData.password}
+          name="userPwd"
+          value={formData.userPwd}
           type="password"
           onChange={onChange}
           placeholder="password"
         />
         <input
-          name="nickname"
-          value={formData.nickname}
+          name="userNickname"
+          value={formData.userNickname}
           onChange={onChange}
           placeholder="nickname"
         />
         <input
-          name="walletAddr"
-          value={formData.walletAddr}
+          name="userWalletAddress"
+          value={formData.userWalletAddress}
           onChange={onChange}
           placeholder="wallet address"
         />
