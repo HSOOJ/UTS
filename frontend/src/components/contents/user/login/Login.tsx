@@ -27,13 +27,6 @@ export const Login = () => {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-
-    setFormData({
-      userId: "",
-      userPwd: "",
-    });
-    setItem("token", token);
   };
 
   // localstorage.setItem
@@ -45,6 +38,11 @@ export const Login = () => {
   const clickLogin = () => {
     console.log(`SUCCESS LOGIN\n${JSON.stringify(formData)}`);
     setToken(formData.userId);
+    setFormData({
+      userId: "",
+      userPwd: "",
+    });
+    setItem("token", formData.userId);
     setUserStateVal({ ...userStateVal, login: true, loginForm: false });
   };
   const clickSignUp = () => {
@@ -59,23 +57,25 @@ export const Login = () => {
 
   return (
     <>
-      <h1>Login Component</h1>
+      <h1>Login Form</h1>
 
       <form onSubmit={onSubmit}>
         <input
           name="userId"
           value={formData.userId}
           onChange={onChange}
-          placeholder="ID"
+          placeholder="email"
         />
         <input
           name="userPwd"
           value={formData.userPwd}
           onChange={onChange}
           type="password"
-          placeholder="PassWord"
+          placeholder="password"
         />
-        <button onClick={clickLogin}>Login</button>
+        <button type="button" onClick={clickLogin}>
+          Login
+        </button>
       </form>
       <button onClick={clickSignUp}>SignUp</button>
       <button onClick={clickFindId}>FindId</button>

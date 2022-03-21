@@ -15,7 +15,7 @@ export const User = () => {
   // router navigate
   let navigate = useNavigate();
   const moveProfileUrl = () => {
-    if (login) navigate("/profile");
+    if (login) navigate("/");
   };
   useEffect(moveProfileUrl, [login]);
 
