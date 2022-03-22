@@ -12,7 +12,6 @@ COPY src /app/src
 RUN ls -a
 
 RUN npm install
-RUN npm run build
 
 # COPY . /app
 
