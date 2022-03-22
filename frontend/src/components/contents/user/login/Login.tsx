@@ -32,7 +32,6 @@ export const Login = () => {
   // click button
   const clickLogin = () => {
     console.log(`SUCCESS LOGIN\n${JSON.stringify(formData)}`);
-
     setFormData({
       userId: "",
       userPwd: "",

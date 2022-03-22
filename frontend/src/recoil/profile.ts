@@ -8,6 +8,9 @@ interface profileType {
   nftBadgeList: boolean;
   tradeList: boolean;
   followList: boolean;
+  ownList: boolean;
+  sellingList: boolean;
+  likeList: boolean;
 }
 
 export const profileState = atom<profileType>({
@@ -20,5 +23,8 @@ export const profileState = atom<profileType>({
     nftBadgeList: true,
     tradeList: false,
     followList: false,
+    ownList: true,
+    sellingList: false,
+    likeList: false,
   },
 });

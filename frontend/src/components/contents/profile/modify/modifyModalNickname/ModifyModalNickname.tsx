@@ -6,16 +6,8 @@ export const ModifyModalNickname = () => {
   // recoil
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
-  // state
+  // useState
   const [nickname, setNickname] = useState("");
-
-  // useEffect
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token === null) return;
-    setNickname(token);
-    // setNickname(profileStateVal.userNickname);
-  }, []);
 
   // input on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +30,13 @@ export const ModifyModalNickname = () => {
       modifyModalNickname: false,
     });
   };
+
+  // useEffect
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) return;
+    setNickname(token);
+  }, []);
 
   return (
     <>

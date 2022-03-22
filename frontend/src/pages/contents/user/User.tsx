@@ -16,12 +16,11 @@ export const User = () => {
 
   // useEffect
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token !== null) {
-      navigate("/");
-    }
-    if (!userStateVal.login) {
-      setUserStateVal({ ...userStateVal, loginForm: true });
+    setUserStateVal({ ...userStateVal, loginForm: true });
+  }, []);
+  useEffect(() => {
+    if (userStateVal.login) {
+      navigate("/profile");
     }
   }, [userStateVal.login]);
 

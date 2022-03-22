@@ -1,9 +1,6 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
 import { profileState } from "../../../recoil/profile";
-import { userState } from "../../../recoil/user";
 import FollowList from "./followList";
 import ModifyModal from "./modify";
 import NftBadgeList from "./nftBadgeList";
@@ -11,23 +8,10 @@ import TradeList from "./tradeList";
 
 export const ProfileCompo = () => {
   // recoil
-  const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
-  // router navigate
-  let navigate = useNavigate();
-
   // useState
-
-  // useEffect
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token !== null) {
-      setProfileStateVal({ ...profileStateVal, userNickname: token });
-    } else {
-      navigate("/user");
-    }
-  }, [userStateVal.login]);
+  const [nickname, setNickname] = useState("");
 
   // function
 
@@ -41,11 +25,6 @@ export const ProfileCompo = () => {
   };
   const clickRegist = () => {
     console.log("click Artist Regist Button");
-  };
-  const clickLogout = () => {
-    console.log(`LOGOUT & Clear localStorage\n${profileStateVal.userNickname}`);
-    localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false });
   };
   const clickNftBadgeList = () => {
     setProfileStateVal({
@@ -72,17 +51,23 @@ export const ProfileCompo = () => {
     });
   };
 
+  // useEffect
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) return;
+    setNickname(token);
+  }, []);
+
   // styled component
 
   return (
     <>
       <h1>ProfileCompo</h1>
       <hr />
-      <h1>{profileStateVal.userNickname}님의 컬렉션</h1>
+      <h1>{nickname}님의 컬렉션</h1>
       <button onClick={clickModify}>수정</button>
       <button onClick={clickAddr}>내 지갑 주소 보기</button>
       <button onClick={clickRegist}>아티스트 등록하기</button>
-      <button onClick={clickLogout}>Logout</button>
 
       {profileStateVal.modifyModal ? <ModifyModal /> : null}
 
