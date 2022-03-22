@@ -1,0 +1,70 @@
+import { useParams, Params } from "react-router-dom";
+import styled from "styled-components";
+import { useState, useRef } from "react";
+import { Modal, Button } from "antd";
+
+interface ArtistParamTypes extends Params {
+  artist_id: string;
+}
+
+export const ArtistInfo = () => {
+  // 현재 artist_id 잡아내기
+  const { artist_id } = useParams() as ArtistParamTypes;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const UserImg = styled.img`
+    border-radius: 50%;
+  `;
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  return (
+    <div>
+      <h1>ArtistDetail</h1>
+      <UserImg src="https://picsum.photos/250/250"></UserImg>
+      <p>{artist_id}번째 아티스트</p>
+      <h1>현정이</h1>
+      <Button type="primary" onClick={showModal}>
+        지갑 주소 확인하기
+      </Button>
+      <Modal
+        title="현정님의 지갑 주소"
+        visible={isModalVisible}
+        onOk={handleOk}
+        okText="지갑 주소 복사하기"
+        onCancel={handleCancel}
+        cancelText="닫기"
+      >
+        <p>0x040192238F80F90c0004dC33e0dd54909777721D</p>
+      </Modal>
+      <hr />
+      <div>
+        <p>아티스트 여러줄 소개 블라블라</p>
+        <p>카테고리</p>
+        <p>소셜 링크</p>
+        <p>팔로워 수</p>
+        <p>총 매출</p>
+        <p>최고가</p>
+        <p>거래량</p>
+      </div>
+      <hr />
+      <p>BADGE EDITION</p>
+      <div>
+        <p>뱃지1</p>
+        <p>뱃지2</p>
+        <p>뱃지3</p>
+        <p>...</p>
+      </div>
+    </div>
+  );
+};
