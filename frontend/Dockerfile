@@ -7,10 +7,10 @@ RUN mkdir /app
 WORKDIR /app
 
 # work dir 에 build 폴더 생성 /app/build
-RUN mkdir ./serve
+RUN mkdir ./build
 
 # host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-ADD ./serve ./serve
+ADD ./build ./build
 
 COPY . /app
 COPY package.json /app/package.json
