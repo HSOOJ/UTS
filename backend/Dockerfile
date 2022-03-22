@@ -20,7 +20,7 @@ EXPOSE 8080
 #npm start : package.json의 scripts에 있는 start 명령어를 실행
 # CMD ["npm", "start"]
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start:dev" ]
 
 # ## Dockerfile(node js)
 
