@@ -2992,6 +2992,13 @@
   "resolved" "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
   "version" "0.2.0"
 
+"@types/antd@^1.0.0":
+  "integrity" "sha1-8E4qhO/Z6pNzZs09+62l08lJRx0="
+  "resolved" "https://registry.npmjs.org/@types/antd/-/antd-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "antd" "*"
+
 "@types/aria-query@^4.2.0":
   "integrity" "sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig=="
   "resolved" "https://registry.npmjs.org/@types/aria-query/-/aria-query-4.2.2.tgz"
@@ -4100,7 +4107,7 @@
   dependencies:
     "entities" "^2.0.0"
 
-"antd@^4.19.2":
+"antd@*", "antd@^4.19.2":
   "integrity" "sha512-qXM6d6hFsT5rZJB4TRTHl32dixu1IHmPD0QLzG5YuUpzecv6QoTr1ZMp2/I1MMCb1+n99yQ5gFx7U677AbL5hw=="
   "resolved" "https://registry.npmjs.org/antd/-/antd-4.19.2.tgz"
   "version" "4.19.2"
