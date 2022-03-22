@@ -1,3 +1,9 @@
+import { AboutPage } from "../../../components/contents/about/AboutPage";
+
 export const About = () => {
-  return <div>이거슨 어바웃</div>;
+  return (
+    <div>
+      <AboutPage />
+    </div>
+  );
 };
