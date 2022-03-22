@@ -7,13 +7,14 @@ RUN mkdir /app
 WORKDIR /app
 
 # work dir 에 build 폴더 생성 /app/build
-RUN mkdir ./build
+RUN mkdir ./serve
 
 # host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-ADD ./build ./build
+ADD ./serve ./serve
 
 # container 실행 시 자동으로 실행할 command. nginx 시작함
-CMD ["serve", "-s", "build"]
+# CMD ["serve", "-s", "build"]
+CMD ["npm", "start"]
 
 # # nginx 이미지를 사용
 # FROM nginx
