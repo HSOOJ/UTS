@@ -1,6 +1,5 @@
 FROM node:16
 
-RUN apk update
 
 RUN mkdir /app
 WORKDIR /app
@@ -13,7 +12,6 @@ COPY src /app/src
 RUN ls -a
 
 RUN npm install
-RUN npm run build
 
 # COPY . /app
 
@@ -22,7 +20,7 @@ EXPOSE 8080
 #npm start : package.json의 scripts에 있는 start 명령어를 실행
 # CMD ["npm", "start"]
 
-CMD [ "npm", "start:dev" ]
+CMD [ "npm", "run", "start:dev" ]
 
 # ## Dockerfile(node js)
 
