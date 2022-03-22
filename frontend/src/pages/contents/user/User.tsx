@@ -2,29 +2,35 @@ import Login from "../../../components/contents/user/login";
 import SignUp from "../../../components/contents/user/signUp";
 import FindId from "../../../components/contents/user/findId";
 import FindPw from "../../../components/contents/user/findPw";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userState } from "../../../recoil/user";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const User = () => {
   // recoil
-  const { login, loginForm, signUp, findId, findPw } =
-    useRecoilValue(userState);
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
 
   // router navigate
   let navigate = useNavigate();
-  const moveProfileUrl = () => {
-    if (login) navigate("/");
-  };
-  useEffect(moveProfileUrl, [login]);
+
+  // useEffect
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token !== null) {
+      navigate("/");
+    }
+    if (!userStateVal.login) {
+      setUserStateVal({ ...userStateVal, loginForm: true });
+    }
+  }, [userStateVal.login]);
 
   return (
     <>
-      {loginForm ? <Login /> : null}
-      {signUp ? <SignUp /> : null}
-      {findId ? <FindId /> : null}
-      {findPw ? <FindPw /> : null}
+      {userStateVal.loginForm ? <Login /> : null}
+      {userStateVal.signUp ? <SignUp /> : null}
+      {userStateVal.findId ? <FindId /> : null}
+      {userStateVal.findPw ? <FindPw /> : null}
     </>
   );
 };

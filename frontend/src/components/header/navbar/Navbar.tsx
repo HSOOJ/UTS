@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../../recoil/user";
 
 export const Navbar = () => {
   // recoil
-  const { login } = useRecoilValue(userState); // userStateVal.login
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
 
   // state
   const [isArtist, setIsArtist] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  // useEffect
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token === null) {
+      setUserStateVal({ ...userStateVal, login: false });
+    } else {
+      setUserStateVal({ ...userStateVal, login: true });
+    }
+  }, []);
 
   return (
     <>
@@ -19,7 +29,7 @@ export const Navbar = () => {
       <NavLink to={"/about"}>About</NavLink>
       {isArtist ? <NavLink to={"/minting"}>Mint</NavLink> : null}
       {isAdmin ? <NavLink to={"/admin"}>Admin</NavLink> : null}
-      {login ? (
+      {userStateVal.login ? (
         <NavLink to={"/profile"}>Profile</NavLink>
       ) : (
         <NavLink to={"/user"}>Login</NavLink>
