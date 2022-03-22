@@ -1,3 +1,5 @@
+import { BadgeInfo } from "../../../components/contents/info/badge/BadgeInfo";
+
 export const BadgeDetail = () => {
-  return <h1>BadgeDetail</h1>;
+  return <BadgeInfo />;
 };

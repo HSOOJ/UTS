@@ -1,3 +1,5 @@
+import { ArtistInfo } from "../../../components/contents/info/artist/ArtistInfo";
+
 export const ArtistDetail = () => {
-  return <h1>ArtistDetail</h1>;
+  return <ArtistInfo />;
 };

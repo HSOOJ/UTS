@@ -1,3 +1,9 @@
+import ProfileCompo from "../../../components/contents/profile";
+
 export const Profile = () => {
-  return <h1>Profile</h1>;
+  return (
+    <>
+      <ProfileCompo />
+    </>
+  );
 };
