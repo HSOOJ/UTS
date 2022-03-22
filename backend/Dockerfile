@@ -1,6 +1,5 @@
 FROM node:16
 
-RUN apk update
 
 RUN mkdir /app
 WORKDIR /app
