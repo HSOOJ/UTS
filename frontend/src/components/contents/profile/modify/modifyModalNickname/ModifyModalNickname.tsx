@@ -40,30 +40,26 @@ export const ModifyModalNickname = () => {
 
   return (
     <>
-      <>
-        <hr />
-        <h2>닉네임 변경</h2>
-        <div>
-          <input
-            name="userNickname"
-            value={nickname}
-            onChange={onChange}
-            placeholder="nickname"
-          />
-          <button onClick={clickModifyNicknameConfirm}>중복 확인</button>
-        </div>
-        <button onClick={clickModifyNicknameChange}>변경하기</button>
-        <button
-          onClick={() => {
-            setProfileStateVal({
-              ...profileStateVal,
-              modifyModalNickname: false,
-            });
-          }}
-        >
-          아니요, 실수에요!
-        </button>
-      </>
+      <div>
+        <input
+          name="userNickname"
+          value={nickname}
+          onChange={onChange}
+          placeholder="nickname"
+        />
+        <button onClick={clickModifyNicknameConfirm}>중복 확인</button>
+      </div>
+      <button onClick={clickModifyNicknameChange}>변경하기</button>
+      <button
+        onClick={() => {
+          setProfileStateVal({
+            ...profileStateVal,
+            modifyModalNickname: false,
+          });
+        }}
+      >
+        아니요, 실수에요!
+      </button>
     </>
   );
 };

@@ -21,7 +21,6 @@ export const ModifyModalDelete = () => {
 
   return (
     <>
-      <hr />
       <h2>정말로 탈퇴하시겠습니까?</h2>
       <h3>UTS에서 당신의 아티스트가 기다리고 있어요.</h3>
       <h3>탈퇴 시 회원님이 보유한 NFT 토큰도 폐기됩니다. (복구불가)</h3>

@@ -5,6 +5,7 @@ import FollowList from "./followList";
 import ModifyModal from "./modify";
 import NftBadgeList from "./nftBadgeList";
 import TradeList from "./tradeList";
+import { Popover, Button } from "antd";
 
 export const ProfileCompo = () => {
   // recoil
@@ -12,8 +13,6 @@ export const ProfileCompo = () => {
 
   // useState
   const [nickname, setNickname] = useState("");
-
-  // function
 
   // click button
   const clickModify = () => {
@@ -65,11 +64,19 @@ export const ProfileCompo = () => {
       <h1>ProfileCompo</h1>
       <hr />
       <h1>{nickname}님의 컬렉션</h1>
-      <button onClick={clickModify}>수정</button>
       <button onClick={clickAddr}>내 지갑 주소 보기</button>
       <button onClick={clickRegist}>아티스트 등록하기</button>
-
-      {profileStateVal.modifyModal ? <ModifyModal /> : null}
+      <Popover
+        content={<ModifyModal />}
+        title="프로필 수정"
+        trigger="click"
+        visible={profileStateVal.modifyModal}
+        onVisibleChange={(visible: boolean) => {
+          setProfileStateVal({ ...profileStateVal, modifyModal: visible });
+        }}
+      >
+        <button onClick={clickModify}>수정</button>
+      </Popover>
 
       <hr />
       <button onClick={clickNftBadgeList}>NFT 뱃지</button>
