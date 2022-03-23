@@ -1,3 +1,3 @@
-import { UstRouter } from "./Router";
+import { UtsRouter } from "./Router";
 
-export default UstRouter;
+export default UtsRouter;

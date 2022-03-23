@@ -30,14 +30,6 @@ export const SignUp = () => {
   };
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
-    setFormData({
-      userId: "",
-      userPwd: "",
-      userNickname: "",
-      userWalletAddress: "",
-    });
-    clickBack();
   };
 
   // click button
@@ -55,11 +47,18 @@ export const SignUp = () => {
         formData
       )}`
     );
+    setFormData({
+      userId: "",
+      userPwd: "",
+      userNickname: "",
+      userWalletAddress: "",
+    });
+    clickBack();
   };
 
   return (
     <>
-      <h1>SignUp Component</h1>
+      <h1>SignUp Form</h1>
       <form onSubmit={onSubmit}>
         <input
           name="userId"
@@ -86,7 +85,9 @@ export const SignUp = () => {
           onChange={onChange}
           placeholder="wallet address"
         />
-        <button onClick={clickSignUp}>SignUp</button>
+        <button type="button" onClick={clickSignUp}>
+          SignUp
+        </button>
       </form>
       <button onClick={clickCheckWallet}>Check Wallet Address</button>
       <button onClick={clickBack}>Back</button>
