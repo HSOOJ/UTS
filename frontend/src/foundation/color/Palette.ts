@@ -13,6 +13,8 @@ const Palette: IPalette = {
   Blu100: "#BBD3FF",
   Blu200: "#759AFF",
   Blu300: "#0066FF",
+
+  BluOpacity100: "rgba(117,154,255, 0.2)",
 } as const;
 
 export default Palette;
