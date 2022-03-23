@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../recoil/user";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import DropdownCompo from "./dropdown";
 
 export const Navbar = () => {
   // recoil
-  const { login } = useRecoilValue(userState); // userStateVal.login
 
   // state
   const [isArtist, setIsArtist] = useState(false);
@@ -19,11 +17,7 @@ export const Navbar = () => {
       <NavLink to={"/about"}>About</NavLink>
       {isArtist ? <NavLink to={"/minting"}>Mint</NavLink> : null}
       {isAdmin ? <NavLink to={"/admin"}>Admin</NavLink> : null}
-      {login ? (
-        <NavLink to={"/profile"}>Profile</NavLink>
-      ) : (
-        <NavLink to={"/user"}>Login</NavLink>
-      )}
+      <DropdownCompo />
     </>
   );
 };

@@ -1,42 +1,84 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../recoil/user";
+import { profileState } from "../../../recoil/profile";
+import FollowList from "./followList";
+import ModifyModal from "./modify";
+import NftBadgeList from "./nftBadgeList";
+import TradeList from "./tradeList";
 
 export const ProfileCompo = () => {
   // recoil
-  const [userStateVal, setUserStateVal] = useRecoilState(userState);
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
-  // state
-  const token = localStorage.getItem("token");
+  // useState
+  const [nickname, setNickname] = useState("");
 
-  // router navigate
-  let navigate = useNavigate();
-  const moveUserUrl = () => {
-    if (!userStateVal.login) navigate("/user");
-  };
-  useEffect(moveUserUrl, [userStateVal.login]);
+  // function
 
   // click button
-  const clickDelete = () => {
-    console.log(`SUCCESS Delete Account\n${token}`);
-    localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
+  const clickModify = () => {
+    console.log("open modify compo");
+    setProfileStateVal({ ...profileStateVal, modifyModal: true });
   };
-  const clickLogout = () => {
-    console.log(`LOGOUT & Clear localStorage\n${token}`);
-    localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
+  const clickAddr = () => {
+    console.log("Check Wallet Address");
   };
+  const clickRegist = () => {
+    console.log("click Artist Regist Button");
+  };
+  const clickNftBadgeList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: true,
+      tradeList: false,
+      followList: false,
+    });
+  };
+  const clickTradeList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: false,
+      tradeList: true,
+      followList: false,
+    });
+  };
+  const clickfollowList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: false,
+      tradeList: false,
+      followList: true,
+    });
+  };
+
+  // useEffect
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) return;
+    setNickname(token);
+  }, []);
+
+  // styled component
 
   return (
     <>
       <h1>ProfileCompo</h1>
-      <h2>now LoggedIn</h2>
-      <button onClick={clickDelete}>Delete Account</button>
-      <button onClick={clickLogout}>Logout</button>
-      <button>닉네임 수정</button>
-      <button>프로필 사진 수정</button>
+      <hr />
+      <h1>{nickname}님의 컬렉션</h1>
+      <button onClick={clickModify}>수정</button>
+      <button onClick={clickAddr}>내 지갑 주소 보기</button>
+      <button onClick={clickRegist}>아티스트 등록하기</button>
+
+      {profileStateVal.modifyModal ? <ModifyModal /> : null}
+
+      <hr />
+      <button onClick={clickNftBadgeList}>NFT 뱃지</button>
+      <button onClick={clickTradeList}>거래 내역</button>
+      <button onClick={clickfollowList}>팔로잉</button>
+      <hr />
+      {profileStateVal.nftBadgeList ? <NftBadgeList /> : null}
+      {profileStateVal.tradeList ? <TradeList /> : null}
+      {profileStateVal.followList ? <FollowList /> : null}
     </>
   );
 };
