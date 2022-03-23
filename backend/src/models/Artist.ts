@@ -4,30 +4,28 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
+  // DeleteDateColumn,
 } from "typeorm";
 
 @Entity()
-export class User {
+export class Artist {
   @PrimaryGeneratedColumn()
-  user_seq: number;
+  artist_seq: number;
   @Column()
-  user_id: string;
+  user_seq: number; // FK
   @Column()
-  user_nickname: string;
+  code_seq: number; // FK
   @Column()
-  user_password: string;
+  artist_description: string;
   @Column()
-  user_wallet_address: string;
+  artist_sns: string;
   @Column()
-  user_profile_image: string;
-  @Column()
-  user_role: number; //(0: 일반회원, 1: 아티스트, 2: 관리자)
+  artist_followers_total: number;
   @CreateDateColumn()
   reg_dt: Date;
   @UpdateDateColumn()
   mod_dt: Date;
   // @DeleteDateColumn()
   @Column()
-  del_yn: Date;
+  del_yn: boolean;
 }
