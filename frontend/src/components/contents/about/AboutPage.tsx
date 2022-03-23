@@ -63,47 +63,52 @@ export const AboutPage = () => {
       <br></br>
       <div>
         <Collapse accordion>
-          <Panel header="MYAH는 무엇인가요?" key="1">
+          <Panel header="UTS는 무엇인가요?" key="1">
             <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
+              UTS는 Under The Sea의 줄임말로, Artist분께 직접적인 후원을 할 수
+              있는 NFT 토큰을 판매하는 마켓플레이스입니다.
             </p>
           </Panel>
-          <Panel header="MYAH에서 뱃지를 어떻게 구매하나요?" key="2">
+          <Panel header="UTS에서 뱃지를 어떻게 구매하나요?" key="2">
             <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
+              UTS에 입장하고 Metamask에 로그인하면 준비 완료! 😃 Artist 탭이나
+              Badge 탬에 들어가시면 회원님의 Artist Badge를 구해하실 수
+              있습니다.
             </p>
           </Panel>
           <Panel header="뱃지를 구매하면 얻을 수 있는 이익이 있나요?" key="3">
             <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
+              Artist분이 민팅을 할 때 해당 뱃지에 대한 혜택을 작성해두었을
+              것입니다. 만약 없다면 UTS 문제가 아닌 Artist가 혜택을 설정하지
+              않은 것 뿐이에요...
             </p>
           </Panel>
           <Panel header="어떤 뱃지가 희귀한가요?" key="4">
             <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
+              여러분의 선택에 맡깁니다. 여러분이 '희귀하다' 생각하는 뱃지는
+              희귀한거에요. 숫자가 특이한(1번, 1004번 등) Badge가 희귀할 수도
+              있고, Artist 분이 설정한 Badge의 개수가 적을 수록 희귀할 수도
+              있겠죠?
             </p>
           </Panel>
           <Panel header="구매한 뱃지는 어디서 확인할 수 있나요?" key="5">
-            <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
-            </p>
+            <p>구매한 Badge는 개인 Profile에서 확인할 수 있습니다.</p>
           </Panel>
-          <Panel header="되팔고싶은 뱃지는 어떻게 해야할까요?" key="6">
+          <Panel header="되팔고 싶은 뱃지는 어떻게 해야할까요?" key="6">
             <p>
-              MYAH는 Meet Your Artist Here의 줄임말로, 아티스트에게 직접적인
-              후원을 할 수 있는 NFT 토큰을 판매하는 마켓플레이스입니다.
+              내 Profile에 있는 Badge를 되팔고 싶을 때는 해당 Badge의 상세
+              페이지로 들어가면 '판매하기' 버튼이 있어요. 원하는 가격을
+              설정하시고 판매하시면 됩니다.
             </p>
           </Panel>
           <Panel header="아티스트가 되고싶어요. 방법을 알려주세요." key="7">
             <p>
-              아티스트이신가요? 여기를 눌러 아티스트 신청서를 제출해주세요.
-              관리자 검토 후 2~3일 이내(공휴일 제외)에 신청 결과를 메일로
-              알려드립니다.
+              아티스트이신가요?{" "}
+              <a href="https://forms.gle/KJUHZF2AWpHVT1z29" target="_blank">
+                여기
+              </a>
+              를 눌러 아티스트 신청서를 제출해주세요. 관리자 검토 후 2~3일
+              이내(공휴일 제외)에 신청 결과를 메일로 알려드립니다.
             </p>
           </Panel>
         </Collapse>

@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
   ${UstFontExtraBold}
 
   body {
-    font-weight: 200;
+    font-weight: 400;
     font-family: 'Leferi', sans-serif;
   }
 `;
