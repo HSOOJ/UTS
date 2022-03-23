@@ -8,19 +8,19 @@ import "antd/dist/antd.css";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "./recoil/theme";
 
-const UstContainer = styled.div``;
+const UtsContainer = styled.div``;
 
 function App() {
   const theme = useRecoilValue(themeAtom);
 
   return (
-    <UstContainer>
+    <UtsContainer>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <UstRouter />
+        <UtsRouter />
       </ThemeProvider>
       <ReactQueryDevtools />
-    </UstContainer>
+    </UtsContainer>
   );
 }
 
