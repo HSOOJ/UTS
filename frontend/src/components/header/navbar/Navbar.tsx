@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import DropdownCompo from "./dropdown";
+import ThemeToggle from "./themeToggle";
 
 export const Navbar = () => {
   // recoil
@@ -17,6 +18,7 @@ export const Navbar = () => {
       <NavLink to={"/about"}>About</NavLink>
       {isArtist ? <NavLink to={"/minting"}>Mint</NavLink> : null}
       {isAdmin ? <NavLink to={"/admin"}>Admin</NavLink> : null}
+      <ThemeToggle />
       <DropdownCompo />
     </>
   );
