@@ -2,65 +2,74 @@ import { useRecoilState } from "recoil";
 import { profileState } from "../../../../recoil/profile";
 import { ModifyModalDelete } from "./modifyModalDelete/ModifyModalDelete";
 import ModifyModalNickname from "./modifyModalNickname";
-import { Popover, Button } from "antd";
+import { Popover, Button, Modal, Popconfirm } from "antd";
 import { useState } from "react";
+import { userState } from "../../../../recoil/user";
+import ModifyModalPic from "./modifyModalPic";
 
 export const ModifyModal = () => {
   // recoil
+  const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // function
-  const handleVisibleChange = (vis: boolean) => {};
+  const handleCancel = () => {
+    setProfileStateVal({ ...profileStateVal, modalVisible: false });
+  };
 
-  // click button
-  const clickModalModifyPic = () => {
-    console.log("modify profile pic");
+  // click button _ modify
+  const clickModifyDelete = () => {
+    console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
+    localStorage.removeItem("token");
+    setUserStateVal({ ...userStateVal, login: false });
   };
-  const clickModalModifyNickname = () => {
-    console.log("modify nickname");
-    setProfileStateVal({ ...profileStateVal, modifyModalNickname: true });
-  };
-  const clickModalModifyDelete = () => {
-    console.log("delete account");
+  const clickModifyNicknameChange = () => {
+    console.log("change nickname / " + profileStateVal.modifyNickname);
     setProfileStateVal({
       ...profileStateVal,
-      modifyModalDelete: true,
+      modalLoading: true,
     });
+    setTimeout(() => {
+      setProfileStateVal({
+        ...profileStateVal,
+        modalLoading: false,
+        modalVisible: false,
+        userNickname: profileStateVal.modifyNickname,
+      });
+      localStorage.setItem("token", profileStateVal.modifyNickname);
+    }, 1500);
   };
+
+  // click button
 
   return (
     <>
-      <button onClick={clickModalModifyPic}>프로필 사진 수정</button>
-      <Popover
-        placement="rightTop"
-        content={<ModifyModalNickname />}
-        title="닉네임 수정"
-        trigger="click"
-        visible={profileStateVal.modifyModalNickname}
-        onVisibleChange={(visible: boolean) => {
-          setProfileStateVal({
-            ...profileStateVal,
-            modifyModalNickname: visible,
-          });
-        }}
+      <Modal
+        visible={profileStateVal.modalVisible}
+        title="프로필 수정"
+        centered
+        onCancel={handleCancel}
+        footer={[
+          <Popconfirm
+            title="정말로 탈퇴하시겠습니까?"
+            onConfirm={clickModifyDelete}
+            okText="네"
+            cancelText="아니요"
+          >
+            <Button danger>회원탈퇴</Button>
+          </Popconfirm>,
+          <Button
+            type="primary"
+            loading={profileStateVal.modalLoading}
+            onClick={clickModifyNicknameChange}
+          >
+            수정하기
+          </Button>,
+        ]}
       >
-        <button onClick={clickModalModifyNickname}>닉네임 수정</button>
-      </Popover>
-      <Popover
-        placement="rightTop"
-        content={<ModifyModalDelete />}
-        title="회원 탈퇴"
-        trigger="click"
-        visible={profileStateVal.modifyModalDelete}
-        onVisibleChange={(visible: boolean) => {
-          setProfileStateVal({
-            ...profileStateVal,
-            modifyModalDelete: visible,
-          });
-        }}
-      >
-        <button onClick={clickModalModifyDelete}>회원탈퇴</button>
-      </Popover>
+        <ModifyModalPic />
+        <ModifyModalNickname />
+      </Modal>
     </>
   );
 };
