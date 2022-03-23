@@ -17,7 +17,7 @@ function App() {
     <UstContainer>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <UstRouter />
+        <UtsRouter />
       </ThemeProvider>
       <ReactQueryDevtools />
     </UstContainer>
