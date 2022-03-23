@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Meta } from "@storybook/react";
 
 import LetterBox from "./LetterBox";
+
 import FontSize, { FontSizeKeys } from "../../../foundation/font/size/FontSize";
 import { FontWeightKeys } from "../../../foundation/font/weight/FontWeight";
 import FontColor, {
@@ -10,11 +11,7 @@ import FontColor, {
 
 const meta: Meta = {
   title: "Containers/LetterBox",
-  parameters: {
-    viewport: {
-      defaultViewport: "responsive",
-    },
-  },
+  component: LetterBox,
 };
 
 export const SizeAndWeight = () => {
