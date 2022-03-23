@@ -16,17 +16,11 @@ export const ArtistInfo = () => {
     border-radius: 50%;
   `;
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  function success() {
+    Modal.success({
+      content: "0x040192238F80F90c0004dC33e0dd54909777721D",
+    });
+  }
 
   return (
     <div>
@@ -34,19 +28,9 @@ export const ArtistInfo = () => {
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <p>{artist_id}번째 아티스트</p>
       <h1>현정이</h1>
-      <Button type="primary" onClick={showModal}>
+      <Button onClick={success} type="primary">
         지갑 주소 확인하기
       </Button>
-      <Modal
-        title="현정님의 지갑 주소"
-        visible={isModalVisible}
-        onOk={handleOk}
-        okText="지갑 주소 복사하기"
-        onCancel={handleCancel}
-        cancelText="닫기"
-      >
-        <p>0x040192238F80F90c0004dC33e0dd54909777721D</p>
-      </Modal>
       <hr />
       <div>
         <p>아티스트 여러줄 소개 블라블라</p>
