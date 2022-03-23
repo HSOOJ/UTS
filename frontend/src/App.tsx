@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import UstRouter from "./routes";
+import UtsRouter from "./routes";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { GlobalStyle } from "./global/style";
 import { ThemeProvider } from "styled-components";

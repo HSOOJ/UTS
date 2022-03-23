@@ -10,9 +10,10 @@ import Main from "../pages/contents/main";
 import Minting from "../pages/contents/minting";
 import Profile from "../pages/contents/profile";
 import User from "../pages/contents/user";
+import Footer from "../pages/footer";
 import Header from "../pages/header";
 
-export const UstRouter = () => {
+export const UtsRouter = () => {
   return (
     <BrowserRouter>
       <Header />
@@ -29,6 +30,7 @@ export const UstRouter = () => {
         <Route path="/minting" element={<Minting />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };

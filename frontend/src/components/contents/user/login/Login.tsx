@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/user";
 
@@ -11,12 +12,11 @@ export const Login = () => {
   // recoil
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
 
-  // state
+  // useState
   const [formData, setFormData] = useState<FormData>({
     userId: "",
     userPwd: "",
   });
-  const [token, setToken] = useState("");
 
   // form on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,24 +27,16 @@ export const Login = () => {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-
-    setFormData({
-      userId: "",
-      userPwd: "",
-    });
-    setItem("token", token);
-  };
-
-  // localstorage.setItem
-  const setItem = (key: string, value: string): void => {
-    localStorage.setItem(key, value);
   };
 
   // click button
   const clickLogin = () => {
     console.log(`SUCCESS LOGIN\n${JSON.stringify(formData)}`);
-    setToken(formData.userId);
+    setFormData({
+      userId: "",
+      userPwd: "",
+    });
+    localStorage.setItem("token", formData.userId);
     setUserStateVal({ ...userStateVal, login: true, loginForm: false });
   };
   const clickSignUp = () => {
@@ -59,23 +51,25 @@ export const Login = () => {
 
   return (
     <>
-      <h1>Login Component</h1>
+      <h1>Login Form</h1>
 
       <form onSubmit={onSubmit}>
         <input
           name="userId"
           value={formData.userId}
           onChange={onChange}
-          placeholder="ID"
+          placeholder="email"
         />
         <input
           name="userPwd"
           value={formData.userPwd}
           onChange={onChange}
           type="password"
-          placeholder="PassWord"
+          placeholder="password"
         />
-        <button onClick={clickLogin}>Login</button>
+        <button type="button" onClick={clickLogin}>
+          Login
+        </button>
       </form>
       <button onClick={clickSignUp}>SignUp</button>
       <button onClick={clickFindId}>FindId</button>

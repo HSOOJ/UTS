@@ -24,11 +24,6 @@ export const FindId = () => {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({
-      userWalletAddress: "",
-    });
-    clickBack();
   };
 
   // click button
@@ -37,11 +32,15 @@ export const FindId = () => {
   };
   const clickFindId = () => {
     console.log(`SUCCESS FindId\n${JSON.stringify(formData)}`);
+    setFormData({
+      userWalletAddress: "",
+    });
+    clickBack();
   };
 
   return (
     <>
-      <h1>FindId Component</h1>
+      <h1>FindId Form</h1>
       <form onSubmit={onSubmit}>
         <input
           name="userWalletAddress"
@@ -49,7 +48,9 @@ export const FindId = () => {
           onChange={onChange}
           placeholder="wallet address"
         />
-        <button onClick={clickFindId}>FindId</button>
+        <button type="button" onClick={clickFindId}>
+          FindId
+        </button>
       </form>
       <button onClick={clickBack}>Back</button>
     </>
