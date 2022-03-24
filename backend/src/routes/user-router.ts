@@ -5,9 +5,9 @@ import userService from "@services/user-service";
 
 const router = Router();
 
-// GET : http://localhost:8080/api/user/info/userSeq=4
-router.get("/info/?userSeq=:userSeq", async (req: Request, res: Response) => {
-  const userSeq = Number(req.params.userSeq);
+// GET : http://localhost:8080/api/user/info/?userSeq=4
+router.get("/info/", async (req: Request, res: Response) => {
+  const userSeq = Number(req.query.userSeq);
   console.log("userSeq -> ", userSeq);
   try {
     const userInfo = await userService.getUserInfo(userSeq);
