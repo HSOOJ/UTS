@@ -2,9 +2,9 @@ import { atom } from "recoil";
 
 interface profileType {
   userNickname: string;
-  modifyModal: boolean;
-  modifyModalNickname: boolean;
-  modifyModalDelete: boolean;
+  modalLoading: boolean;
+  modalVisible: boolean;
+  modifyNickname: string;
   nftBadgeList: boolean;
   tradeList: boolean;
   followList: boolean;
@@ -17,14 +17,14 @@ export const profileState = atom<profileType>({
   key: "profileState",
   default: {
     userNickname: "",
-    modifyModal: false,
-    modifyModalNickname: false,
-    modifyModalDelete: false,
     nftBadgeList: true,
     tradeList: false,
     followList: false,
     ownList: true,
     sellingList: false,
     likeList: false,
+    modalLoading: false,
+    modalVisible: false,
+    modifyNickname: "",
   },
 });

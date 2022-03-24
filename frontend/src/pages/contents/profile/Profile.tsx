@@ -15,11 +15,13 @@ export const Profile = () => {
 
   // useEffect
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) return;
     setProfileStateVal({
       ...profileStateVal,
-      modifyModal: false,
-      modifyModalNickname: false,
-      modifyModalDelete: false,
+      userNickname: token,
+      modalVisible: false,
+      modifyNickname: token,
       nftBadgeList: true,
       tradeList: false,
       followList: false,

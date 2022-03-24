@@ -7,63 +7,35 @@ export const ModifyModalNickname = () => {
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // useState
-  const [nickname, setNickname] = useState("");
 
   // input on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = e;
-    setNickname(value);
+    setProfileStateVal({ ...profileStateVal, modifyNickname: value });
   };
 
   // click button
   const clickModifyNicknameConfirm = () => {
-    console.log("confirm nickname duplicate / " + nickname);
-  };
-  const clickModifyNicknameChange = () => {
-    console.log("change nickname / " + nickname);
-    localStorage.setItem("token", nickname);
-    setProfileStateVal({
-      ...profileStateVal,
-      userNickname: nickname,
-      modifyModalNickname: false,
-    });
+    console.log(
+      "confirm nickname duplicate / " + profileStateVal.modifyNickname
+    );
   };
 
   // useEffect
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token === null) return;
-    setNickname(token);
-  }, []);
 
   return (
     <>
-      <>
-        <hr />
-        <h2>닉네임 변경</h2>
-        <div>
-          <input
-            name="userNickname"
-            value={nickname}
-            onChange={onChange}
-            placeholder="nickname"
-          />
-          <button onClick={clickModifyNicknameConfirm}>중복 확인</button>
-        </div>
-        <button onClick={clickModifyNicknameChange}>변경하기</button>
-        <button
-          onClick={() => {
-            setProfileStateVal({
-              ...profileStateVal,
-              modifyModalNickname: false,
-            });
-          }}
-        >
-          아니요, 실수에요!
-        </button>
-      </>
+      <div>
+        <input
+          name="userNickname"
+          value={profileStateVal.modifyNickname}
+          onChange={onChange}
+          placeholder="nickname"
+        />
+        <button onClick={clickModifyNicknameConfirm}>중복 확인</button>
+      </div>
     </>
   );
 };
