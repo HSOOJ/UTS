@@ -1,5 +1,5 @@
 import { User } from "@models/user-model";
-import { getConnection } from "typeorm";
+import { Equal, getConnection } from "typeorm";
 import { Request, Response } from "express";
 
 function getUserInfo(userSeq: number) {
@@ -11,6 +11,20 @@ function getUserInfo(userSeq: number) {
   });
 }
 
+function checkNickname(inputNickname: string) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.count({
+    where: {
+      user_nickname: Equal(inputNickname),
+    },
+  });
+}
+
+// Export default
+export default {
+  getUserInfo,
+  checkNickname,
+} as const;
 /*
 SELECT *
 FROM User user
@@ -25,8 +39,3 @@ WHERE user.user_seq = userSeq
 //     .getOne();
 //   return userInfo;
 // }
-
-// Export default
-export default {
-  getUserInfo,
-} as const;

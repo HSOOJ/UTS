@@ -5,7 +5,8 @@ import userService from "@services/user-service";
 
 const router = Router();
 
-// GET : http://localhost:8080/api/user/info/?userSeq=4
+// user info 불러오기
+// GET : http://localhost:8080/api/user/info?userSeq=4
 router.get("/info/", async (req: Request, res: Response) => {
   const userSeq = Number(req.query.userSeq);
   console.log("userSeq -> ", userSeq);
@@ -22,6 +23,24 @@ router.get("/info/", async (req: Request, res: Response) => {
         userNickname: userNickname,
         userProfileImage: userProfileImage,
       });
+    }
+  } catch (err) {
+    console.error("error is", err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// 닉네임 중복 확인
+router.get("/check/nickname", async (req: Request, res: Response) => {
+  const inputNickname = String(req.query.userNickname);
+  console.log("inputNickname -> ", inputNickname);
+  try {
+    const savedNickName = await userService.checkNickname(inputNickname);
+    console.log(savedNickName);
+    if (!savedNickName) {
+      res.status(200).json({ result: "사용 가능한 닉네임입니다." });
+    } else {
+      res.status(404).json({ error: "존재하는 닉네임입니다." });
     }
   } catch (err) {
     console.error("error is", err);
