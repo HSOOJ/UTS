@@ -1,4 +1,4 @@
-import { Meta, Story } from "@storybook/react";
+import { Meta } from "@storybook/react";
 import styled from "styled-components";
 import LetterBox from "../../components/containers/letterBox/LetterBox";
 import Palette from "./Palette";
