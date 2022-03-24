@@ -8,7 +8,7 @@ import { IButton } from "./Button.types";
 
 const bgColor = {
   primary: Palette.Blu300,
-  secondary: Palette.Grigio500,
+  secondary: Palette.Grigio400,
 };
 
 export const LayOut = styled(motion.button)<IButton>`
