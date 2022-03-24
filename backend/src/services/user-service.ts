@@ -1,58 +1,32 @@
-// import userRepo from '@repos/user-repo';
-// import { IUser } from '@models/user-model';
-// import { UserNotFoundError } from '@shared/errors';
+import { User } from "@models/user-model";
+import { getConnection } from "typeorm";
+import { Request, Response } from "express";
 
-// /**
-//  * Get all users.
-//  *
-//  * @returns
-//  */
-// function getAll(): Promise<IUser[]> {
-//     return userRepo.getAll();
+function getUserInfo(userSeq: number) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.findOne({
+    where: {
+      user_seq: userSeq,
+    },
+  });
+}
+
+/*
+SELECT *
+FROM User user
+WHERE user.user_seq = userSeq
+*/
+// function getUserInfo(userSeq: number) {
+//   const userInfo = getConnection()
+//     .createQueryBuilder()
+//     .select(["user"])
+//     .from(User, "user")
+//     .where("user.user_seq = :seq", { seq: userSeq })
+//     .getOne();
+//   return userInfo;
 // }
 
-// /**
-//  * Add one user.
-//  *
-//  * @param user
-//  * @returns
-//  */
-// function addOne(user: IUser): Promise<void> {
-//     return userRepo.add(user);
-// }
-
-// /**
-//  * Update one user.
-//  *
-//  * @param user
-//  * @returns
-//  */
-// async function updateOne(user: IUser): Promise<void> {
-//     const persists = await userRepo.persists(user.id);
-//     if (!persists) {
-//         throw new UserNotFoundError();
-//     }
-//     return userRepo.update(user);
-// }
-
-// /**
-//  * Delete a user by their id.
-//  *
-//  * @param id
-//  * @returns
-//  */
-// async function deleteOne(id: number): Promise<void> {
-//     const persists = await userRepo.persists(id);
-//     if (!persists) {
-//         throw new UserNotFoundError();
-//     }
-//     return userRepo.delete(id);
-// }
-
-// // Export default
-// export default {
-//     getAll,
-//     addOne,
-//     updateOne,
-//     delete: deleteOne,
-// } as const;
+// Export default
+export default {
+  getUserInfo,
+} as const;
