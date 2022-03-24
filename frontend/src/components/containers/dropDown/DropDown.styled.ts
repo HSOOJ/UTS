@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Palette from "../../../foundation/color/Palette";
 import { IDropDown } from "./DropDown.types";
+import { motion } from "framer-motion";
 
 const bgColor = {
   light: Palette.Grigio100,
-  dark: Palette.Grigio400,
+  dark: Palette.Grigio500,
 };
 
-export const LayOut = styled.div<IDropDown>`
+export const LayOut = styled(motion.div)<IDropDown>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,3 +18,9 @@ export const LayOut = styled.div<IDropDown>`
   border: ${(props) => (props.isDark ? null : `1px solid ${Palette.Blu100}`)};
   background-color: ${(props) => bgColor[props.isDark ? "dark" : "light"]};
 `;
+
+export const DropDownLayOutVariants = {
+  entry: { opacity: 0, y: -10 },
+  presence: { opacity: 1, y: 0 },
+  out: { opacity: 0, y: -5 },
+};
