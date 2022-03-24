@@ -5,23 +5,36 @@ import { Collapse } from "antd";
 export const AboutPage = () => {
   const { Panel } = Collapse;
 
+  const FirstImg = styled.div`
+    position: relative;
+  `;
+
   const BackgroundImg = styled.img`
     width: 100%;
     height: 100%;
   `;
 
   const Text = styled.h1`
-    /* color: white; */
+    color: white;
     display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
   `;
 
   return (
     <div>
-      <BackgroundImg src="img/about_1.jpg" />
-      <Text>당신의 아티스트와 더욱 가까워지는 방법</Text>
+      <FirstImg>
+        <BackgroundImg src="img/about_1.jpg" />
+        <Text>
+          당신의 아티스트와 <br />
+          더욱 가까워지는 방법
+        </Text>
+      </FirstImg>
       <br></br>
-      <Text>ROADMAP</Text>
+      <h1>ROADMAP</h1>
       <br></br>
       <div>
         <Timeline mode="alternate">
@@ -59,7 +72,7 @@ export const AboutPage = () => {
         </Timeline>
       </div>
       <br></br>
-      <Text>FAQ</Text>
+      <h1>FAQ</h1>
       <br></br>
       <div>
         <Collapse accordion>
