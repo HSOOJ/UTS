@@ -8,8 +8,8 @@ import { getConnection } from "typeorm";
 import { maxHeaderSize } from "http";
 const router = Router();
 
-// GET : http://localhost:8080/api/user/info/userSeq=4
-router.get("/", async (req: Request, res: Response) => {
+// GET : http://localhost:8080/api/user/info/?userSeq=4
+router.get("/info/", async (req: Request, res: Response) => {
   const userSeq = Number(req.query.userSeq);
   console.log("userSeq -> ", userSeq);
   try {
