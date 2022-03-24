@@ -1,3 +1,36 @@
+// import StatusCodes from "http-status-codes";
+// import { User } from "@models/user-model";
+import { Request, Response, Router } from "express";
+import userService from "@services/user-service";
+
+const router = Router();
+
+// GET : http://localhost:8080/api/user/info/?userSeq=4
+router.get("/info/", async (req: Request, res: Response) => {
+  const userSeq = Number(req.query.userSeq);
+  console.log("userSeq -> ", userSeq);
+  try {
+    const userInfo = await userService.getUserInfo(userSeq);
+
+    if (!userInfo) {
+      res.status(404).json({ error: "user가 존재하지 않습니다." });
+    } else {
+      const userNickname = userInfo.user_nickname;
+      const userProfileImage = userInfo.user_profile_image;
+
+      res.status(200).json({
+        userNickname: userNickname,
+        userProfileImage: userProfileImage,
+      });
+    }
+  } catch (err) {
+    console.error("error is", err);
+    res.status(500).json({ error: err });
+  }
+});
+
+export default router;
+
 // /* eslint-disable @typescript-eslint/no-unsafe-argument */
 // /* eslint-disable @typescript-eslint/no-misused-promises */
 // import StatusCodes from "http-status-codes";
