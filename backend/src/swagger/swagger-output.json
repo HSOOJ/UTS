@@ -5,10 +5,10 @@
     "description": "이렇게 스웨거 자동생성이 됩니다.",
     "version": "1.0.0"
   },
-  "host": "http://j6a105.p.ssafy.io:8080/api",
+  "host": "j6a105.p.ssafy.io:8080/api",
   "servers": [
     {
-      "url": "http://j6a105.p.ssafy.io/:8080"
+      "url": "http://j6a105.p.ssafy.io:8080"
     }
   ],
   "basePath": "/",
@@ -16,18 +16,35 @@
     "http"
   ],
   "paths": {
-    "/user/info/{id}": {
+    "/user/info": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user/check/nickname": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userNickname",
             "in": "query",
             "type": "string"
           }

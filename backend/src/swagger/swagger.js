@@ -4,8 +4,8 @@ const options = {
     title: "This is my API Document",
     description: "이렇게 스웨거 자동생성이 됩니다.",
   },
-  host: "http://j6a105.p.ssafy.io:8080/api",
-  servers: [{ url: "http://j6a105.p.ssafy.io/:8080" }],
+  host: "j6a105.p.ssafy.io:8080/api",
+  servers: [{ url: "http://j6a105.p.ssafy.io:8080" }],
   schemes: ["http"],
   // securityDefinitions: {
   //   bearerAuth: {
