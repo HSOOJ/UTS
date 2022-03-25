@@ -29,6 +29,25 @@ function checkUser(userWalletAddress: string) {
   });
 }
 
+function checkUserSeq(userSeq: number) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.findOne({
+    where: {
+      user_seq: userSeq,
+    },
+  });
+}
+
+async function checkArtistYn(userSeq: number) {
+  const userRepository = getConnection().getRepository(User);
+  const userRole = await userRepository.findOne({
+    where: {
+      user_seq: userSeq,
+    },
+  });
+  return userRole;
+}
+
 async function getMaxUserSeq() {
   const userRepository = getConnection().getRepository(User);
   const latestUserSeq = userRepository
@@ -125,7 +144,9 @@ export default {
   editNickname,
   getUserInfo,
   checkUser,
+  checkUserSeq,
   createUser,
   deleteUser,
   checkNickname,
+  checkArtistYn,
 } as const;

@@ -1,8 +1,6 @@
 // import StatusCodes from "http-status-codes";
-// import { User } from "@models/user-model";
 import { Request, Response, Router } from "express";
 import userService from "@services/user-service";
-import { User } from "@models/user-model";
 
 import { getConnection } from "typeorm";
 import { maxHeaderSize } from "http";
@@ -62,37 +60,35 @@ router.post("/join", async (req, res, next) => {
     // 로그인
     if (exUser) {
       return res.status(200).json({
-        userSeq: exUser.user_seq,
-        userNickname: exUser.user_nickname,
-        userProfileImage: exUser.user_profile_image,
-        userWalletAddress: exUser.user_wallet_address,
-        userRole: exUser.user_role,
+        success: {
+          userSeq: exUser.user_seq,
+          userNickname: exUser.user_nickname,
+          userProfileImage: exUser.user_profile_image,
+          userWalletAddress: exUser.user_wallet_address,
+          userRole: exUser.user_role,
+        },
       });
     } else {
       const newUser = await userService.createUser(userWalletAddress);
-      return res.status(200).json("join success");
+      return res.status(200).json({ success: "join success" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ error });
+    return res.status(404).json({ fail: error });
   }
 });
 
+//회원탈퇴
 router.put("/withdraw", async (req, res, next) => {
   const userSeq = req.body.userSeq;
-  console.log("userSeq=>", userSeq);
   try {
     const exUser = await userService.getUserInfo(userSeq);
     console.log(userSeq);
     if (exUser) {
-      // 회원탈퇴 함수
       userService.deleteUser(userSeq);
-      return res.status(200);
+      return res.status(200).json({ success: "" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(404);
-    return;
+    return res.status(404).json({ fail: error });
   }
 });
 

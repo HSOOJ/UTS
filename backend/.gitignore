@@ -1,4 +1,8 @@
 /node_modules/
 /package-lock.json
+<<<<<<< HEAD
+/convention.md
+=======
 
 /Zconvention.md
+>>>>>>> d220683309d6df54f3add9d725a88946fc53e1ad
