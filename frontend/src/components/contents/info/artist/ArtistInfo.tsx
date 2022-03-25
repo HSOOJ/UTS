@@ -44,9 +44,27 @@ export const ArtistInfo = () => {
       <hr />
       <p>BADGE EDITION</p>
       <div>
-        <p>뱃지1</p>
-        <p>뱃지2</p>
-        <p>뱃지3</p>
+        <div>
+          <UserImg src="https://picsum.photos/50/50" />
+          <p>에디션 이름</p>
+          <p>From 2ETH ~</p>
+          <p>2022.03.09</p>
+          <progress value="50" max="100" />
+        </div>
+        <div>
+          <UserImg src="https://picsum.photos/50/50" />
+          <p>에디션 이름</p>
+          <p>From 2ETH ~</p>
+          <p>2022.03.09</p>
+          <progress value="50" max="100" />
+        </div>{" "}
+        <div>
+          <UserImg src="https://picsum.photos/50/50" />
+          <p>에디션 이름</p>
+          <p>From 2ETH ~</p>
+          <p>2022.03.09</p>
+          <progress value="50" max="100" />
+        </div>
         <p>...</p>
       </div>
     </div>

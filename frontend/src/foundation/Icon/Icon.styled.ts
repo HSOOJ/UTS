@@ -5,7 +5,11 @@ import type IIcon from "./Icon.types";
 const Svg = styled.svg<IIcon>`
   flex: 0 0 auto;
   color: ${({ color, isDark }) =>
-    color ? FontColor[color] : isDark ? FontColor["light"] : FontColor["dark"]};
+    color
+      ? FontColor[color]
+      : isDark
+      ? FontColor["light"]
+      : FontColor["primary"]};
 `;
 
 export default Svg;

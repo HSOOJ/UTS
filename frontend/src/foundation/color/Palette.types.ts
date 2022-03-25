@@ -3,7 +3,10 @@ interface IPaletteGrigio {
   Grigio200: string;
   Grigio300: string;
   Grigio400: string;
-  Nero500: string;
+  Grigio500: string;
+
+  Nero100: string;
+  Nero300: string;
 }
 
 interface IPaletteBlu {
