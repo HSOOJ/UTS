@@ -100,7 +100,6 @@ router.put("/edit/nickname", async (req, res, next) => {
   console.log("start edit nickname... ");
   const userSeq = req.body.userSeq;
   const newNickname = req.body.userNickname;
-  // console.log("userSeq: ", userSeq, "| input nickname: ", newNickname);
   try {
     const savedNickName = await userService.checkNickname(newNickname);
     if (savedNickName) {
@@ -112,6 +111,23 @@ router.put("/edit/nickname", async (req, res, next) => {
     }
   } catch (error) {
     return;
+  }
+});
+
+router.put("/edit/image", async (req, res, next) => {
+  console.log("start edit profile iamge... ");
+  const userSeq = req.body.userSeq;
+  const newProfileImage = req.body.userProfileImage;
+  try {
+    const exUser = await userService.getUserInfo(userSeq);
+    if (exUser) {
+      userService.editProfileImage(userSeq, newProfileImage);
+      return res.status(200).json("사진 변경 성공");
+    } else {
+      return res.status(404).json("회원 조회 실패");
+    }
+  } catch (error) {
+    return res.status(404).json("사진 변경 실패");
   }
 });
 
