@@ -7,20 +7,26 @@ import { ThemeProvider } from "styled-components";
 import "antd/dist/antd.css";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "./recoil/theme";
+import { ThemeType } from "./global/theme";
+import Palette from "./foundation/color/Palette";
 
-const UstContainer = styled.div``;
+const UtsContainer = styled.div<ThemeType>`
+  color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
+  background-color: ${(props) =>
+    props.isDark ? Palette.Nero300 : Palette.grigio200};
+`;
 
 function App() {
   const theme = useRecoilValue(themeAtom);
 
   return (
-    <UstContainer>
+    <UtsContainer isDark={theme.isDark}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <UtsRouter />
       </ThemeProvider>
       <ReactQueryDevtools />
-    </UstContainer>
+    </UtsContainer>
   );
 }
 
