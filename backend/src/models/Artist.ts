@@ -13,7 +13,9 @@ export class Artist {
   @PrimaryGeneratedColumn()
   artist_seq: number;
   @JoinColumn()
+  @Column()
   user_seq: number; // FK
+  @JoinColumn()
   @Column()
   code_seq: number; // FK
   @Column()
