@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 import Palette from "../../../foundation/color/Palette";
 import FontColor from "../../../foundation/font/color/FontColor";
 import FontWeight from "../../../foundation/font/weight/FontWeight";
+import { Icon } from "../../../foundation/Icon/Icon";
+import Svg from "../../../foundation/Icon/Icon.styled";
 import { ThemeType } from "../../../global/theme";
 import { IDisable } from "../../../types/IDisabled";
 import { IInput } from "./Input.types";
@@ -27,6 +29,9 @@ export const InputBox = styled.label<IInput>`
   border-radius: 8px;
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};
+  ${Svg} {
+    margin-left: 12px;
+  }
 
   ${({ disabled }) => disabled && disabledLayoutStyle}
   ${({ hasError }) => hasError && erroredLayoutStyle}
