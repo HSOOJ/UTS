@@ -27,17 +27,8 @@ function getArtists(input: string): Promise<Artist[] | null> {
         .select("user.user_seq")
         .from(User, "user")
         .where(`user.user_nickname Like '%${input}%'`);
-      logger.info(subQuery.getQuery());
-      subQuery.getCount().then((num) => {
-        logger.info(num);
-      });
-      subQuery.getMany().then((result) => {
-        logger.info(result);
-      });
       return "artist.user_seq in " + subQuery.getQuery();
     });
-
-  logger.info(result.getQuery());
 
   return result.getMany();
 }
