@@ -15,6 +15,7 @@ export const DropdownCompo = () => {
   const clickLogout = () => {
     console.log(`LOGOUT & Clear localStorage`);
     localStorage.removeItem("token");
+    localStorage.removeItem("userAccount");
     setUserStateVal({ ...userStateVal, login: false });
   };
 
