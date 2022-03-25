@@ -11,7 +11,7 @@ import { IInput } from "./Input.types";
 
 const bgColor = {
   light: Palette.Grigio100,
-  dark: Palette.Grigio400,
+  dark: Palette.Grigio500,
 };
 
 const textColor = {
