@@ -5,7 +5,7 @@ import { Request, Response, Router } from "express";
 import { Artist } from "@models/Artist";
 // import { IArtistCard } from "@models/ArtistCard-model";
 
-import marketService from "@services/market-service";
+import searchService from "@services/search-service";
 // import { ParamMissingError } from "@shared/errors";
 
 // Constants
@@ -22,12 +22,8 @@ const router = Router();
  * Get artists by sortby and category.
  */
 router.get("/artists", async (req: Request, res: Response) => {
-  const sortby = Number(req.query.sortby);
-  const category = Number(req.query.category);
-  const artists: Artist[] | null = await marketService.getArtists(
-    sortby,
-    category
-  );
+  const input = String(req.query.input);
+  const artists: Artist[] | null = await searchService.getArtists(input);
   if (artists != null) return res.status(200).json({ success: artists });
   else return res.status(404).json({ fail: "fail" });
 });

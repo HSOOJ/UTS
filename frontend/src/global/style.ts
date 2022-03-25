@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-weight: 400;
+    font-size: 13px;
     font-family: 'Leferi', sans-serif;
   }
 `;

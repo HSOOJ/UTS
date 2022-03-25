@@ -19,4 +19,8 @@ export const LayOutVariants = {
     backgroundColor: Palette.Blu200,
     color: FontColor["light"],
   },
+  tap: {
+    backgroundColor: Palette.Blu300,
+    scale: 0.93,
+  },
 };
