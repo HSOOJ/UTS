@@ -2,7 +2,10 @@
 // import { User } from "@models/user-model";
 import { Request, Response, Router } from "express";
 import userService from "@services/user-service";
+import { User } from "@models/user-model";
 
+import { getConnection } from "typeorm";
+import { maxHeaderSize } from "http";
 const router = Router();
 
 // user info 불러오기
@@ -45,6 +48,23 @@ router.get("/check/nickname", async (req: Request, res: Response) => {
   } catch (err) {
     console.error("error is", err);
     res.status(500).json({ error: err });
+  }
+});
+
+router.post("/join", async (req, res, next) => {
+  const userWalletAddress = req.body.userWalletAddress;
+  console.log("userWalletAddress=>", userWalletAddress);
+  try {
+    const exUser = await userService.checkUser(userWalletAddress);
+    console.log(userWalletAddress);
+    if (exUser) {
+      return res.status(404).send("이미 사용중인 지갑입니다");
+    }
+    const userRepository = getConnection().getRepository(User);
+    const newUser = await userService.createUser(userWalletAddress);
+    return res.status(200).json("success");
+  } catch (error) {
+    console.error(error);
   }
 });
 
