@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Palette from "../../../../foundation/color/Palette";
+import { InputBox } from "../../../containers/input/Input.styled";
 import { LetterBoxStyle } from "../../../containers/letterBox/LetterBox.styled";
 import { IController } from "./Controller.types";
 
@@ -17,12 +18,17 @@ export const ControllerBox = styled.div<IController>`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  width: 280px;
+  min-width: 240px;
+  max-width: 270px;
   height: 100%;
   background-color: ${(props) =>
     props.isDark ? bgColor["dark"] : bgColor["light"]};
 
   ${LetterBoxStyle} {
     margin: 12px 0px 12px 0px;
+  }
+
+  ${InputBox} {
+    margin: 3px 0px 8px 0px;
   }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Controller } from "../../../components/contents/market/controller";
 import { ArtistMarketHeader } from "../../../components/contents/market/marketHeader";
-// import { ArtistList } from "../../../components/contents/market/artist";
+import { ArtistList } from "../../../components/contents/market/artist";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../recoil/theme";
 import { Menu } from "../../../components/contents/market/controller/Controller.types";
@@ -35,7 +35,7 @@ export const Artist = () => {
           isDark={isDark}
           menuList={artistMenuList}
         />
-        {/* <ArtistList /> */}
+        <ArtistList />
       </MarketPlaceLayOut>
     </ArtistPageLayOut>
   );
@@ -51,7 +51,7 @@ const MarketPlaceLayOut = styled.div`
   display: flex;
   width: 100%;
   padding: 0px 12px;
-  max-width: ${280 + 15 * 4 + 350 * 4}px;
+  max-width: ${270 + 15 * 5 + 320 * 5}px;
   min-width: 350px;
   gap: 15px;
 `;
