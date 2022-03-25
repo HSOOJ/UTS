@@ -1,11 +1,14 @@
 import IPalette from "./Palette.types";
 
 const Palette: IPalette = {
-  Grigio100: "#F9F8FF",
-  Grigio200: "#D7D5E9",
-  Grigio300: "#8B8A9C",
-  Grigio400: "#464555",
-  Nero500: "#2B2A39",
+  Grigio100: "#F8FAFF",
+  Grigio200: "#D5DDE9",
+  Grigio300: "#8A929C",
+  Grigio400: "#4C4E50",
+  Grigio500: "#32363B",
+
+  Nero100: "#222426",
+  Nero300: "#131415",
 
   Rosso100: "#FF4D6B",
   Rosso200: "#EC003C",
