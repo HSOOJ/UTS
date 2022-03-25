@@ -9,7 +9,7 @@ import { maxHeaderSize } from "http";
 const router = Router();
 
 // GET : http://localhost:8080/api/user/info/?userSeq=4
-router.get("/info/", async (req: Request, res: Response) => {
+router.get("/info/:id", async (req: Request, res: Response) => {
   const userSeq = Number(req.query.userSeq);
   console.log("userSeq -> ", userSeq);
   try {
@@ -41,11 +41,29 @@ router.post("/join", async (req, res, next) => {
     if (exUser) {
       return res.status(404).send("이미 사용중인 지갑입니다");
     }
-    const userRepository = getConnection().getRepository(User);
     const newUser = await userService.createUser(userWalletAddress);
     return res.status(200).json("success");
   } catch (error) {
     console.error(error);
+    res.status(400).json({ error });
+  }
+});
+
+router.put("/withdraw", async (req, res, next) => {
+  const userSeq = req.body.userSeq;
+  console.log("userSeq=>", userSeq);
+  try {
+    const exUser = await userService.getUserInfo(userSeq);
+    console.log(userSeq);
+    if (exUser) {
+      // 회원탈퇴 함수
+      userService.deleteUser(userSeq);
+      return res.status(200);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404);
+    return;
   }
 });
 export default router;
