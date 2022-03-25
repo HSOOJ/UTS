@@ -3,7 +3,6 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import path from "path";
 import helmet from "helmet";
-
 import express, { NextFunction, Request, Response } from "express";
 import StatusCodes from "http-status-codes";
 import "express-async-errors";
@@ -14,8 +13,18 @@ import { CustomError } from "@shared/errors";
 
 import cors from "cors";
 
+import swaggerUi from "swagger-ui-express";
+const swaggerFile = require("./swagger/swagger-output.json");
+
 // Constants
 const app = express();
+
+//Swagger
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, { explorer: true })
+);
 
 /***********************************************************************************
  *                                  Middlewares

@@ -51,6 +51,22 @@ async function createUser(userWalletAddress: string) {
   return newUser;
 }
 
+async function deleteUser(userSeq: number) {
+  const userRepository = getConnection().getRepository(User);
+  const nowDate = new Date();
+  console.log("here", userSeq);
+  try {
+    await userRepository.update(
+      {
+        user_seq: userSeq,
+      },
+      {
+        mod_dt: nowDate,
+        del_dt: nowDate,
+      }
+    );
+  } catch (error) {}
+}
 /*
 SELECT *
 FROM User user
@@ -71,5 +87,6 @@ export default {
   getUserInfo,
   checkUser,
   createUser,
+  deleteUser,
   checkNickname,
 } as const;
