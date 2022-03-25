@@ -92,4 +92,39 @@ router.put("/withdraw", async (req, res, next) => {
   }
 });
 
+router.put("/edit/nickname", async (req, res, next) => {
+  console.log("start edit nickname... ");
+  const userSeq = req.body.userSeq;
+  const newNickname = req.body.userNickname;
+  try {
+    const savedNickName = await userService.checkNickname(newNickname);
+    if (savedNickName) {
+      res.status(404).json({ error: "존재하는 닉네임입니다." });
+      return;
+    } else {
+      userService.editNickname(userSeq, newNickname);
+      return res.status(200).json("닉네임 변경 성공");
+    }
+  } catch (error) {
+    return;
+  }
+});
+
+router.put("/edit/image", async (req, res, next) => {
+  console.log("start edit profile iamge... ");
+  const userSeq = req.body.userSeq;
+  const newProfileImage = req.body.userProfileImage;
+  try {
+    const exUser = await userService.getUserInfo(userSeq);
+    if (exUser) {
+      userService.editProfileImage(userSeq, newProfileImage);
+      return res.status(200).json("사진 변경 성공");
+    } else {
+      return res.status(404).json("회원 조회 실패");
+    }
+  } catch (error) {
+    return res.status(404).json("사진 변경 실패");
+  }
+});
+
 export default router;

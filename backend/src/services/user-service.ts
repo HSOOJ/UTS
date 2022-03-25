@@ -55,6 +55,7 @@ async function getMaxUserSeq() {
     .select("MAX(user.user_seq)", "max");
   return await latestUserSeq.getRawOne();
 }
+
 async function createUser(userWalletAddress: string) {
   const userRepository = getConnection().getRepository(User);
 
@@ -74,7 +75,7 @@ async function createUser(userWalletAddress: string) {
 async function deleteUser(userSeq: number) {
   const userRepository = getConnection().getRepository(User);
   const nowDate = new Date();
-  console.log("here", userSeq);
+  // console.log("here", userSeq);
   try {
     await userRepository.update(
       {
@@ -87,6 +88,41 @@ async function deleteUser(userSeq: number) {
     );
   } catch (error) {}
 }
+
+function editNickname(userSeq: number, newNickname: string) {
+  console.log("PROCEEDING edit nickname... ");
+  const userRepository = getConnection().getRepository(User);
+  const nowDate = new Date();
+  try {
+    userRepository.update(
+      {
+        user_seq: userSeq,
+      },
+      {
+        user_nickname: newNickname,
+        mod_dt: nowDate,
+      }
+    );
+  } catch (error) {}
+}
+
+function editProfileImage(userSeq: number, newProfileImage: string) {
+  console.log("PROCEEDING edit profile image... ");
+  const userRepository = getConnection().getRepository(User);
+  const nowDate = new Date();
+  try {
+    userRepository.update(
+      {
+        user_seq: userSeq,
+      },
+      {
+        user_profile_image: newProfileImage,
+        mod_dt: nowDate,
+      }
+    );
+  } catch (error) {}
+}
+
 /*
 SELECT *
 FROM User user
@@ -104,6 +140,8 @@ WHERE user.user_seq = userSeq
 
 // Export default
 export default {
+  editProfileImage,
+  editNickname,
   getUserInfo,
   checkUser,
   checkUserSeq,
