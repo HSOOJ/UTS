@@ -1,1 +1,1 @@
-export type ThemeType = { isDark: boolean };
+export type ThemeType = { isDark?: boolean };
