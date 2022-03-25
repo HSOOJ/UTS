@@ -2,16 +2,17 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  // DeleteDateColumn,
+  DeleteDateColumn,
 } from "typeorm";
 
 @Entity()
 export class Artist {
   @PrimaryGeneratedColumn()
   artist_seq: number;
-  @Column()
+  @JoinColumn()
   user_seq: number; // FK
   @Column()
   code_seq: number; // FK
@@ -25,7 +26,7 @@ export class Artist {
   reg_dt: Date;
   @UpdateDateColumn()
   mod_dt: Date;
-  // @DeleteDateColumn()
-  @Column()
-  del_yn: boolean;
+  @DeleteDateColumn()
+  // @Column()
+  del_dt: Date;
 }
