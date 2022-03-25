@@ -28,8 +28,8 @@ router.get("/artists", async (req: Request, res: Response) => {
     sortby,
     category
   );
-  if (artists != null) return res.status(200).json({ artists });
-  else return res.status(404);
+  if (artists != null) return res.status(200).json({ success: artists });
+  else return res.status(404).json({ fail: "fail" });
 });
 
 // Export default
