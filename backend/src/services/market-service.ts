@@ -33,6 +33,14 @@ function getArtists(
   // logger.info(result);
   // });
 
+  if (category == 0) {
+    return artistRepository.find({
+      order: {
+        artist_followers_total: "DESC",
+      },
+    });
+  }
+
   switch (sortby) {
     case 1:
       // latest
