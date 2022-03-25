@@ -69,11 +69,29 @@ router.post("/join", async (req, res, next) => {
         userRole: exUser.user_role,
       });
     }
-    const userRepository = getConnection().getRepository(User);
     const newUser = await userService.createUser(userWalletAddress);
     return res.status(200).json("join success");
   } catch (error) {
     console.error(error);
+    res.status(400).json({ error });
+  }
+});
+
+router.put("/withdraw", async (req, res, next) => {
+  const userSeq = req.body.userSeq;
+  console.log("userSeq=>", userSeq);
+  try {
+    const exUser = await userService.getUserInfo(userSeq);
+    console.log(userSeq);
+    if (exUser) {
+      // 회원탈퇴 함수
+      userService.deleteUser(userSeq);
+      return res.status(200);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404);
+    return;
   }
 });
 

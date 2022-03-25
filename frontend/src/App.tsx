@@ -7,10 +7,17 @@ import { ThemeProvider } from "styled-components";
 import "antd/dist/antd.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { themeAtom } from "./recoil/theme";
+import { ThemeType } from "./global/theme";
+import Palette from "./foundation/color/Palette";
+
 import { useEffect } from "react";
 import { userState } from "./recoil/user";
 
-const UtsContainer = styled.div``;
+const UtsContainer = styled.div<ThemeType>`
+  color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
+  background-color: ${(props) =>
+    props.isDark ? Palette.Nero300 : Palette.grigio200};
+`;
 
 function App() {
   // recoil
@@ -28,7 +35,7 @@ function App() {
   }, []);
 
   return (
-    <UtsContainer>
+    <UtsContainer isDark={theme.isDark}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <UtsRouter />
