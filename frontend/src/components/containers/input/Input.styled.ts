@@ -11,11 +11,11 @@ import { IInput } from "./Input.types";
 
 const bgColor = {
   light: Palette.Grigio100,
-  dark: Palette.Grigio400,
+  dark: Palette.Grigio500,
 };
 
 const textColor = {
-  light: FontColor["dark"],
+  light: Palette.Grigio400,
   dark: FontColor["light"],
 };
 
@@ -30,6 +30,7 @@ export const InputBox = styled.label<IInput>`
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};
   ${Svg} {
+    position: absolute;
     margin-left: 12px;
   }
 
@@ -40,10 +41,10 @@ export const InputBox = styled.label<IInput>`
 export const TextField = styled(motion.input)<IInput>`
   width: 100%;
   height: 100%;
-  padding: 0;
   border-radius: 8px;
   border: none;
   padding: 0px 12px;
+  padding-left: ${({ type }) => type === "search" && "36px"};
 
   color: ${({ isDark }) => (isDark ? textColor["dark"] : textColor["light"])};
 

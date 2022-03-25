@@ -2,6 +2,9 @@
 import { Request, Response, Router } from "express";
 import userService from "@services/user-service";
 
+import { getConnection } from "typeorm";
+import { maxHeaderSize } from "http";
+import { Cipher } from "crypto";
 const router = Router();
 
 // user info 불러오기
@@ -35,7 +38,7 @@ router.get("/check/nickname", async (req: Request, res: Response) => {
   console.log("inputNickname -> ", inputNickname);
   try {
     const savedNickName = await userService.checkNickname(inputNickname);
-    console.log(savedNickName);
+    console.log("log", savedNickName);
     if (!savedNickName) {
       res.status(200).json({ result: "사용 가능한 닉네임입니다." });
     } else {
@@ -47,18 +50,28 @@ router.get("/check/nickname", async (req: Request, res: Response) => {
   }
 });
 
-//회원가입
+// 로그인 및 회원가입
 router.post("/join", async (req, res, next) => {
   const userWalletAddress = req.body.userWalletAddress;
   console.log("userWalletAddress=>", userWalletAddress);
   try {
     const exUser = await userService.checkUser(userWalletAddress);
-    console.log(userWalletAddress);
+
+    // 로그인
     if (exUser) {
-      return res.status(404).send({ fail: "이미 사용중인 지갑입니다" });
+      return res.status(200).json({
+        success: {
+          userSeq: exUser.user_seq,
+          userNickname: exUser.user_nickname,
+          userProfileImage: exUser.user_profile_image,
+          userWalletAddress: exUser.user_wallet_address,
+          userRole: exUser.user_role,
+        },
+      });
+    } else {
+      const newUser = await userService.createUser(userWalletAddress);
+      return res.status(200).json({ success: "join success" });
     }
-    const newUser = await userService.createUser(userWalletAddress);
-    return res.status(200).json({ success: "" });
   } catch (error) {
     return res.status(404).json({ fail: error });
   }
