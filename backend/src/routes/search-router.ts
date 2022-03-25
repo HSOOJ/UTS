@@ -24,8 +24,8 @@ const router = Router();
 router.get("/artists", async (req: Request, res: Response) => {
   const input = String(req.query.input);
   const artists: Artist[] | null = await searchService.getArtists(input);
-  if (artists != null) return res.status(200).json({ artists });
-  else return res.status(404);
+  if (artists != null) return res.status(200).json({ success: artists });
+  else return res.status(404).json({ fail: "fail" });
 });
 
 // Export default
