@@ -68,9 +68,10 @@ router.post("/join", async (req, res, next) => {
         userWalletAddress: exUser.user_wallet_address,
         userRole: exUser.user_role,
       });
+    } else {
+      const newUser = await userService.createUser(userWalletAddress);
+      return res.status(200).json("join success");
     }
-    const newUser = await userService.createUser(userWalletAddress);
-    return res.status(200).json("join success");
   } catch (error) {
     console.error(error);
     res.status(400).json({ error });
