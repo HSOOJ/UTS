@@ -1,11 +1,7 @@
 // import StatusCodes from "http-status-codes";
-// import { User } from "@models/user-model";
 import { Request, Response, Router } from "express";
 import userService from "@services/user-service";
-import { User } from "@models/user-model";
 
-import { getConnection } from "typeorm";
-import { maxHeaderSize } from "http";
 const router = Router();
 
 // user info 불러오기
@@ -51,6 +47,7 @@ router.get("/check/nickname", async (req: Request, res: Response) => {
   }
 });
 
+//회원가입
 router.post("/join", async (req, res, next) => {
   const userWalletAddress = req.body.userWalletAddress;
   console.log("userWalletAddress=>", userWalletAddress);
@@ -58,105 +55,28 @@ router.post("/join", async (req, res, next) => {
     const exUser = await userService.checkUser(userWalletAddress);
     console.log(userWalletAddress);
     if (exUser) {
-      return res.status(404).send("이미 사용중인 지갑입니다");
+      return res.status(404).send({ fail: "이미 사용중인 지갑입니다" });
     }
     const newUser = await userService.createUser(userWalletAddress);
-    return res.status(200).json("success");
+    return res.status(200).json({ success: "" });
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ error });
+    return res.status(404).json({ fail: error });
   }
 });
 
+//회원탈퇴
 router.put("/withdraw", async (req, res, next) => {
   const userSeq = req.body.userSeq;
-  console.log("userSeq=>", userSeq);
   try {
     const exUser = await userService.getUserInfo(userSeq);
     console.log(userSeq);
     if (exUser) {
-      // 회원탈퇴 함수
       userService.deleteUser(userSeq);
-      return res.status(200);
+      return res.status(200).json({ success: "" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(404);
-    return;
+    return res.status(404).json({ fail: error });
   }
 });
 
 export default router;
-
-// /* eslint-disable @typescript-eslint/no-unsafe-argument */
-// /* eslint-disable @typescript-eslint/no-misused-promises */
-// import StatusCodes from "http-status-codes";
-// import { Request, Response, Router } from "express";
-
-// // import userService from "@services/user-service";
-// import { ParamMissingError } from "@shared/errors";
-
-// // Constants
-// const router = Router();
-// const { CREATED, OK } = StatusCodes;
-
-// // Paths
-// export const p = {
-//   get: "/all",
-//   add: "/add",
-//   update: "/update",
-//   delete: "/delete/:id",
-// } as const;
-
-// /**
-//  * Get all users.
-//  */
-// router.get(p.get, async (_: Request, res: Response) => {
-//   const users = await userService.getAll();
-//   return res.status(OK).json({ users });
-// });
-
-// /**
-//  * Add one user.
-//  */
-// router.post(p.add, async (req: Request, res: Response) => {
-//   const { user } = req.body;
-//   // Check param
-//   if (!user) {
-//     throw new ParamMissingError();
-//   }
-//   // Fetch data
-//   await userService.addOne(user);
-//   return res.status(CREATED).end();
-// });
-
-// /**
-//  * Update one user.
-//  */
-// router.put(p.update, async (req: Request, res: Response) => {
-//   const { user } = req.body;
-//   // Check param
-//   if (!user) {
-//     throw new ParamMissingError();
-//   }
-//   // Fetch data
-//   await userService.updateOne(user);
-//   return res.status(OK).end();
-// });
-
-// /**
-//  * Delete one user.
-//  */
-// router.delete(p.delete, async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   // Check param
-//   if (!id) {
-//     throw new ParamMissingError();
-//   }
-//   // Fetch data
-//   await userService.delete(Number(id));
-//   return res.status(OK).end();
-// });
-
-// // Export default
-// export default router;

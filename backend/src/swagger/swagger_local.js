@@ -2,10 +2,10 @@ const swaggerAutogen = require("swagger-autogen")();
 const options = {
   info: {
     title: "This is my API Document",
-    description: "이렇게 스웨거 자동생성이 됩니다.",
+    description: "local 용 스웨거 생성",
   },
-  host: "j6a105.p.ssafy.io:8080/api",
-  servers: [{ url: "http://j6a105.p.ssafy.io:8080" }],
+  host: "localhost:8080/api",
+  servers: [{ url: "localhost:8080" }],
   schemes: ["http"],
   // securityDefinitions: {
   //   bearerAuth: {

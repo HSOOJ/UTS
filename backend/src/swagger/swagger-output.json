@@ -83,9 +83,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "404": {
             "description": "Not Found"
           }
@@ -126,6 +123,31 @@
         "responses": {}
       }
     },
+    "/artist/check/follow": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userTo",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userFrom",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/artist/follow": {
       "post": {
         "description": "",
@@ -146,7 +168,44 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/unfollow": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userTo": {
+                  "example": "any"
+                },
+                "userFrom": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     }
   }
