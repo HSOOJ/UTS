@@ -5,21 +5,24 @@ import FollowList from "./followList";
 import ModifyModal from "./modify";
 import NftBadgeList from "./nftBadgeList";
 import TradeList from "./tradeList";
+import { Popover, Button, Modal, Popconfirm, Image } from "antd";
+import { userState } from "../../../recoil/user";
 
 export const ProfileCompo = () => {
   // recoil
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // useState
-  const [nickname, setNickname] = useState("");
 
-  // function
+  // function _ modal
+  const showModal = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      modalVisible: true,
+    });
+  };
 
   // click button
-  const clickModify = () => {
-    console.log("open modify compo");
-    setProfileStateVal({ ...profileStateVal, modifyModal: true });
-  };
   const clickAddr = () => {
     console.log("Check Wallet Address");
   };
@@ -52,24 +55,25 @@ export const ProfileCompo = () => {
   };
 
   // useEffect
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token === null) return;
-    setNickname(token);
-  }, []);
-
-  // styled component
 
   return (
     <>
       <h1>ProfileCompo</h1>
       <hr />
-      <h1>{nickname}님의 컬렉션</h1>
-      <button onClick={clickModify}>수정</button>
+      <div>
+        <Image
+          width={200}
+          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        />
+        <h1>{profileStateVal.userNickname}님의 컬렉션</h1>
+      </div>
       <button onClick={clickAddr}>내 지갑 주소 보기</button>
       <button onClick={clickRegist}>아티스트 등록하기</button>
 
-      {profileStateVal.modifyModal ? <ModifyModal /> : null}
+      <Button type="primary" onClick={showModal}>
+        수정
+      </Button>
+      {profileStateVal.modalVisible ? <ModifyModal /> : null}
 
       <hr />
       <button onClick={clickNftBadgeList}>NFT 뱃지</button>

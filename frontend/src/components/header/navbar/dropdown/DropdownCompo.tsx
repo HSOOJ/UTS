@@ -1,4 +1,4 @@
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Avatar } from "antd";
 import { UserOutlined, IdcardTwoTone } from "@ant-design/icons";
 import { useEffect } from "react";
 import { userState } from "../../../../recoil/user";
@@ -14,7 +14,8 @@ export const DropdownCompo = () => {
 
   const clickLogout = () => {
     console.log(`LOGOUT & Clear localStorage`);
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("userAccount");
     setUserStateVal({ ...userStateVal, login: false });
   };
 
@@ -64,7 +65,14 @@ export const DropdownCompo = () => {
   return (
     <>
       <Dropdown overlay={menu}>
-        {userStateVal.login ? <IdcardTwoTone /> : <UserOutlined />}
+        {userStateVal.login ? (
+          <Avatar
+            style={{ backgroundColor: "#87d068" }}
+            icon={<UserOutlined />}
+          />
+        ) : (
+          <Avatar icon={<UserOutlined />} />
+        )}
       </Dropdown>
     </>
   );

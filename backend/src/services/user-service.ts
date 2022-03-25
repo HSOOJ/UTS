@@ -1,58 +1,75 @@
-// import userRepo from '@repos/user-repo';
-// import { IUser } from '@models/user-model';
-// import { UserNotFoundError } from '@shared/errors';
+import { User } from "@models/user-model";
+import { Equal, getConnection } from "typeorm";
+import { Request, Response } from "express";
 
-// /**
-//  * Get all users.
-//  *
-//  * @returns
-//  */
-// function getAll(): Promise<IUser[]> {
-//     return userRepo.getAll();
+function getUserInfo(userSeq: number) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.findOne({
+    where: {
+      user_seq: userSeq,
+    },
+  });
+}
+
+function checkNickname(inputNickname: string) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.count({
+    where: {
+      user_nickname: Equal(inputNickname),
+    },
+  });
+}
+
+function checkUser(userWalletAddress: string) {
+  const userRepository = getConnection().getRepository(User);
+  return userRepository.findOne({
+    where: {
+      user_wallet_address: userWalletAddress,
+    },
+  });
+}
+async function getMaxUserSeq() {
+  const userRepository = getConnection().getRepository(User);
+  const latestUserSeq = userRepository
+    .createQueryBuilder()
+    .select("MAX(user.user_seq)", "max");
+  return await latestUserSeq.getRawOne();
+}
+async function createUser(userWalletAddress: string) {
+  const userRepository = getConnection().getRepository(User);
+
+  const latestUserSeq = await getMaxUserSeq();
+
+  const nowDate = new Date();
+  const newUser = userRepository.insert({
+    user_wallet_address: userWalletAddress,
+    user_nickname: "user" + (latestUserSeq["max"] + 1),
+    user_profile_image: "defaultimageurl",
+    reg_dt: nowDate,
+    mod_dt: nowDate,
+  });
+  return newUser;
+}
+
+/*
+SELECT *
+FROM User user
+WHERE user.user_seq = userSeq
+*/
+// function getUserInfo(userSeq: number) {
+//   const userInfo = getConnection()
+//     .createQueryBuilder()
+//     .select(["user"])
+//     .from(User, "user")
+//     .where("user.user_seq = :seq", { seq: userSeq })
+//     .getOne();
+//   return userInfo;
 // }
 
-// /**
-//  * Add one user.
-//  *
-//  * @param user
-//  * @returns
-//  */
-// function addOne(user: IUser): Promise<void> {
-//     return userRepo.add(user);
-// }
-
-// /**
-//  * Update one user.
-//  *
-//  * @param user
-//  * @returns
-//  */
-// async function updateOne(user: IUser): Promise<void> {
-//     const persists = await userRepo.persists(user.id);
-//     if (!persists) {
-//         throw new UserNotFoundError();
-//     }
-//     return userRepo.update(user);
-// }
-
-// /**
-//  * Delete a user by their id.
-//  *
-//  * @param id
-//  * @returns
-//  */
-// async function deleteOne(id: number): Promise<void> {
-//     const persists = await userRepo.persists(id);
-//     if (!persists) {
-//         throw new UserNotFoundError();
-//     }
-//     return userRepo.delete(id);
-// }
-
-// // Export default
-// export default {
-//     getAll,
-//     addOne,
-//     updateOne,
-//     delete: deleteOne,
-// } as const;
+// Export default
+export default {
+  getUserInfo,
+  checkUser,
+  createUser,
+  checkNickname,
+} as const;
