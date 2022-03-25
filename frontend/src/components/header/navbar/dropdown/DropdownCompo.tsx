@@ -4,19 +4,39 @@ import { useEffect } from "react";
 import { userState } from "../../../../recoil/user";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { profileState } from "../../../../recoil/profile";
 
 export const DropdownCompo = () => {
   // recoil
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+
+  let walletAddress = localStorage.getItem("userAccount")?.replace(/\"/gi, "");
 
   // router navigate
   let navigate = useNavigate();
 
+  // click
+  const clickProfile = () => {
+    navigate(`/profile/${walletAddress}`);
+    setProfileStateVal({
+      ...profileStateVal,
+      modifyVisible: true,
+      clickProfile: !profileStateVal.clickProfile,
+    });
+  };
   const clickLogout = () => {
     console.log(`LOGOUT & Clear localStorage`);
-    localStorage.removeItem("token");
     localStorage.removeItem("userAccount");
     setUserStateVal({ ...userStateVal, login: false });
+    setProfileStateVal({
+      ...profileStateVal,
+      modifyVisible: false,
+      clickProfile: !profileStateVal.clickProfile,
+      userWallet: "",
+    });
   };
 
   const menu = (
@@ -24,13 +44,7 @@ export const DropdownCompo = () => {
       {userStateVal.login ? (
         <>
           <Menu.Item key="1">
-            <div
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              Profile
-            </div>
+            <div onClick={clickProfile}>Profile</div>
           </Menu.Item>
           <Menu.Item key="2">
             <div onClick={clickLogout}>Logout</div>
