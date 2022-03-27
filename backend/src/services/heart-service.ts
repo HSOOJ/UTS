@@ -27,7 +27,7 @@ async function nftHeart(userSeq: number, nftSeq: number) {
   const nowDate = new Date();
   try {
     const checkUser = await userService.checkUserSeq(userSeq);
-    const checkNft = await nftService.checkNftSeq(nftSeq);
+    const checkNft = await nftService.returnNft(nftSeq);
 
     if (checkUser !== null && checkNft != null) {
       await heartRepository.insert({
@@ -55,7 +55,7 @@ async function nftUnHeart(userSeq: number, nftSeq: number) {
 
   try {
     const checkUser = await userService.checkUserSeq(userSeq);
-    const checkNft = await nftService.checkNftSeq(nftSeq);
+    const checkNft = await nftService.returnNft(nftSeq);
     const checkHeart = await checkHeartNFT(userSeq, nftSeq);
 
     if (checkUser !== null && checkNft !== null && checkHeart != null) {

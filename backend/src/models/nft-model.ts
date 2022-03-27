@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Edition } from "./edition-model";
 import { Heart } from "./heart-model";
+import { Sale } from "./sale-model";
 
 @Entity()
 export class Nft {
@@ -53,4 +54,7 @@ export class Nft {
 
   @OneToMany(() => Heart, (heart) => heart.nftSeq2)
   hearts: Heart[];
+
+  @OneToMany(() => Sale, (sale) => sale.nftSeq2)
+  sales: Sale[];
 }
