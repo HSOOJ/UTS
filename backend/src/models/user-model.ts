@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
+import { Heart } from "./heart-model";
 
 @Entity()
 export class User {
@@ -32,4 +34,7 @@ export class User {
 
   @DeleteDateColumn()
   del_dt: Date;
+
+  @OneToMany(() => Heart, (heart) => heart.userSeq2)
+  hearts: Heart[];
 }

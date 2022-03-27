@@ -6,7 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
+import { Edition } from "./edition-model";
 
 @Entity()
 export class Artist {
@@ -31,4 +33,6 @@ export class Artist {
   @DeleteDateColumn()
   // @Column()
   del_dt: Date;
+  @OneToMany(() => Edition, (edition) => edition.artistSeq2)
+  editions: Edition[];
 }
