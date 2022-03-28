@@ -1,5 +1,6 @@
 import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
+import nftService from "./nft-service";
 
 async function checkIsOnSale(nftSeq: number) {
   const saleRepository = getConnection().getRepository(Sale);
@@ -30,7 +31,27 @@ async function sell(nftSeq: number, salePrice: number) {
   }
 }
 
+async function deleteSale(nftSeq: number) {
+  console.log("PROCEEDING delete sale...");
+
+  const saleRepository = getConnection().getRepository(Sale);
+
+  try {
+    saleRepository
+      .createQueryBuilder()
+      .softDelete()
+      .where({ nft_seq: nftSeq })
+      .execute();
+    console.log("sale 테이블 삭제 성공");
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
 export default {
   checkIsOnSale,
   sell,
+  deleteSale,
 } as const;
