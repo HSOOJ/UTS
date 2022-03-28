@@ -1,7 +1,6 @@
 import { useRecoilValue } from "recoil";
+import { AdminCompo } from "../../../components/contents/admin/AdminCompo";
 import { AdminNav } from "../../../components/contents/admin/AdminNav";
-import { ManageUser } from "../../../components/contents/admin/ManageUser";
-import { ReportUser } from "../../../components/contents/admin/ReportUser";
 import { adminState } from "../../../recoil/admin";
 
 export const Admin = () => {
@@ -11,7 +10,7 @@ export const Admin = () => {
   return (
     <>
       <AdminNav />
-      {manageUser ? <ManageUser /> : <ReportUser />}
+      <AdminCompo />
     </>
   );
 };

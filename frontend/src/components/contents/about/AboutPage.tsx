@@ -1,6 +1,18 @@
 import styled from "styled-components";
 import { Timeline } from "antd";
 import { Collapse } from "antd";
+import LetterBox from "../../containers/letterBox/LetterBox";
+
+const AboutMainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+`;
+
+const CenterText = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export const AboutPage = () => {
   const { Panel } = Collapse;
@@ -22,10 +34,14 @@ export const AboutPage = () => {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    font-size: 80px;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-weight: bold;
+    letter-spacing: 5px;
   `;
 
   return (
-    <div>
+    <AboutMainDiv>
       <FirstImg>
         <BackgroundImg src="img/about_1.jpg" />
         <Text>
@@ -34,7 +50,11 @@ export const AboutPage = () => {
         </Text>
       </FirstImg>
       <br></br>
-      <h1>ROADMAP</h1>
+      <CenterText>
+        <LetterBox size="h1" weight="bold">
+          ROADMAP
+        </LetterBox>
+      </CenterText>
       <br></br>
       <div>
         <Timeline mode="alternate">
@@ -72,7 +92,11 @@ export const AboutPage = () => {
         </Timeline>
       </div>
       <br></br>
-      <h1>FAQ</h1>
+      <CenterText>
+        <LetterBox size="h1" weight="bold">
+          FAQ
+        </LetterBox>
+      </CenterText>
       <br></br>
       <div>
         <Collapse accordion>
@@ -125,8 +149,7 @@ export const AboutPage = () => {
             </p>
           </Panel>
         </Collapse>
-        <BackgroundImg src="img/about_2.jpg" />
       </div>
-    </div>
+    </AboutMainDiv>
   );
 };
