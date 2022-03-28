@@ -21,6 +21,11 @@ const EditionItemMoreDetail = styled.div`
   margin-top: 10px;
 `;
 
+// const TextColor = styled(Progress)`
+//   color: white;
+//   font-weight: bold;
+// `;
+
 export const EditionItem = () => {
   return (
     <EditionItemDiv>

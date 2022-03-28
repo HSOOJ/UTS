@@ -15,21 +15,39 @@ const EditionInfomation = styled.div`
   flex-direction: column;
 `;
 
+const BadgesOnMarket = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+`;
+
+const BadgesOnMarketText = styled.div`
+  margin-bottom: 20px;
+  margin-top: 15px;
+`;
+
 export const EditionInfo = () => {
   // 현재 edition_id 잡아내기
   const { edition_id } = useParams() as EditionParamTypes;
 
   return (
     <EditionInfomation>
-      <p>{edition_id}번째 에디션</p>
+      {/* <p>{edition_id}번째 에디션</p> */}
       <ArtistHeader></ArtistHeader>
       <EditionInfoBox></EditionInfoBox>
-      <LetterBox size="h1">Badges on Market</LetterBox>
-      <div>
+      <BadgesOnMarketText>
+        <LetterBox size="h1">Badges on Market</LetterBox>
+      </BadgesOnMarketText>
+      <BadgesOnMarket>
         <BadgeItem></BadgeItem>
         <BadgeItem></BadgeItem>
         <BadgeItem></BadgeItem>
-      </div>
+      </BadgesOnMarket>
+      <BadgesOnMarket>
+        <BadgeItem></BadgeItem>
+        <BadgeItem></BadgeItem>
+        <BadgeItem></BadgeItem>
+      </BadgesOnMarket>
     </EditionInfomation>
   );
 };

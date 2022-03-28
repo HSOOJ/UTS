@@ -5,6 +5,10 @@ const EditionInfoBoxDiv = styled.div`
   display: flex;
   /* align-items: center; */
   /* flex-wrap: wrap; */
+  background-color: gray;
+  width: 700px;
+  gap: 5px;
+  padding-left: 30px;
 `;
 
 const EditionImg = styled.img`
@@ -18,13 +22,20 @@ const EditionDetail = styled.div`
   width: 500px;
 `;
 
+const EditionTitle = styled.div`
+  margin-bottom: 10px;
+  /* text-align: center; */
+`;
+
 export const EditionInfoBox = () => {
   return (
     <EditionInfoBoxDiv>
       <EditionImg src="https://picsum.photos/150/150" />
       <EditionDetail>
-        <LetterBox size="h1">존 메이어 골드 에디션</LetterBox>
-        <p>에디션 혜택 설</p>
+        <EditionTitle>
+          <LetterBox size="h1">존 메이어 골드 에디션</LetterBox>
+        </EditionTitle>
+        <p>에디션 혜택 설명</p>
       </EditionDetail>
     </EditionInfoBoxDiv>
   );
