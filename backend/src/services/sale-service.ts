@@ -1,5 +1,6 @@
 import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
+import nftService from "./nft-service";
 
 async function checkIsOnSale(nftSeq: number) {
   const saleRepository = getConnection().getRepository(Sale);
@@ -10,6 +11,47 @@ async function checkIsOnSale(nftSeq: number) {
   });
 }
 
+async function sell(nftSeq: number, salePrice: number) {
+  const checkSale = await checkIsOnSale(nftSeq);
+  if (checkSale === null) {
+    const saleRepository = getConnection().getRepository(Sale);
+    const nowDate = new Date();
+
+    saleRepository.insert({
+      nft_seq: nftSeq,
+      sale_price: salePrice,
+      reg_dt: nowDate,
+      mod_dt: nowDate,
+    });
+    console.log("판매 테이블 등록 완료");
+    return 1;
+  } else {
+    console.log("이미 판매중인 NFT");
+    return 0;
+  }
+}
+
+async function deleteSale(nftSeq: number) {
+  console.log("PROCEEDING delete sale...");
+
+  const saleRepository = getConnection().getRepository(Sale);
+
+  try {
+    saleRepository
+      .createQueryBuilder()
+      .softDelete()
+      .where({ nft_seq: nftSeq })
+      .execute();
+    console.log("sale 테이블 삭제 성공");
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
 export default {
   checkIsOnSale,
+  sell,
+  deleteSale,
 } as const;

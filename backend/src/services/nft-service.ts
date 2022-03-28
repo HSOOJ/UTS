@@ -26,26 +26,30 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
   const checkIsOnSale = await saleService.checkIsOnSale(nftSeq);
   const curOwner = checkNft?.nft_owner_seq;
 
-  // console.log(checkIsOnSale);
-  if (curOwner === ownerSeq) {
-    console.log("현재 소유자와 동일한 회원");
-    return 0;
-  } else if (checkIsOnSale === null) {
+  if (checkIsOnSale === null) {
     console.log("판매 중인 NFT가 아님");
     return 0;
   } else {
-    if (checkUser !== null && checkNft !== null) {
-      await nftRepository.update(
-        {
-          nft_seq: nftSeq,
-        },
-        {
-          nft_owner_seq: ownerSeq,
-          mod_dt: nowDate,
-        }
-      );
-      console.log("소유자 변경 성공");
-      return checkIsOnSale.sale_price;
+    if (checkNft !== null) {
+      if (curOwner === ownerSeq) {
+        console.log("현재 소유자와 동일한 회원");
+        return 0;
+      } else if (checkUser !== null) {
+        await nftRepository.update(
+          {
+            nft_seq: nftSeq,
+          },
+          {
+            nft_owner_seq: ownerSeq,
+            mod_dt: nowDate,
+          }
+        );
+        console.log("소유자 변경 성공");
+        return checkIsOnSale.sale_price;
+      }
+    } else {
+      console.log("유효한 NFT가 아님");
+      return 0;
     }
   }
 }
