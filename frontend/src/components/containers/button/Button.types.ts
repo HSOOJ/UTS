@@ -1,7 +1,7 @@
 import { IReactNode } from "../../../types/IReactNode";
 
 type ButtonTypes = {
-  onClick: () => void;
+  onClick?: () => void;
   styleVariant: "primary" | "secondary";
 };
 
