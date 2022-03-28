@@ -22,4 +22,17 @@ router.post("/buy", async (req, res, next) => {
   }
 });
 
+router.post("/sell", async (req, res, next) => {
+  console.log("START sell nft...");
+  const nftSeq = Number(req.body.nftSeq);
+  const salePrice = Number(req.body.salePrice);
+
+  const result = await saleService.sell(nftSeq, salePrice);
+  if (result !== 0) {
+    return res.status(200).json({ success: "NFT 판매 등록 성공" });
+  } else {
+    return res.status(404).json({ fail: "NFT 판매 등록 실패" });
+  }
+});
+
 export default router;
