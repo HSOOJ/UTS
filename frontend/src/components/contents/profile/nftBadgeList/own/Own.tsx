@@ -1,5 +1,5 @@
-import { Avatar, List } from "antd";
-import { useEffect, useState } from "react";
+import { Avatar, Button, List } from "antd";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import VirtualList from "rc-virtual-list";
 
 const fakeDataUrl =
@@ -10,12 +10,14 @@ export const Own = () => {
   // useState
   const [data, setData] = useState([]);
 
+  const listRef = useRef(null);
+
   // fetch
   const appendData = () => {
     fetch(fakeDataUrl)
       .then((res) => res.json())
-      .then((body) => {
-        setData(data.concat(body.results));
+      .then((res) => {
+        setData(data.concat(res.results));
       });
   };
 
@@ -41,6 +43,7 @@ export const Own = () => {
           itemHeight={47}
           itemKey="email"
           onScroll={onScroll}
+          ref={listRef}
         >
           {(item: any) => (
             <List.Item key={item.email}>

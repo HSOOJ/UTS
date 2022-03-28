@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Params, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import ProfileCompo from "../../../components/contents/profile";
 import { profileState } from "../../../recoil/profile";
 import { userState } from "../../../recoil/user";
+
+interface ProfileParamTypes extends Params {
+  walletAddress: string;
+}
 
 export const Profile = () => {
   // recoil
   const { login } = useRecoilValue(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
-  // let
-  let navigate = useNavigate();
+  // 현재 walletAddress 잡아내기
+  const { walletAddress } = useParams() as ProfileParamTypes;
 
   // useEffect
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token === null) return;
+    // const token = localStorage.getItem("token");
+    // if (token === null) return;
     setProfileStateVal({
       ...profileStateVal,
-      userNickname: token,
+      userNickname: "",
+      modifyNickname: "",
       modalVisible: false,
-      modifyNickname: token,
       nftBadgeList: true,
       tradeList: false,
       followList: false,
@@ -31,8 +35,12 @@ export const Profile = () => {
     });
   }, []);
   useEffect(() => {
-    if (!login) navigate("/user");
-  }, [login]);
+    if (walletAddress === profileStateVal.userWallet) {
+      setProfileStateVal({ ...profileStateVal, modifyVisible: true });
+    } else {
+      setProfileStateVal({ ...profileStateVal, modifyVisible: false });
+    }
+  }, [profileStateVal.clickProfile]);
 
   return (
     <>
