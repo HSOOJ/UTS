@@ -1,6 +1,16 @@
-import { LayOut } from "./Card.styled";
+import { CardLayOutVariants, LayOut } from "./Card.styled";
 import { ICard } from "./Card.types";
 
-export const Card = ({ isDark }: ICard) => {
-  return <LayOut isDark={isDark}></LayOut>;
+export const Card = ({ isDark, children }: ICard) => {
+  return (
+    <LayOut
+      key={"" + isDark}
+      isDark={isDark}
+      variants={CardLayOutVariants}
+      whileHover="hover"
+      whileTap="tap"
+    >
+      {children}
+    </LayOut>
+  );
 };
