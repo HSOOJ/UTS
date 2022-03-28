@@ -1,21 +1,22 @@
 import { useParams, Params } from "react-router-dom";
 import styled from "styled-components";
+import { BadgeHeader } from "../infoHeader/badgeHeader/BadgeHeader";
 
 interface BadgeParamTypes extends Params {
   badge_id: string;
 }
 
+const BadgeImg = styled.img`
+  border-radius: 50%;
+`;
+
 export const BadgeInfo = () => {
   // 현재 edition_id 잡아내기
   const { badge_id } = useParams() as BadgeParamTypes;
 
-  const BadgeImg = styled.img`
-    border-radius: 50%;
-  `;
-
   return (
     <div>
-      <BadgeImg src="https://picsum.photos/250/250" />
+      <BadgeHeader></BadgeHeader>
       <p>뱃지 이름</p>
       <div>
         <div>
