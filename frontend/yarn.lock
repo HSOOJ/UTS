@@ -3558,6 +3558,11 @@
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   "version" "0.0.29"
 
+"@types/lodash@^4.14.180":
+  "integrity" "sha512-XOKXa1KIxtNXgASAnwj7cnttJxS4fksBRywK/9LzRV5YxrF80BXZIGeQSuoESQ/VkUj30Ae0+YcuHc15wJCB2g=="
+  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.180.tgz"
+  "version" "4.14.180"
+
 "@types/mdast@^3.0.0":
   "integrity" "sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA=="
   "resolved" "https://registry.npmjs.org/@types/mdast/-/mdast-3.0.10.tgz"
