@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const settings = {
   dots: false,
@@ -57,10 +58,12 @@ export const Onboarding = () => {
           {datas.map((data, index) => {
             return (
               <div key={index}>
-                <h2>{data.name}</h2>
-                <ImageContainer>
-                  <Image width="400" src={data.urls[0]} alt={data.name} />
-                </ImageContainer>
+                <NavLink to={`/artist/${data.name}`}>
+                  <ImageContainer>
+                    <h2>{data.name}</h2>
+                    <Image width="400" src={data.urls[0]} alt={data.name} />
+                  </ImageContainer>
+                </NavLink>
               </div>
             );
           })}

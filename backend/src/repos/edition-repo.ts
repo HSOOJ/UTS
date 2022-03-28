@@ -2,4 +2,4 @@ import { Edition } from "@models/edition-model";
 import { EntityRepository, Repository } from "typeorm";
 
 @EntityRepository(Edition)
-export class editionRepository extends Repository<Edition> {}
+export class EditionRepository extends Repository<Edition> {}

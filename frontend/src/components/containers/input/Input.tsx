@@ -25,7 +25,11 @@ const Input = ({
         disabled={disabled}
       >
         {type === "search" ? (
-          <Icon size={FontSize.body1} isDark={isDark} name="search-glass" />
+          <Icon
+            size={FontSize.body1}
+            color={isDark ? "light" : "primary"}
+            name="search-glass"
+          />
         ) : null}
         <TextField
           variants={InputBoxVariants}
