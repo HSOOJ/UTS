@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { NavLink } from "react-router-dom";
 
 const settings = {
   dots: false,
@@ -57,14 +58,26 @@ export const HotBadge = () => {
             return (
               <div key={index}>
                 <Wrapper>
-                  <h2>{data.rank[0]}</h2>
-                  <ImageContainer>
-                    <Image width="150" src={data.urls[0]} alt={data.rank[0]} />
-                  </ImageContainer>
-                  <h2>{data.rank[1]}</h2>
-                  <ImageContainer>
-                    <Image width="150" src={data.urls[1]} alt={data.rank[1]} />
-                  </ImageContainer>
+                  <NavLink to={`/badge/${data.rank[0]}`}>
+                    <ImageContainer>
+                      <h2>{data.rank[0]}</h2>
+                      <Image
+                        width="150"
+                        src={data.urls[0]}
+                        alt={data.rank[0]}
+                      />
+                    </ImageContainer>
+                  </NavLink>
+                  <NavLink to={`/badge/${data.rank[1]}`}>
+                    <ImageContainer>
+                      <h2>{data.rank[1]}</h2>
+                      <Image
+                        width="150"
+                        src={data.urls[1]}
+                        alt={data.rank[1]}
+                      />
+                    </ImageContainer>
+                  </NavLink>
                 </Wrapper>
               </div>
             );

@@ -12,6 +12,7 @@ import Palette from "./foundation/color/Palette";
 
 import { useEffect } from "react";
 import { userState } from "./recoil/user";
+import { profileState } from "./recoil/profile";
 
 const UtsContainer = styled.div<ThemeType>`
   color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
@@ -23,11 +24,11 @@ function App() {
   // recoil
   const theme = useRecoilValue(themeAtom);
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // useEffect
   useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (token === null) {
+    if (profileStateVal.userWallet === undefined) {
       setUserStateVal({ ...userStateVal, login: false });
     } else {
       setUserStateVal({ ...userStateVal, login: true });

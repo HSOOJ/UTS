@@ -3,7 +3,12 @@ import { IDropDownItem } from "./DropDownItem.types";
 
 const DropDownItem = ({ isDark, children }: IDropDownItem) => {
   return (
-    <LayOut isDark={isDark} variants={LayOutVariants} whileHover="hover">
+    <LayOut
+      isDark={isDark}
+      variants={LayOutVariants}
+      whileTap="tap"
+      whileHover="hover"
+    >
       {children}
     </LayOut>
   );

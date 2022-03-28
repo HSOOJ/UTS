@@ -3,25 +3,52 @@ import { profileState } from "../../../../recoil/profile";
 import { ModifyModalDelete } from "./modifyModalDelete/ModifyModalDelete";
 import ModifyModalNickname from "./modifyModalNickname";
 import { Popover, Button, Modal, Popconfirm } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userState } from "../../../../recoil/user";
 import ModifyModalPic from "./modifyModalPic";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const ModifyModal = () => {
   // recoil
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
+  // useNavigate
+  const naviagate = useNavigate();
+
   // function
   const handleCancel = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
+  };
+  const AxiosUserInfo = (seq: string | null) => {
+    axios
+      .get("http://j6a105.p.ssafy.io:8080/api/user/info", {
+        params: { userSeq: seq },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProfileStateVal({
+          ...profileStateVal,
+          modifyNickname: res.data.userNickname,
+        });
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
 
   // click button _ modify
   const clickModifyDelete = () => {
     console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
-    localStorage.removeItem("token");
+    localStorage.removeItem("userAccount");
+    localStorage.removeItem("userSeq");
     setUserStateVal({ ...userStateVal, login: false });
+    setProfileStateVal({
+      ...profileStateVal,
+      modalVisible: false,
+    });
+    naviagate("/");
   };
   const clickModifyNicknameChange = () => {
     console.log("change nickname / " + profileStateVal.modifyNickname);
@@ -40,7 +67,10 @@ export const ModifyModal = () => {
     }, 1500);
   };
 
-  // click button
+  // useEffect
+  useEffect(() => {
+    AxiosUserInfo(localStorage.getItem("userSeq"));
+  }, []);
 
   return (
     <>
