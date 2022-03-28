@@ -20,8 +20,7 @@ export const LayOut = styled(motion.button)<IButton>`
     styleVariant === "primary" ? FontColor["light"] : FontColor["primary"]};
   border-radius: 10px;
   font-size: ${FontSize.body1}px;
-  background-color: ${({ styleVariant }) =>
-    styleVariant === "primary" ? bgColor[styleVariant] : bgColor[styleVariant]};
+  background-color: ${({ styleVariant }) => bgColor[styleVariant]};
 `;
 
 export const ButtonLayOutVariantPrimary = {
