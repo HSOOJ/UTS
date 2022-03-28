@@ -215,6 +215,19 @@
         }
       }
     },
+    "/search/nfts/nonsale": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/artist/check/follow": {
       "get": {
         "description": "",
@@ -298,6 +311,39 @@
             "description": "Not Found"
           }
         }
+      }
+    },
+    "/nft/artists": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nft/nfts/nonsale": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
       }
     },
     "/nft/check/heart": {
