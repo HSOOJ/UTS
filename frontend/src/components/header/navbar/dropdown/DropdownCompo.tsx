@@ -7,35 +7,80 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { profileState } from "../../../../recoil/profile";
+import { ethers } from "ethers";
+import axios from "axios";
+
+declare let window: any;
 
 export const DropdownCompo = () => {
   // recoil
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
-  let walletAddress = localStorage.getItem("userAccount")?.replace(/\"/gi, "");
+  let userSeq = localStorage.getItem("userSeq");
 
   // router navigate
   let navigate = useNavigate();
 
+  // function
+  // function
+  const metamaskLogin = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // Prompt user for account connections
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      const balance = await provider.getBalance(signer.getAddress());
+      window.localStorage.setItem(
+        "userAccount",
+        JSON.stringify(await signer.getAddress())
+      );
+      console.log("Account:", await signer.getAddress());
+
+      AxiosSignup(await signer.getAddress());
+    } catch (err) {
+      alert("Metamask 연결이 필요합니다!");
+    }
+  };
+  const AxiosSignup = (walletAddress: string) => {
+    axios
+      .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
+        userWalletAddress: walletAddress,
+      })
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("userSeq", res.data.success.userSeq);
+        setProfileStateVal({
+          ...profileStateVal,
+          userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
+          userSeq: localStorage.getItem("userSeq"),
+        });
+        setUserStateVal({ ...userStateVal, login: true });
+      })
+      .catch((res) => {
+        console.log(res);
+        alert("회원가입&로그인 실패... Metamask 연결이 필요합니다!");
+      });
+  };
+
   // click
   const clickProfile = () => {
-    navigate(`/profile/${walletAddress}`);
     setProfileStateVal({
       ...profileStateVal,
-      modifyVisible: true,
       clickProfile: !profileStateVal.clickProfile,
     });
+    navigate(`/profile/${userSeq}`);
   };
   const clickLogout = () => {
     console.log(`LOGOUT & Clear localStorage`);
     localStorage.removeItem("userAccount");
+    localStorage.removeItem("userSeq");
     setUserStateVal({ ...userStateVal, login: false });
     setProfileStateVal({
       ...profileStateVal,
-      modifyVisible: false,
       clickProfile: !profileStateVal.clickProfile,
       userWallet: "",
+      userSeq: "",
     });
   };
 
@@ -53,28 +98,17 @@ export const DropdownCompo = () => {
       ) : (
         <>
           <Menu.Item key="1">
-            <div
+            {/* <div
               onClick={() => {
                 navigate("/user");
               }}
-            >
-              Login
-            </div>
+            > */}
+            <div onClick={metamaskLogin}>Login</div>
           </Menu.Item>
         </>
       )}
     </Menu>
   );
-
-  // useEffect
-  useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (token === null) {
-      setUserStateVal({ ...userStateVal, login: false });
-    } else {
-      setUserStateVal({ ...userStateVal, login: true });
-    }
-  }, []);
 
   return (
     <>
