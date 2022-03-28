@@ -12,9 +12,9 @@ router.get("/check/heart", async (req, res, next) => {
 
   try {
     if (checkHeartNFT) {
-      return res.status(200).json({ success: "y" });
+      return res.status(200).json({ success: true });
     } else {
-      return res.status(200).json({ success: "n" });
+      return res.status(200).json({ success: false });
     }
   } catch (error) {
     return res.status(404).json({ fail: error });
