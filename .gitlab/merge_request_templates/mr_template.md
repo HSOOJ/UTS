@@ -1,11 +1,14 @@
 ## Merge Description :pencil2:
 
-무엇이 변경됐나요?
+팔로잉 체크, 팔로우, 언팔로우 api 제작
 
 ## Issues :question:
 
-이건 했는데 이건 안돼요 ㅠ
-
 ## Discussion :card_box:
 
-이런건 어때요?
+output 컨벤션 통일했습니다.
+success: ""
+fail:""
+기본으로 하되, succes와 fail에 필요한 문구 추가 기입
+ex) 팔로잉 체크 요청했을 때 y or n으로
+ex) 해당 아티스트 이미 팔로우 중
