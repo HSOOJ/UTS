@@ -1,25 +1,25 @@
 import styled from "styled-components";
 
 const paddingAndGap = 15;
-const defaultGridCardMaxWidth = 320;
+const defaultGridCardMaxWidth = 280;
 const ControllerMaxWidth = 270;
 
 const large =
-  defaultGridCardMaxWidth * 4 + paddingAndGap * 4 + ControllerMaxWidth;
+  defaultGridCardMaxWidth * 5 + paddingAndGap * 4 + ControllerMaxWidth;
 
 const medium =
-  defaultGridCardMaxWidth * 3 + paddingAndGap * 3 + ControllerMaxWidth;
+  defaultGridCardMaxWidth * 4 + paddingAndGap * 3 + ControllerMaxWidth;
 
 const small =
-  defaultGridCardMaxWidth * 2 + paddingAndGap * 2 + ControllerMaxWidth;
+  defaultGridCardMaxWidth * 3 + paddingAndGap * 2 + ControllerMaxWidth;
 
 const xsmall =
-  defaultGridCardMaxWidth * 1 + paddingAndGap * 1 + ControllerMaxWidth;
+  defaultGridCardMaxWidth * 2 + paddingAndGap * 1 + ControllerMaxWidth;
 
 export const GridLayOut = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
+  gap: ${paddingAndGap}px;
   width: 100%;
   max-width: 1660px;
   height: 100%;
