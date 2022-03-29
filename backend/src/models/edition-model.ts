@@ -37,6 +37,6 @@ export class Edition {
   @JoinColumn({ name: "artist_seq" })
   artist_seq: number;
 
-  @OneToMany(() => Nft, (nft) => nft.editionSeq2)
+  @OneToMany(() => Nft, (nft) => nft.edition)
   nfts: Nft[];
 }

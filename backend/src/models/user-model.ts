@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  JoinColumn,
   OneToOne,
 } from "typeorm";
 import { Artist } from "./Artist";
 import { Heart } from "./heart-model";
+import { Nft } from "./nft-model";
 
 @Entity()
 export class User {
@@ -40,6 +42,9 @@ export class User {
   @OneToMany(() => Heart, (heart) => heart.userSeq2)
   hearts: Heart[];
 
+  @OneToMany(() => Nft, (nft) => nft.nftOwnerSeq2)
+  @JoinColumn({ name: "nfts" })
+  nfts: Nft[];
   @OneToOne(() => Artist, (artist) => artist.user)
   artist: Artist;
 }
