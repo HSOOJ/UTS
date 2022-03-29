@@ -1,14 +1,13 @@
 ## Merge Description :pencil2:
 
-팔로잉 체크, 팔로우, 언팔로우 api 제작
+민팅안되는 nft_minting api 제작
+성공 시 success,
+이미 있는 에디션 네임이면 fail
+
+request body에 editionTotal은 edition에 뱃지 몇개 만들 지 의믜
 
 ## Issues :question:
 
 ## Discussion :card_box:
 
-output 컨벤션 통일했습니다.
-success: ""
-fail:""
-기본으로 하되, succes와 fail에 필요한 문구 추가 기입
-ex) 팔로잉 체크 요청했을 때 y or n으로
-ex) 해당 아티스트 이미 팔로우 중
+스마트 컨트랙이 되고나서 프론트분과 얘기 필요할 듯합니다
