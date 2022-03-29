@@ -7,8 +7,9 @@ import { ArtistHeader } from "../infoHeader/artistHeader/ArtistHeader";
 import { ArtistInfoBox } from "./artistInfoBox/ArtistInfoBox";
 import { EditionItem } from "./EditionItem/EditionItem";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { artistDetailState } from "../../../../recoil/artistDetail";
+import { themeAtom } from "../../../../recoil/theme";
 
 interface ArtistParamTypes extends Params {
   artist_id: string;
@@ -22,6 +23,8 @@ const ArtistInfomation = styled.div`
 `;
 
 export const ArtistInfo = () => {
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   const checkFollow = () => {
     axios({
       method: "GET",
@@ -77,45 +80,12 @@ export const ArtistInfo = () => {
     setIsModalVisible(false);
   };
 
-  const onClickFollow = () => {
-    axios({
-      method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
-      data: {
-        userTo: "2",
-        userFrom: "33",
-      },
-    }).then(function (res) {
-      setFollowArtist({ ...followArtist, followArtist: true });
-      console.log(followArtist);
-    });
-  };
-
-  const onClickUnfollow = () => {
-    axios({
-      method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
-      data: {
-        userTo: "2",
-        userFrom: "33",
-      },
-    }).then(function (res) {
-      setFollowArtist({ ...followArtist, followArtist: false });
-      console.log(followArtist);
-    });
-  };
-
   return (
     <div>
       <ArtistInfomation>
-        <ArtistHeader />
-        {followArtist.followArtist === false ? (
-          <button onClick={onClickFollow}>팔로우 하기</button>
-        ) : (
-          <button onClick={onClickUnfollow}>팔로우 안하기</button>
-        )}
+        <ArtistHeader isFollow={followArtist.followArtist} />
         {/* <p>{artist_id}번째 아티스트</p> */}
-        <LetterBox size="h1" weight="bold">
+        <LetterBox size="h1" weight="extraBold">
           Kelly Jung
         </LetterBox>
         <Button type="primary" onClick={showModal}>
@@ -132,17 +102,15 @@ export const ArtistInfo = () => {
           <p>{walletAddress}</p>
         </Modal>
         <br />
-        <ArtistInfoBox />
+        <ArtistInfoBox isDark={isDark} />
         <br />
-        <LetterBox size="h2" weight="bold">
+        <LetterBox size="h2" weight="extraBold">
           BADGE EDITION
         </LetterBox>
         <div>
-          <EditionItem />
-          <EditionItem />
-          <EditionItem />
-          <EditionItem />
-          <EditionItem />
+          <EditionItem isDark={isDark} />
+          <EditionItem isDark={isDark} />
+          <EditionItem isDark={isDark} />
         </div>
       </ArtistInfomation>
     </div>
