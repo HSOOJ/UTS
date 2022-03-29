@@ -15,8 +15,8 @@ export class Edition {
   @PrimaryGeneratedColumn()
   edition_seq: number;
 
-  @Column()
-  artist_seq: number;
+  // @Column()
+  // artist_seq: number;
 
   @Column()
   edition_name: string;
@@ -35,7 +35,7 @@ export class Edition {
 
   @ManyToOne(() => Artist, (artist) => artist.editions)
   @JoinColumn({ name: "artist_seq" })
-  artistSeq2: Artist;
+  artist_seq: number;
 
   @OneToMany(() => Nft, (nft) => nft.edition)
   nfts: Nft[];

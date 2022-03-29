@@ -1,72 +1,150 @@
+import LetterBox from "../../../containers/letterBox/LetterBox";
 import { useParams, Params } from "react-router-dom";
 import styled from "styled-components";
-import { useState, useRef } from "react";
-import { Modal, Button } from "antd";
+import { useState, useEffect } from "react";
+import { Modal, Button, message } from "antd";
+import { ArtistHeader } from "../infoHeader/artistHeader/ArtistHeader";
+import { ArtistInfoBox } from "./artistInfoBox/ArtistInfoBox";
+import { EditionItem } from "./EditionItem/EditionItem";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { artistDetailState } from "../../../../recoil/artistDetail";
 
 interface ArtistParamTypes extends Params {
   artist_id: string;
 }
 
+const ArtistInfomation = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export const ArtistInfo = () => {
+  const checkFollow = () => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
+      params: {
+        userTo: 2,
+        userFrom: 33,
+      },
+    })
+      .then(function (res) {
+        setFollowArtist({ ...followArtist, followArtist: res.data.success });
+        console.log(res.data.success);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
   // 현재 artist_id 잡아내기
   const { artist_id } = useParams() as ArtistParamTypes;
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [walletAddress, setwalletAddress] = useState("");
+  const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
 
-  const UserImg = styled.img`
-    border-radius: 50%;
-  `;
+  // useEffect
+  // 고쳐야 합니다
+  useEffect(() => {
+    checkFollow();
+    setwalletAddress("0x23D5ecFf8a5b9f9f5f57EAFE35268bC566BDda55");
+    // console.log(followArtist.followArtist);
+  }, []);
 
-  function success() {
-    Modal.success({
-      content: "0x040192238F80F90c0004dC33e0dd54909777721D",
+  // modal창 열기
+  // clipboard에 지갑 주소 복사하기
+  const copyCodeToClipboard = () => {
+    const el = walletAddress;
+    navigator.clipboard.writeText(el).then(() => {
+      console.log(`${el} success`);
     });
-  }
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCopyPaste = () => {
+    setIsModalVisible(false);
+    copyCodeToClipboard();
+    message.success("지갑 주소가 복사되었습니다.");
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const onClickFollow = () => {
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
+      data: {
+        userTo: "2",
+        userFrom: "33",
+      },
+    }).then(function (res) {
+      setFollowArtist({ ...followArtist, followArtist: true });
+      console.log(followArtist);
+    });
+  };
+
+  const onClickUnfollow = () => {
+    axios({
+      method: "DELETE",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
+      data: {
+        userTo: "2",
+        userFrom: "33",
+      },
+    }).then(function (res) {
+      setFollowArtist({ ...followArtist, followArtist: false });
+      console.log(followArtist);
+    });
+  };
 
   return (
     <div>
-      <h1>ArtistDetail</h1>
-      <UserImg src="https://picsum.photos/250/250"></UserImg>
-      <p>{artist_id}번째 아티스트</p>
-      <h1>현정이</h1>
-      <Button onClick={success} type="primary">
-        지갑 주소 확인하기
-      </Button>
-      <hr />
-      <div>
-        <p>아티스트 여러줄 소개 블라블라</p>
-        <p>카테고리</p>
-        <p>소셜 링크</p>
-        <p>팔로워 수</p>
-        <p>총 매출</p>
-        <p>최고가</p>
-        <p>거래량</p>
-      </div>
-      <hr />
-      <p>BADGE EDITION</p>
-      <div>
+      <ArtistInfomation>
+        <ArtistHeader />
+        {followArtist.followArtist === false ? (
+          <button onClick={onClickFollow}>팔로우 하기</button>
+        ) : (
+          <button onClick={onClickUnfollow}>팔로우 안하기</button>
+        )}
+        {/* <p>{artist_id}번째 아티스트</p> */}
+        <LetterBox size="h1" weight="bold">
+          Kelly Jung
+        </LetterBox>
+        <Button type="primary" onClick={showModal}>
+          지갑 주소 확인하기
+        </Button>
+        <Modal
+          title={`${artist_id}님의 지갑 주소`} // 고쳐야 합니다
+          visible={isModalVisible}
+          onOk={handleCopyPaste}
+          onCancel={handleCancel}
+          okText="지갑 주소 복사하기"
+          cancelText="닫기"
+        >
+          <p>{walletAddress}</p>
+        </Modal>
+        <br />
+        <ArtistInfoBox />
+        <br />
+        <LetterBox size="h2" weight="bold">
+          BADGE EDITION
+        </LetterBox>
         <div>
-          <UserImg src="https://picsum.photos/50/50" />
-          <p>에디션 이름</p>
-          <p>From 2ETH ~</p>
-          <p>2022.03.09</p>
-          <progress value="50" max="100" />
+          <EditionItem />
+          <EditionItem />
+          <EditionItem />
+          <EditionItem />
+          <EditionItem />
         </div>
-        <div>
-          <UserImg src="https://picsum.photos/50/50" />
-          <p>에디션 이름</p>
-          <p>From 2ETH ~</p>
-          <p>2022.03.09</p>
-          <progress value="50" max="100" />
-        </div>{" "}
-        <div>
-          <UserImg src="https://picsum.photos/50/50" />
-          <p>에디션 이름</p>
-          <p>From 2ETH ~</p>
-          <p>2022.03.09</p>
-          <progress value="50" max="100" />
-        </div>
-        <p>...</p>
-      </div>
+      </ArtistInfomation>
     </div>
   );
 };

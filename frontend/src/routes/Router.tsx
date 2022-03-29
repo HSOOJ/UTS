@@ -1,9 +1,9 @@
-import { Badge } from "antd";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "../pages/contents/about";
 import Admin from "../pages/contents/admin";
 import Artist from "../pages/contents/artist";
 import ArtistDetail from "../pages/contents/artistDetail";
+import Badge from "../pages/contents/badge";
 import BadgeDetail from "../pages/contents/badgeDetail";
 import Edition from "../pages/contents/edition";
 import Main from "../pages/contents/main";
@@ -25,8 +25,8 @@ export const UtsRouter = () => {
         <Route path="/badge" element={<Badge />} />
         <Route path="/badge/:badge_id" element={<BadgeDetail />} />
         <Route path="/edition/:edition_id" element={<Edition />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/profile/:walletAddress" element={<Profile />} />
+        {/* <Route path="/user" element={<User />} /> */}
+        <Route path="/profile/:userSeq" element={<Profile />} />
         <Route path="/minting" element={<Minting />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>

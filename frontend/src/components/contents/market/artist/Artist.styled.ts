@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const paddingAndGap = 15;
-const defaultGridCardMaxWidth = 280;
+const defaultGridCardMaxWidth = 320;
 const ControllerMaxWidth = 270;
 
 const large =
@@ -21,21 +21,25 @@ export const GridLayOut = styled.div`
   grid-template-columns: repeat(5, 1fr);
   gap: ${paddingAndGap}px;
   width: 100%;
-  max-width: 1660px;
+  max-width: ${defaultGridCardMaxWidth * 5 + 60}px;
   height: 100%;
 
   @media screen and (max-width: ${large}px) {
+    max-width: ${defaultGridCardMaxWidth * 4 + 60}px;
     grid-template-columns: repeat(4, 1fr);
   }
 
   @media screen and (max-width: ${medium}px) {
+    max-width: ${defaultGridCardMaxWidth * 3 + 50}px;
     grid-template-columns: repeat(3, 1fr);
   }
 
   @media screen and (max-width: ${small}px) {
+    max-width: ${defaultGridCardMaxWidth * 2 + 40}px;
     grid-template-columns: repeat(2, 1fr);
   }
   @media screen and (max-width: ${xsmall}px) {
+    max-width: ${defaultGridCardMaxWidth + 30}px;
     grid-template-columns: repeat(1, 1fr);
   }
 `;

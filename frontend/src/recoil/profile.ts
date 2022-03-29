@@ -4,8 +4,9 @@ interface profileType {
   userNickname: string;
   modifyNickname: string;
   userWallet: string | undefined | null;
+  userSeq: string | undefined | null;
+  userProfileImage: string | undefined | null;
   clickProfile: boolean;
-  modifyVisible: boolean;
   modalLoading: boolean;
   modalVisible: boolean;
   nftBadgeList: boolean;
@@ -22,8 +23,9 @@ export const profileState = atom<profileType>({
     userNickname: "",
     modifyNickname: "",
     userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
+    userSeq: localStorage.getItem("userSeq"),
+    userProfileImage: "",
     clickProfile: false,
-    modifyVisible: false,
     modalLoading: false,
     modalVisible: false,
     nftBadgeList: true,

@@ -215,19 +215,6 @@
         }
       }
     },
-    "/search/nfts/nonsale": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/artist/check/follow": {
       "get": {
         "description": "",
@@ -311,39 +298,6 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/nft/artists": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/nft/nfts/nonsale": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {}
       }
     },
     "/nft/check/heart": {
@@ -475,6 +429,48 @@
                   "example": "any"
                 },
                 "salePrice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nft/minting": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userSeq": {
+                  "example": "any"
+                },
+                "editionName": {
+                  "example": "any"
+                },
+                "editionImage": {
+                  "example": "any"
+                },
+                "editionDescription": {
+                  "example": "any"
+                },
+                "editionRoyalty": {
+                  "example": "any"
+                },
+                "editionTotal": {
                   "example": "any"
                 }
               }
