@@ -133,8 +133,25 @@ async function editionMinting(
   }
 }
 
-// async function nftMinting(userSeq: number);
+async function getOwnNft(userSeq: number) {
+  const result = await getConnection()
+    .getRepository(Edition)
+    .createQueryBuilder("edition")
+    .leftJoinAndSelect(Nft, "nft")
+    .leftJoinAndSelect(User, "user", "user.user_seq = nft.nft_author_seq")
+    .where(`nft.nft_owner_seq = ${userSeq}`)
+    .select("edition.edition_name AS edition_name")
+    .addSelect("edition.edition_image AS edition_image")
+    .addSelect("user.user_nickname AS artist_nickname")
+    .addSelect("nft.nft_num AS nft_num")
+    .addSelect("nft.nft_seq AS nft_seq")
+    .getRawMany();
+
+  return result;
+}
+
 export default {
+  getOwnNft,
   returnNft,
   updateOwner,
   editionMinting,

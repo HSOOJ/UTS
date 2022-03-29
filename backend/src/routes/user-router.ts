@@ -5,6 +5,7 @@ import userService from "@services/user-service";
 import { getConnection } from "typeorm";
 import { maxHeaderSize } from "http";
 import { Cipher } from "crypto";
+import nftService from "@services/nft-service";
 const router = Router();
 
 // user info 불러오기
@@ -126,6 +127,13 @@ router.put("/edit/image", async (req, res, next) => {
   } catch (error) {
     return res.status(404).json({ fail: "사진 변경 실패" });
   }
+});
+
+router.get("/nfts", async (req, res, next) => {
+  const userSeq = Number(req.query.userSeq);
+  const result = await nftService.getOwnNft(userSeq);
+  if (result.length > 0) return res.status(200).json({ success: result });
+  else return res.status(404).json({ fail: "가지고 있는 NFT 없음" });
 });
 
 export default router;

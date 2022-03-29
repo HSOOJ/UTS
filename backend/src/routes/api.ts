@@ -18,5 +18,6 @@ baseRouter.use("/nft", searchRouter);
 baseRouter.use("/nft", heartRouter);
 baseRouter.use("/nft", saleRouter);
 baseRouter.use("/nft", nftRouter);
+
 // Export default.
 export default baseRouter;
