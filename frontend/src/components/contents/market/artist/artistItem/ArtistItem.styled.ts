@@ -8,6 +8,7 @@ export const borderColor = {
 };
 
 export const LayOut = styled.div`
+  min-width: 320px;
   padding: 12px;
   box-sizing: border-box;
   display: flex;
