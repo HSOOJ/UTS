@@ -1,8 +1,17 @@
-import styled from "styled-components";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Container,
+  TextGradientRed,
+  ImageBadge,
+  ImageContainer,
+  TextGradientAside,
+  Layout,
+  StyledSlider,
+  TextContent,
+  Wrapper,
+} from "../Main.styled";
 
 const settings = {
   dots: false,
@@ -11,79 +20,66 @@ const settings = {
   infinite: true,
 };
 
-// styled-component
-const Wrapper = styled.div`
-  float: left;
-`;
-const Container = styled.div`
-  overflow: hidden;
-`;
-const StyledSlider = styled(Slider)`
-  .slick-slide div {
-    outline: none;
-  }
-`;
-const ImageContainer = styled.div`
-  margin: 0 16px;
-  padding: 1em;
-`;
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 50% 20% / 10% 40%;
-`;
-
 export const HotBadge = () => {
-  let url =
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
-  const datas = [
-    { rank: ["1", "2"], urls: [url, url] },
-    { rank: ["3", "4"], urls: [url, url] },
-    { rank: ["5", "6"], urls: [url, url] },
-    { rank: ["7", "8"], urls: [url, url] },
-    // { name: "5", urls: [url, url] },
-    // { name: "6", urls: [url, url] },
-    // { name: "7", urls: [url, url] },
-    // { name: "8", urls: [url, url] },
+  let urls = [
+    "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
+    "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
+    "https://cdn.vox-cdn.com/thumbor/SiIyeqmKIJGcOJccz94pHgwmgvQ=/0x0:1400x1400/1200x800/filters:focal(588x588:812x812):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/68837730/poptart1redrainbowfix_1.0.gif",
+    "https://c.tenor.com/ex0ssYC5xdEAAAAd/metakongz-nft.gif",
+    "https://miro.medium.com/max/1400/1*SNOwGBmvP12qQA-NA4FXmg.gif",
+    "https://images.squarespace-cdn.com/content/v1/5ddad07e6a21930596a863a6/1620248513626-3CUN9IR68L0QZHTUEII7/Mountain+GIF.gif",
+    "https://images.squarespace-cdn.com/content/v1/5ddad07e6a21930596a863a6/1620241984557-ZPQ8YWOWN8NIYIKZH54R/Random+Card+NFT+Cesar+Langa",
+    "https://public.nftstatic.com/static/nft/zipped/a81fb83270264069b20d998e738de84b_zipped.gif",
   ];
+  const datas = [
+    { rank: ["0", "1"], name: ["name", "NAME"], urls: [urls[0], urls[1]] },
+    { rank: ["2", "3"], name: ["name", "NAME"], urls: [urls[2], urls[3]] },
+    { rank: ["4", "5"], name: ["name", "NAME"], urls: [urls[4], urls[5]] },
+    { rank: ["6", "7"], name: ["name", "NAME"], urls: [urls[6], urls[7]] },
+  ];
+
+  let navigate = useNavigate();
 
   return (
     <>
-      <h1>Hot Badges Component</h1>
-      <h2>NFT 목록 - 인기순(좋아요)</h2>
-
-      <Container>
-        <StyledSlider {...settings}>
-          {datas.map((data, index) => {
-            return (
-              <div key={index}>
-                <Wrapper>
-                  <NavLink to={`/badge/${data.rank[0]}`}>
-                    <ImageContainer>
-                      <h2>{data.rank[0]}</h2>
-                      <Image
-                        width="150"
-                        src={data.urls[0]}
-                        alt={data.rank[0]}
-                      />
+      {/* <h1>Hot Badges Component</h1>
+      <h2>NFT 목록 - 인기순(좋아요)</h2> */}
+      <TextGradientRed>Hot </TextGradientRed>
+      <TextGradientAside>Badges</TextGradientAside>
+      <Layout>
+        <Container>
+          <StyledSlider {...settings}>
+            {datas.map((data, index) => {
+              return (
+                <div key={index}>
+                  <Wrapper>
+                    <ImageContainer
+                      onClick={() => {
+                        navigate(`/badge/${data.rank[0]}`);
+                      }}
+                    >
+                      <ImageBadge src={data.urls[0]} alt={data.rank[0]} />
+                      <TextContent>
+                        {data.rank[0]} | {data.name[0]}
+                      </TextContent>
                     </ImageContainer>
-                  </NavLink>
-                  <NavLink to={`/badge/${data.rank[1]}`}>
-                    <ImageContainer>
-                      <h2>{data.rank[1]}</h2>
-                      <Image
-                        width="150"
-                        src={data.urls[1]}
-                        alt={data.rank[1]}
-                      />
+                    <ImageContainer
+                      onClick={() => {
+                        navigate(`/badge/${data.rank[1]}`);
+                      }}
+                    >
+                      <ImageBadge src={data.urls[1]} alt={data.rank[1]} />
+                      <TextContent>
+                        {data.rank[1]} | {data.name[1]}
+                      </TextContent>
                     </ImageContainer>
-                  </NavLink>
-                </Wrapper>
-              </div>
-            );
-          })}
-        </StyledSlider>
-      </Container>
+                  </Wrapper>
+                </div>
+              );
+            })}
+          </StyledSlider>
+        </Container>
+      </Layout>
     </>
   );
 };
