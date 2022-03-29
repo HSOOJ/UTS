@@ -9,10 +9,9 @@ const bgColor = {
 };
 
 export const LayOut = styled(motion.div)<ICard>`
-  min-width: 300px;
-  max-width: 390px;
-  width: 100%;
+  min-width: 280px;
   height: 420px;
+
   border-radius: 10px;
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};

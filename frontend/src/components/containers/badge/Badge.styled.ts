@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IBadge } from "./Badge.types";
 import Palette from "../../../foundation/color/Palette";
+import { motion } from "framer-motion";
 
 const bgColor = {
   like: Palette.Giallo200,
@@ -8,7 +9,7 @@ const bgColor = {
   verified: Palette.Blu200,
 };
 
-export const LayOut = styled.div<IBadge>`
+export const LayOut = styled(motion.div)<IBadge>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,3 +19,9 @@ export const LayOut = styled.div<IBadge>`
   background-color: ${({ type }) => bgColor[type]};
   border-radius: 50%;
 `;
+
+export const LayOutVariants = {
+  hover: {
+    scale: 1.2,
+  },
+};
