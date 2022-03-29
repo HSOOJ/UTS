@@ -8,52 +8,54 @@ export const borderColor = {
 };
 
 export const LayOut = styled.div`
-  min-width: 320px;
-  padding: 12px;
+  padding: 10px 15px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 `;
 
-export const BgImageLayOut = styled.div`
+export const HeaderLayOut = styled.div`
+  display: flex;
+  padding: 5px;
+  justify-content: space-around;
   position: relative;
+  height: 180px;
 `;
 
-export const ProfileImageLayOut = styled.div`
-  position: absolute;
-  top: 55px;
-  left: 10px;
+export const BadgeImageLayOut = styled.div`
+  width: fit-content;
+  height: fit-content;
+  border-radius: 90px;
+  box-shadow: 0px 0px 12px ${Palette.BluOpacity100};
 `;
 
 export const NameBoxLayOut = styled.div`
-  overflow: scroll;
-  display: inline-block;
+  overflow-x: scroll;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: flex;
-  align-items: center;
+  height: max-content;
+  gap: 3px;
   justify-content: space-between;
   flex-direction: column;
   align-self: flex-end;
-  width: 55%;
-  height: 40px;
+  width: 100%;
 `;
 
-export const SalesLayOut = styled.div`
+export const ContentLayOut = styled.div`
   display: flex;
   gap: 10px;
-  height: 75px;
+  height: 95px;
 `;
 
-export const SalesItemBox = styled.div<ThemeType>`
+export const OwnerBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Grigio500 : Palette.Blu100};
-  width: 100%;
+
+  width: 120px;
   height: 100%;
   border-radius: 8px;
 `;
@@ -65,29 +67,17 @@ export const BadgeLayOut = styled.div`
   right: 10px;
 `;
 
-export const TokenLayOut = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  height: 132px;
-`;
-
-export const TokenItemLayOut = styled.div`
-  width: 100%;
-  height: 100%;
+export const BottomLayOut = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
-export const TokenItemBox = styled(SalesItemBox)`
-  position: relative;
-  justify-content: flex-end;
-  padding-bottom: 10px;
-  gap: 3px;
-`;
-
-export const TokenImageLayOut = styled.div`
-  position: absolute;
-  top: -9px;
+export const BottomBottomLayOut = styled.div`
+  display: flex;
+  justify-content: space-between;
+  button {
+    width: 80%;
+  }
+  align-items: center;
 `;

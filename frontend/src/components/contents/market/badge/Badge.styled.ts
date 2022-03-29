@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const paddingAndGap = 15;
-const defaultGridCardMaxWidth = 320;
+const defaultGridCardMaxWidth = 280;
 const ControllerMaxWidth = 270;
 
 const large =

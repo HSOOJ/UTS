@@ -31,7 +31,7 @@ export const Artist = () => {
       <ArtistMarketHeader />
       <MarketPlaceLayOut>
         <Controller
-          header="Explore"
+          header="Explore Artists"
           isDark={isDark}
           menuList={artistMenuList}
         />
@@ -41,14 +41,15 @@ export const Artist = () => {
   );
 };
 
-const ArtistPageLayOut = styled.div`
+export const ArtistPageLayOut = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const MarketPlaceLayOut = styled.div`
+export const MarketPlaceLayOut = styled.div`
   display: flex;
+  justify-content: center;
   width: 100%;
   padding: 0px 12px;
   max-width: ${270 + 15 * 5 + 320 * 5}px;

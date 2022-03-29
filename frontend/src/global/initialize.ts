@@ -111,7 +111,12 @@ const initialize = css`
     display: none;
   }
   * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     box-sizing: border-box;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
   body {
     line-height: 1;
