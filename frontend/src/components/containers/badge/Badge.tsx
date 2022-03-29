@@ -3,16 +3,19 @@ import { Icon } from "../../../foundation/Icon/Icon";
 import { LayOut } from "./Badge.styled";
 import { IBadge } from "./Badge.types";
 
-export const Badge = ({ type, borderColor, isDark }: IBadge) => {
+export const Badge = ({ liked, type, borderColor, isDark }: IBadge) => {
   return (
     <LayOut type={type} borderColor={borderColor}>
-      {type === "like" && (
-        <Icon
-          name="heart"
-          size={FontSize["h3"]}
-          color={isDark ? "dark" : "light"}
-        />
-      )}
+      {type === "like" &&
+        (liked ? (
+          <Icon name="heart-solid" size={FontSize["h3"]} color={"danger"} />
+        ) : (
+          <Icon
+            name="heart"
+            size={FontSize["h3"]}
+            color={isDark ? "dark" : "light"}
+          />
+        ))}
       {type === "report" && (
         <Icon
           name="exclamation"
