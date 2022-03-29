@@ -34,9 +34,9 @@ export class Edition {
   reg_dt: Date;
 
   @ManyToOne(() => Artist, (artist) => artist.editions)
-  @JoinColumn()
+  @JoinColumn({ name: "artist_seq" })
   artistSeq2: Artist;
 
-  @OneToMany(() => Nft, (nft) => nft.editionSeq2)
+  @OneToMany(() => Nft, (nft) => nft.edition)
   nfts: Nft[];
 }

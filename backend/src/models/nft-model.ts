@@ -11,7 +11,9 @@ import {
 } from "typeorm";
 import { Edition } from "./edition-model";
 import { Heart } from "./heart-model";
+import { NftSorting } from "./nft-sorting-model";
 import { Sale } from "./sale-model";
+import { User } from "./user-model";
 
 @Entity()
 export class Nft {
@@ -49,12 +51,19 @@ export class Nft {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "edition_seq", referencedColumnName: "edition_seq" }])
-  editionSeq2: Edition;
+  @JoinColumn({ name: "edition_seq" })
+  //, referencedColumnName: "edition_seq" }])
+  edition: Edition;
 
   @OneToMany(() => Heart, (heart) => heart.nftSeq2)
   hearts: Heart[];
 
   @OneToMany(() => Sale, (sale) => sale.nftSeq2)
   sales: Sale[];
+
+  @JoinColumn({ name: "nfts" })
+  nftOwnerSeq2: User;
+
+  @OneToMany(() => NftSorting, (nftSorting) => nftSorting.nftSeq2)
+  nftSortings: NftSorting[];
 }

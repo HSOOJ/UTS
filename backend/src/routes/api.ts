@@ -14,6 +14,7 @@ baseRouter.use("/user", userRouter);
 baseRouter.use("/market", marketRouter);
 baseRouter.use("/search", searchRouter);
 baseRouter.use("/artist", followRouter);
+baseRouter.use("/nft", searchRouter);
 baseRouter.use("/nft", heartRouter);
 baseRouter.use("/nft", saleRouter);
 // Export default.
