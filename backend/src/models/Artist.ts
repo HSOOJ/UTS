@@ -7,14 +7,15 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { Edition } from "./edition-model";
+import { User } from "./user-model";
 
 @Entity()
 export class Artist {
   @PrimaryGeneratedColumn()
   artist_seq: number;
-  @JoinColumn()
   @Column()
   user_seq: number; // FK
   @JoinColumn()
@@ -31,8 +32,10 @@ export class Artist {
   @UpdateDateColumn()
   mod_dt: Date;
   @DeleteDateColumn()
-  // @Column()
   del_dt: Date;
-  @OneToMany(() => Edition, (edition) => edition.artistSeq2)
+  @OneToOne(() => User, (user) => user.artist)
+  @JoinColumn({ name: "user_seq", referencedColumnName: "user_seq" })
+  user: User;
+  @OneToMany(() => Edition, (edition) => edition.artist_seq)
   editions: Edition[];
 }

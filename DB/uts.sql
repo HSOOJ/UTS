@@ -102,7 +102,7 @@ CREATE TABLE `edition` (
   `edition_seq` bigint NOT NULL AUTO_INCREMENT,
   `artist_seq` int NOT NULL,
   `edition_name` varchar(50) NOT NULL,
-  `edtion_image` varchar(100) NOT NULL,
+  `edition_image` varchar(100) NOT NULL,
   `edition_description` varchar(1000) NOT NULL,
   `edition_royalty` double NOT NULL,
   `reg_dt` DATETIME NOT NULL,
