@@ -1,11 +1,16 @@
 import FontSize from "../../../foundation/font/size/FontSize";
 import { Icon } from "../../../foundation/Icon/Icon";
-import { LayOut } from "./Badge.styled";
+import { LayOut, LayOutVariants } from "./Badge.styled";
 import { IBadge } from "./Badge.types";
 
 export const Badge = ({ liked, type, borderColor, isDark }: IBadge) => {
   return (
-    <LayOut type={type} borderColor={borderColor}>
+    <LayOut
+      whileHover="hover"
+      variants={LayOutVariants}
+      type={type}
+      borderColor={borderColor}
+    >
       {type === "like" &&
         (liked ? (
           <Icon name="heart-solid" size={FontSize["h3"]} color={"danger"} />
