@@ -18,20 +18,10 @@ const ArtistInfomation = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 10px;
 `;
 
 export const ArtistInfo = () => {
-  // useEffect
-  // 고쳐야 합니다
-  useEffect(() => {
-    async function checkFollowFunction() {
-      checkFollow();
-    }
-    checkFollowFunction();
-    setwalletAddress("0x23D5ecFf8a5b9f9f5f57EAFE35268bC566BDda55");
-    console.log(followArtist.followArtist);
-  }, []);
-
   const checkFollow = () => {
     axios({
       method: "GET",
@@ -42,7 +32,8 @@ export const ArtistInfo = () => {
       },
     })
       .then(function (res) {
-        setFollowArtist({ ...followArtist, followArtist: res.data[0] });
+        setFollowArtist({ ...followArtist, followArtist: res.data.success });
+        console.log(res.data.success);
       })
       .catch(function (err) {
         console.log(err);
@@ -54,6 +45,14 @@ export const ArtistInfo = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [walletAddress, setwalletAddress] = useState("");
   const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
+
+  // useEffect
+  // 고쳐야 합니다
+  useEffect(() => {
+    checkFollow();
+    setwalletAddress("0x23D5ecFf8a5b9f9f5f57EAFE35268bC566BDda55");
+    // console.log(followArtist.followArtist);
+  }, []);
 
   // modal창 열기
   // clipboard에 지갑 주소 복사하기
@@ -115,8 +114,7 @@ export const ArtistInfo = () => {
         ) : (
           <button onClick={onClickUnfollow}>팔로우 안하기</button>
         )}
-        <button onClick={onClickFollow}>팔로우</button>
-        <p>{artist_id}번째 아티스트</p>
+        {/* <p>{artist_id}번째 아티스트</p> */}
         <LetterBox size="h1" weight="bold">
           Kelly Jung
         </LetterBox>

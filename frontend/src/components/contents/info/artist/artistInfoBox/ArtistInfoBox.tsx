@@ -1,9 +1,21 @@
 import styled from "styled-components";
 
-const InfoMainbox = styled.div``;
+const InfoMainbox = styled.div`
+  background-color: gray;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const InfoDetailBox = styled.div`
   display: flex;
+  flex-direction: row;
+`;
+
+const InfoMoreDetailBox = styled.div`
+  text-align: center;
+  width: 150px;
 `;
 
 export const ArtistInfoBox = () => {
@@ -12,15 +24,15 @@ export const ArtistInfoBox = () => {
       <p>아티스트 여러줄 소개 블라블라</p>
       <br></br>
       <InfoDetailBox>
-        <div>아트아트아트아트아트아트아트</div>
-        <div>소셜 링크</div>
-        <div>팔로워 수</div>
+        <InfoMoreDetailBox>아트</InfoMoreDetailBox>
+        <InfoMoreDetailBox>소셜 링크</InfoMoreDetailBox>
+        <InfoMoreDetailBox>팔로워 수</InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>
-        <p>총 매출</p>
-        <p>최고가</p>
-        <p>거래량</p>
+        <InfoMoreDetailBox>총 매출</InfoMoreDetailBox>
+        <InfoMoreDetailBox>최고가</InfoMoreDetailBox>
+        <InfoMoreDetailBox>거래량</InfoMoreDetailBox>
       </InfoDetailBox>
     </InfoMainbox>
   );
