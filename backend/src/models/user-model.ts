@@ -6,7 +6,9 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
+import { Artist } from "./Artist";
 import { Heart } from "./heart-model";
 
 @Entity()
@@ -37,4 +39,7 @@ export class User {
 
   @OneToMany(() => Heart, (heart) => heart.userSeq2)
   hearts: Heart[];
+
+  @OneToOne(() => Artist, (artist) => artist.user)
+  artist: Artist;
 }
