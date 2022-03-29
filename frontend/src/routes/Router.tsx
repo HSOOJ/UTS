@@ -25,8 +25,8 @@ export const UtsRouter = () => {
         <Route path="/badge" element={<Badge />} />
         <Route path="/badge/:badge_id" element={<BadgeDetail />} />
         <Route path="/edition/:edition_id" element={<Edition />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/profile/:walletAddress" element={<Profile />} />
+        {/* <Route path="/user" element={<User />} /> */}
+        <Route path="/profile/:userSeq" element={<Profile />} />
         <Route path="/minting" element={<Minting />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>

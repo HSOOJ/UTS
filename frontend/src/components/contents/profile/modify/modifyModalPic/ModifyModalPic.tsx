@@ -1,6 +1,11 @@
 import { Image } from "antd";
+import { useRecoilState } from "recoil";
+import { profileState } from "../../../../../recoil/profile";
 
 export const ModifyModalPic = () => {
+  // recoil
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+
   // click button
   const clickModalModifyPic = () => {
     console.log("modify profile pic");
@@ -8,14 +13,17 @@ export const ModifyModalPic = () => {
 
   return (
     <>
-      <Image
-        width={200}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
-        preview={{
-          src: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        }}
-      />
-      <button onClick={clickModalModifyPic}>프로필 사진 수정</button>
+      <div>
+        <Image
+          style={{ float: "left" }}
+          width={200}
+          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        />
+        <div>{profileStateVal.userProfileImage}</div>
+        <button onClick={clickModalModifyPic}>프로필 사진 수정</button>
+      </div>
+      {/* <div style={{ float: "left" }}>{profileStateVal.userProfileImage}</div>
+      <button onClick={clickModalModifyPic}>프로필 사진 수정</button> */}
     </>
   );
 };

@@ -1,8 +1,17 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
+import {
+  Container,
+  TextGradientBlue,
+  ImageBoarding,
+  ImageContainer,
+  TextGradientAside,
+  Layout,
+  StyledSlider,
+  TextNameTop,
+  TextSubTop,
+} from "../Main.styled";
 
 const settings = {
   dots: false,
@@ -14,61 +23,68 @@ const settings = {
   pauseOnHover: true,
 };
 
-// styled-component
-const Wrapper = styled.div`
-  float: left;
-`;
-const Container = styled.div`
-  overflow: hidden;
-`;
-const StyledSlider = styled(Slider)`
-  .slick-slide div {
-    outline: none;
-  }
-`;
-const ImageContainer = styled.div`
-  margin: 0 16px;
-  padding: 1em;
-`;
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px 100px / 120px;
-`;
-
 export const Onboarding = () => {
-  let url =
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
-  const datas = [
-    { name: "1", urls: [url, url] },
-    { name: "2", urls: [url, url] },
-    { name: "3", urls: [url, url] },
-    { name: "4", urls: [url, url] },
-    { name: "5", urls: [url, url] },
-    { name: "6", urls: [url, url] },
-    { name: "7", urls: [url, url] },
-    { name: "8", urls: [url, url] },
+  let urls = [
+    "https://dimg.donga.com/wps/NEWS/IMAGE/2022/02/10/111691750.2.jpg",
+    "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
+    "https://w.namu.la/s/5bd1f7b3210a6deba5560683c0cd62f61445e3d1069ef2325a2ed8de6050cb2454f98c27478a9db4a7b3fc052366431d626c38525e371e08fbe70e14de391f5d9f8a3ea241d9e8db2c534c41b01c81ae",
+    "https://opgg-com-image.akamaized.net/attach/images/20210525033339.1367998.jpg",
+    "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
+    "https://w.namu.la/s/5bd1f7b3210a6deba5560683c0cd62f61445e3d1069ef2325a2ed8de6050cb2454f98c27478a9db4a7b3fc052366431d626c38525e371e08fbe70e14de391f5d9f8a3ea241d9e8db2c534c41b01c81ae",
+    "https://opgg-com-image.akamaized.net/attach/images/20210525033339.1367998.jpg",
+    "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
+    "https://w.namu.la/s/5bd1f7b3210a6deba5560683c0cd62f61445e3d1069ef2325a2ed8de6050cb2454f98c27478a9db4a7b3fc052366431d626c38525e371e08fbe70e14de391f5d9f8a3ea241d9e8db2c534c41b01c81ae",
+    "https://opgg-com-image.akamaized.net/attach/images/20210525033339.1367998.jpg",
+    "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
+    "https://w.namu.la/s/5bd1f7b3210a6deba5560683c0cd62f61445e3d1069ef2325a2ed8de6050cb2454f98c27478a9db4a7b3fc052366431d626c38525e371e08fbe70e14de391f5d9f8a3ea241d9e8db2c534c41b01c81ae",
+    "https://opgg-com-image.akamaized.net/attach/images/20210525033339.1367998.jpg",
   ];
+  const datas = [
+    { name: "0", url: urls[0] },
+    { name: "1", url: urls[1] },
+    { name: "2", url: urls[2] },
+    { name: "3", url: urls[3] },
+    { name: "4", url: urls[4] },
+    { name: "5", url: urls[5] },
+    { name: "6", url: urls[6] },
+    { name: "7", url: urls[7] },
+    { name: "8", url: urls[8] },
+    { name: "9", url: urls[9] },
+    { name: "10", url: urls[10] },
+    { name: "11", url: urls[11] },
+  ];
+
+  let navigate = useNavigate();
+
   return (
     <>
-      <h1>Onboarding Component</h1>
-      <h2>아티스트 목록 - 아티스트 등록 최신 순</h2>
-      <Container>
-        <StyledSlider {...settings}>
-          {datas.map((data, index) => {
-            return (
-              <div key={index}>
-                <NavLink to={`/artist/${data.name}`}>
+      {/* <h1>Onboarding Component</h1>
+      <h2>아티스트 목록 - 아티스트 등록 최신 순</h2> */}
+      <TextGradientBlue>On </TextGradientBlue>
+      <TextGradientAside>Boarding</TextGradientAside>
+      <Layout>
+        <Container>
+          <StyledSlider {...settings}>
+            {datas.map((data, index) => {
+              return (
+                <div key={index}>
                   <ImageContainer>
-                    <h2>{data.name}</h2>
-                    <Image width="400" src={data.urls[0]} alt={data.name} />
+                    <ImageBoarding
+                      src={data.url}
+                      alt={data.name}
+                      onClick={() => {
+                        navigate(`/artist/${data.name}`);
+                      }}
+                    />
+                    <TextNameTop>{data.name}번 아티스트</TextNameTop>
+                    <TextSubTop>서브내용</TextSubTop>
                   </ImageContainer>
-                </NavLink>
-              </div>
-            );
-          })}
-        </StyledSlider>
-      </Container>
+                </div>
+              );
+            })}
+          </StyledSlider>
+        </Container>
+      </Layout>
     </>
   );
 };

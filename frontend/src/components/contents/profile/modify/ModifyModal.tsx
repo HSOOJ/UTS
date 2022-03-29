@@ -21,22 +21,6 @@ export const ModifyModal = () => {
   const handleCancel = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
   };
-  const AxiosUserInfo = (seq: string | null) => {
-    axios
-      .get("http://j6a105.p.ssafy.io:8080/api/user/info", {
-        params: { userSeq: seq },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setProfileStateVal({
-          ...profileStateVal,
-          modifyNickname: res.data.userNickname,
-        });
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
 
   // click button _ modify
   const clickModifyDelete = () => {
@@ -67,11 +51,6 @@ export const ModifyModal = () => {
     }, 1500);
   };
 
-  // useEffect
-  useEffect(() => {
-    AxiosUserInfo(localStorage.getItem("userSeq"));
-  }, []);
-
   return (
     <>
       <Modal
@@ -85,6 +64,7 @@ export const ModifyModal = () => {
             onConfirm={clickModifyDelete}
             okText="네"
             cancelText="아니요"
+            key="0"
           >
             <Button danger>회원탈퇴</Button>
           </Popconfirm>,
@@ -92,13 +72,15 @@ export const ModifyModal = () => {
             type="primary"
             loading={profileStateVal.modalLoading}
             onClick={clickModifyNicknameChange}
+            key="1"
           >
             수정하기
           </Button>,
         ]}
       >
-        <ModifyModalPic />
-        <ModifyModalNickname />
+        <ModifyModalPic key="0" />
+
+        <ModifyModalNickname key="1" />
       </Modal>
     </>
   );
