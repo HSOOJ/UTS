@@ -6,6 +6,8 @@
 
 request body에 editionTotal은 edition에 뱃지 몇개 만들 지 의믜
 
+nft, sale 테이블에만 우선 등록/ 알림등록은 나중에
+
 ## Issues :question:
 
 ## Discussion :card_box:

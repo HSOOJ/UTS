@@ -2,8 +2,7 @@ import { Artist } from "@models/Artist";
 import { Edition } from "@models/edition-model";
 import { Nft } from "@models/nft-model";
 import { User } from "@models/user-model";
-import { EditionRepository } from "@repos/edition-repo";
-import { userRepository } from "@repos/user-repo";
+import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
 import saleService from "./sale-service";
 import userService from "./user-service";
@@ -60,14 +59,14 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
 }
 
 // nft 민팅 시 에디션 등록
-// 1. 중복 체크 구현 아직 안 함
 async function editionMinting(
   userSeq: number,
   editionName: string,
   editionImage: string,
   editionDescription: string,
   editionRoyalty: number,
-  editionTotal: number
+  editionTotal: number,
+  salePrice: number
 ) {
   const connection = getConnection();
   const artistRepository = connection.getRepository(Artist);
@@ -80,6 +79,8 @@ async function editionMinting(
   const editionRepository = connection.getRepository(Edition);
   const nftRepository = connection.getRepository(Nft);
   const userRepository = connection.getRepository(User);
+  const saleRepository = connection.getRepository(Sale);
+
   const editionNameCheck = await editionRepository.findOne({
     where: {
       edition_name: editionName,
@@ -115,6 +116,7 @@ async function editionMinting(
       },
     });
     const editionSequence = editionSeq?.edition_seq;
+
     for (let idx = 1; idx <= editionTotal; idx++) {
       await nftRepository.insert({
         edition_seq: editionSequence,
@@ -126,7 +128,20 @@ async function editionMinting(
         nft_id: "",
         nft_transaction_id: artistTransactionId,
       });
+      const nftSeq = await nftRepository.findOne({
+        where: {
+          edition_seq: editionSequence,
+          nft_num: idx,
+        },
+      });
+      await saleRepository.insert({
+        sale_price: salePrice,
+        nft_seq: nftSeq?.nft_seq,
+        reg_dt: nowDate,
+        mod_dt: nowDate,
+      });
     }
+
     return 1;
   } else {
     return 0;

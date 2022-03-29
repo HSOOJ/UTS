@@ -472,6 +472,9 @@
                 },
                 "editionTotal": {
                   "example": "any"
+                },
+                "salePrice": {
+                  "example": "any"
                 }
               }
             }
