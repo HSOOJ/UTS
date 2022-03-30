@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Request, Response, Router } from "express";
 import mainService from "@services/main-service";
+import { Artist } from "@models/Artist";
+import artistService from "@services/artist-service";
+
 const router = Router();
 
 router.get("/nfts/popular", async (req, res, next) => {
@@ -17,4 +21,11 @@ router.get("/nfts/popular", async (req, res, next) => {
     success: map1,
   });
 });
+
+router.get("/artists/popular", async (req: Request, res: Response) => {
+  const artists: Artist[] | null = await artistService.getAll();
+  if (artists != null) return res.status(200).json({ success: artists });
+  else return res.status(404).json({ fail: "fail" });
+});
+
 export default router;
