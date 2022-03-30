@@ -20,8 +20,9 @@ router.get("/info", async (req, res, next) => {
         edition_image: editionInfo.edition_image,
         edition_description: editionInfo.edition_description,
         artist_image: artistInfo.artist_image,
+        artist_seq: artistInfo.artist_seq,
       },
     });
-  } else return res.status(404).json({ fail: "에디션 정보가 유효하지 않음" });
+  } else return res.status(404).json({ fail: "에디션 정보가 유효 하지 않음" });
 });
 export default router;
