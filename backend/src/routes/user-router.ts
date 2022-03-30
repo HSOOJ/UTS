@@ -5,6 +5,7 @@ import userService from "@services/user-service";
 import { getConnection } from "typeorm";
 import { maxHeaderSize } from "http";
 import { Cipher } from "crypto";
+import { Follow } from "@models/follow-model";
 const router = Router();
 
 // user info 불러오기
@@ -128,4 +129,55 @@ router.put("/edit/image", async (req, res, next) => {
   }
 });
 
+// 프로필 페이지에서 follower 보기
+router.get("/followings", async (req, res, next) => {
+  console.log("checking followers");
+  const myUserSeq = req.query.myUserSeq;
+  const profileUserSeq = req.query.profileUserSeq;
+  const followList = await userService.getFollowings(
+    Number(myUserSeq),
+    Number(profileUserSeq)
+  );
+  console.log(followList);
+  const mylist: Array<any> = [];
+  if (Number(myUserSeq) === Number(profileUserSeq)) {
+    console.log("same");
+    for (let idx = 0; idx < followList.length; idx++) {
+      mylist.push({
+        userSeq: followList[idx].user_user_seq,
+        userNickname: followList[idx].user_user_nickname,
+        userProfileImage: followList[idx].user_user_profile_image,
+        following: "y",
+      });
+    }
+  } else {
+    for (let idx = 0; idx < followList.length; idx++) {
+      console.log(myUserSeq, profileUserSeq, myUserSeq === profileUserSeq);
+      const followRepository = getConnection().getRepository(Follow);
+      const checking = await followRepository.findOne({
+        where: {
+          user_from: Number(myUserSeq),
+          user_to: followList[idx].follow_user_to,
+        },
+      });
+      if (checking) {
+        mylist.push({
+          userSeq: followList[idx].user_user_seq,
+          userNickname: followList[idx].user_user_nickname,
+          userProfileImage: followList[idx].user_user_profile_image,
+          following: "y",
+        });
+      } else {
+        mylist.push({
+          userSeq: followList[idx].user_user_seq,
+          userNickname: followList[idx].user_user_nickname,
+          userProfileImage: followList[idx].user_user_profile_image,
+          following: "n",
+        });
+      }
+    }
+    console.log(mylist);
+  }
+  return res.status(200).json({ success: mylist });
+});
 export default router;
