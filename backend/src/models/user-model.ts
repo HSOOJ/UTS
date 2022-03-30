@@ -30,6 +30,9 @@ export class User {
   @Column()
   user_role: number; //(0: 일반회원, 1: 아티스트, 2: 관리자)
 
+  @Column()
+  user_volume: number;
+
   @CreateDateColumn()
   reg_dt: Date;
 
