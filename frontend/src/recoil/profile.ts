@@ -15,6 +15,9 @@ interface profileType {
   ownList: boolean;
   sellingList: boolean;
   likeList: boolean;
+  ownData: [];
+  sellingData: [];
+  likeData: [];
 }
 
 export const profileState = atom<profileType>({
@@ -34,5 +37,8 @@ export const profileState = atom<profileType>({
     ownList: true,
     sellingList: false,
     likeList: false,
+    ownData: [],
+    sellingData: [],
+    likeData: [],
   },
 });
