@@ -53,11 +53,11 @@ select * from edition;
 
 -- nft
 desc nft;
-insert into nft values(0, 1, 2, 2, 1, "id", "transaction", now(), now(), null);
-insert into nft values(0, 1, 2, 2, 2, "id", "transaction", now(), now(), null);
-insert into nft values(0, 1, 2, 2, 3, "nft-id", "transaction-id", now(), now(), null);
-insert into nft values(0, 1, 2, 2, 3, "nft-id", "transaction-id", now(), now(), now());
-insert into nft values(0, 1, 2, 5, 3, "nft-id", "transaction-id", now(), now(), null);
+insert into nft values(0, 1, 2, 2, 1, "id", "transaction", 0, now(), now(), null);
+insert into nft values(0, 1, 2, 2, 2, "id", "transaction", 0, now(), now(), null);
+insert into nft values(0, 1, 2, 2, 3, "nft-id", "transaction-id", 0, now(), now(), null);
+insert into nft values(0, 1, 2, 2, 3, "nft-id", "transaction-id", 0, now(), now(), now());
+insert into nft values(0, 1, 2, 5, 3, "nft-id", "transaction-id", 0, now(), now(), null);
 select * from nft;
 
 -- nft_sorting

@@ -10,6 +10,9 @@ router.post("/minting", async (req, res, next) => {
   const editionDescription = req.body.editionDescription;
   const editionRoyalty = req.body.editionRoyalty;
   const editionTotal = req.body.editionTotal;
+  const salePrice = req.body.salePrice;
+  const nftId = req.body.nftId;
+  const nftTransactionId = req.body.nftTransactionId;
 
   const result = await nftService.editionMinting(
     Number(userSeq),
@@ -17,7 +20,10 @@ router.post("/minting", async (req, res, next) => {
     String(editionImage),
     String(editionDescription),
     Number(editionRoyalty),
-    Number(editionTotal)
+    Number(editionTotal),
+    Number(salePrice),
+    String(nftId),
+    String(nftTransactionId)
   );
 
   if (result === 1) {

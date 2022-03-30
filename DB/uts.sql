@@ -121,9 +121,10 @@ CREATE TABLE `nft` (
   `nft_num` int NOT NULL COMMENT '에디션 내부에서 번호',
   `nft_id` varchar(50) NOT NULL COMMENT '이더리움 상의 id',
   `nft_transaction_id` varchar(50) NOT NULL,
-  `reg_dt` DATETIME NOT NULL,
-  `mod_dt` DATETIME NOT NULL,
-  `del_dt` DATETIME NULL,
+  `nft_transaction_count` int NOT NULL,
+  `reg_dt` datetime NOT NULL,
+  `mod_dt` datetime NOT NULL,
+  `del_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`nft_seq`),
   UNIQUE KEY `nft_seq_UNIQUE` (`nft_seq`),
   KEY `edition_nft_fk_idx` (`edition_seq`),
@@ -131,7 +132,7 @@ CREATE TABLE `nft` (
   KEY `user_nft_fk_idx` (`nft_owner_seq`),
   CONSTRAINT `edition_nft_fk` FOREIGN KEY (`edition_seq`) REFERENCES `edition` (`edition_seq`),
   CONSTRAINT `user_nft_fk` FOREIGN KEY (`nft_owner_seq`) REFERENCES `user` (`user_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- nft 정렬 기준 테이블
 CREATE TABLE `nft_sorting` (
@@ -140,7 +141,7 @@ CREATE TABLE `nft_sorting` (
   `nft_sorting_transaction_count` int NOT NULL DEFAULT '0',
   `nft_sorting_volume` double NOT NULL,
   `nft_sorting_latest` double NOT NULL,
-  `nft_sorting_likes` int NOT NULL DEFAULT '0',
+  `nft_sorting_hearts` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`nft_sorting_seq`),
   UNIQUE KEY `nft_sorting_seq_UNIQUE` (`nft_sorting_seq`),
   KEY `nft_nft_sorting_fk_idx` (`nft_seq`),
@@ -156,11 +157,11 @@ CREATE TABLE `heart` (
   `mod_dt` DATETIME NOT NULL,
   `del_dt` DATETIME NULL,
   PRIMARY KEY (`heart_seq`),
-  UNIQUE KEY `like_seq_UNIQUE` (`heart_seq`),
-  KEY `nft_like_fk_idx` (`nft_seq`),
-  KEY `user_like_fk_idx` (`user_seq`),
-  CONSTRAINT `nft_like_fk` FOREIGN KEY (`nft_seq`) REFERENCES `nft` (`nft_seq`),
-  CONSTRAINT `user_like_fk` FOREIGN KEY (`user_seq`) REFERENCES `user` (`user_seq`)
+  UNIQUE KEY `heart_seq_UNIQUE` (`heart_seq`),
+  KEY `nft_heart_fk_idx` (`nft_seq`),
+  KEY `user_heart_fk_idx` (`user_seq`),
+  CONSTRAINT `nft_heart_fk` FOREIGN KEY (`nft_seq`) REFERENCES `nft` (`nft_seq`),
+  CONSTRAINT `user_heart_fk` FOREIGN KEY (`user_seq`) REFERENCES `user` (`user_seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 판매 테이블

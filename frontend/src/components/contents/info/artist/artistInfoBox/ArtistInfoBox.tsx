@@ -1,11 +1,16 @@
 import styled from "styled-components";
+import Palette from "../../../../../foundation/color/Palette";
+import { ThemeType } from "../../../../../global/theme";
 
-const InfoMainbox = styled.div`
-  background-color: gray;
-  width: 500px;
+const InfoMainbox = styled.div<ThemeType>`
+  background-color: ${({ isDark }) =>
+    isDark ? Palette.Nero100 : Palette.BluOpacity100};
+  width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 const InfoDetailBox = styled.div`
@@ -15,12 +20,14 @@ const InfoDetailBox = styled.div`
 
 const InfoMoreDetailBox = styled.div`
   text-align: center;
-  width: 150px;
+  width: 200px;
 `;
 
-export const ArtistInfoBox = () => {
+interface IArtistInfoBox extends ThemeType {}
+
+export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
   return (
-    <InfoMainbox>
+    <InfoMainbox isDark={isDark}>
       <p>아티스트 여러줄 소개 블라블라</p>
       <br></br>
       <InfoDetailBox>

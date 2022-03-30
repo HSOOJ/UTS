@@ -8,6 +8,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { Edition } from "./edition-model";
 import { Heart } from "./heart-model";
@@ -37,6 +38,9 @@ export class Nft {
 
   @Column()
   nft_transaction_id: string;
+
+  @Column()
+  nft_transaction_count: number;
 
   @CreateDateColumn()
   reg_dt: Date;
