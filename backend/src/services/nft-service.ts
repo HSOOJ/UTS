@@ -4,7 +4,6 @@ import { Heart } from "@models/heart-model";
 import { Nft } from "@models/nft-model";
 import { Sale } from "@models/sale-model";
 import { User } from "@models/user-model";
-import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
 import heartService from "./heart-service";
 import saleService from "./sale-service";
