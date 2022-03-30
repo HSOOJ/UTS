@@ -11,7 +11,6 @@ async function getEditionInfo(editionSeq: number) {
 }
 
 async function returnEditionImage(editionSeq: number) {
-  const editionRepository = getConnection().getRepository(Edition);
   const res = await getConnection()
     .createQueryBuilder()
     .select("edition.edition_image")

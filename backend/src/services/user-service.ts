@@ -134,20 +134,6 @@ async function getUserProfileImage(userSeq: number) {
   const res = (<{ user_profile_image: string }>userInfo).user_profile_image;
   return res;
 }
-/*
-SELECT *
-FROM User user
-WHERE user.user_seq = userSeq
-*/
-// function getUserInfo(userSeq: number) {
-//   const userInfo = getConnection()
-//     .createQueryBuilder()
-//     .select(["user"])
-//     .from(User, "user")
-//     .where("user.user_seq = :seq", { seq: userSeq })
-//     .getOne();
-//   return userInfo;
-// }
 
 // Export default
 export default {

@@ -1,5 +1,6 @@
 // import { User } from "@models/user-model";
 import { Artist } from "@models/Artist";
+import { User } from "@models/user-model";
 
 import { getConnection } from "typeorm";
 
@@ -29,8 +30,20 @@ function getAllbyLatest(): Promise<Artist[] | null> {
   return result.getRawMany();
 }
 
+async function getArtistInfo(artistSeq: number) {
+  const result = await getConnection()
+    .getRepository(Artist)
+    .createQueryBuilder("artist")
+    .innerJoinAndSelect("artist.user", "user")
+    .where(`artist.artist_seq = ${artistSeq}`)
+    .getRawOne();
+
+  return result;
+}
+
 // Export default
 export default {
   getAllbyPopular,
   getAllbyLatest,
+  getArtistInfo,
 } as const;
