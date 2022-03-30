@@ -209,3 +209,6 @@ alter table notification auto_increment=1;
 alter table report auto_increment=1;
 alter table sale auto_increment=1;
 alter table user auto_increment=1;
+
+ALTER TABLE `uts`.`nft` 
+ADD COLUMN `nft_transaction_count` INT NOT NULL AFTER `del_dt`;

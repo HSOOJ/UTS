@@ -2,11 +2,11 @@ import { Artist } from "@models/Artist";
 import { Edition } from "@models/edition-model";
 import { Nft } from "@models/nft-model";
 import { User } from "@models/user-model";
-import { EditionRepository } from "@repos/edition-repo";
-import { userRepository } from "@repos/user-repo";
+import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
 import saleService from "./sale-service";
 import userService from "./user-service";
+import { NftSorting } from "@models/nft_sorting-model";
 
 const nowDate = new Date();
 
@@ -30,7 +30,7 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
   const checkNft = await returnNft(nftSeq);
   const checkIsOnSale = await saleService.checkIsOnSale(nftSeq);
   const curOwner = checkNft?.nft_owner_seq;
-
+  const curCount = checkNft?.nft_transaction_count;
   if (checkIsOnSale === null) {
     console.log("판매 중인 NFT가 아님");
     return 0;
@@ -46,6 +46,7 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
           },
           {
             nft_owner_seq: ownerSeq,
+            nft_transaction_count: Number(curCount) + 1,
             mod_dt: nowDate,
           }
         );
@@ -60,14 +61,16 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
 }
 
 // nft 민팅 시 에디션 등록
-// 1. 중복 체크 구현 아직 안 함
 async function editionMinting(
   userSeq: number,
   editionName: string,
   editionImage: string,
   editionDescription: string,
   editionRoyalty: number,
-  editionTotal: number
+  editionTotal: number,
+  salePrice: number,
+  nftId: string,
+  nftTransactionId: string
 ) {
   const connection = getConnection();
   const artistRepository = connection.getRepository(Artist);
@@ -80,6 +83,9 @@ async function editionMinting(
   const editionRepository = connection.getRepository(Edition);
   const nftRepository = connection.getRepository(Nft);
   const userRepository = connection.getRepository(User);
+  const saleRepository = connection.getRepository(Sale);
+  // const nftsortingRepository = connection.getRepository(NftSorting);
+
   const editionNameCheck = await editionRepository.findOne({
     where: {
       edition_name: editionName,
@@ -115,6 +121,7 @@ async function editionMinting(
       },
     });
     const editionSequence = editionSeq?.edition_seq;
+
     for (let idx = 1; idx <= editionTotal; idx++) {
       await nftRepository.insert({
         edition_seq: editionSequence,
@@ -123,10 +130,24 @@ async function editionMinting(
         nft_num: idx,
         reg_dt: nowDate,
         mod_dt: nowDate,
-        nft_id: "",
-        nft_transaction_id: artistTransactionId,
+        nft_id: nftId,
+        nft_transaction_id: nftTransactionId,
+        nft_transaction_count: 1,
+      });
+      const nftSeq = await nftRepository.findOne({
+        where: {
+          edition_seq: editionSequence,
+          nft_num: idx,
+        },
+      });
+      await saleRepository.insert({
+        sale_price: salePrice,
+        nft_seq: nftSeq?.nft_seq,
+        reg_dt: nowDate,
+        mod_dt: nowDate,
       });
     }
+
     return 1;
   } else {
     return 0;

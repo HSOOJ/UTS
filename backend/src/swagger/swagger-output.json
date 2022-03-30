@@ -472,6 +472,9 @@
                 },
                 "editionTotal": {
                   "example": "any"
+                },
+                "salePrice": {
+                  "example": "any"
                 }
               }
             }
@@ -483,6 +486,17 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/main/nfts/popular": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
