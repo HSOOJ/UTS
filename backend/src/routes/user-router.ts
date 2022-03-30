@@ -145,4 +145,12 @@ router.get("/nfts/onsale", async (req, res, next) => {
   else return res.status(404).json({ fail: "판매 중인 NFT 없음" });
 });
 
+// 좋아요 한 NFT 목록
+router.get("/likes", async (req, res, next) => {
+  const userSeq = Number(req.query.userSeq);
+  const result = await nftService.returnHeartNft(userSeq);
+  if (result.length > 0) return res.status(200).json({ success: result });
+  else return res.status(404).json({ fail: "좋아요 한 NFT 없음" });
+});
+
 export default router;
