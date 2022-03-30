@@ -190,6 +190,26 @@
         }
       }
     },
+    "/user/nfts/onsale": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/market/artists": {
       "get": {
         "description": "",
