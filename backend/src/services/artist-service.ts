@@ -3,7 +3,7 @@ import { Artist } from "@models/Artist";
 
 import { getConnection } from "typeorm";
 
-function getAll(): Promise<Artist[] | null> {
+function getAllbyPopular(): Promise<Artist[] | null> {
   const connection = getConnection();
 
   const result = connection
@@ -16,7 +16,21 @@ function getAll(): Promise<Artist[] | null> {
   return result.getRawMany();
 }
 
+function getAllbyLatest(): Promise<Artist[] | null> {
+  const connection = getConnection();
+
+  const result = connection
+    .getRepository(Artist)
+    .createQueryBuilder("artist")
+    .innerJoinAndSelect("artist.user", "user")
+    .orderBy("artist_reg_dt", "DESC")
+    .limit(12);
+
+  return result.getRawMany();
+}
+
 // Export default
 export default {
-  getAll,
+  getAllbyPopular,
+  getAllbyLatest,
 } as const;
