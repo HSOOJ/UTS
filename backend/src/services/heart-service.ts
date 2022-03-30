@@ -76,7 +76,19 @@ async function nftUnHeart(userSeq: number, nftSeq: number) {
   }
 }
 
+async function countHeart(nftSeq: number) {
+  const heartRepository = getConnection().getRepository(Heart);
+  const res = heartRepository
+    .createQueryBuilder()
+    .select("count(nft_seq)", "heart")
+    .where({ nft_seq: nftSeq })
+    .getRawOne();
+
+  return res;
+}
+
 export default {
+  countHeart,
   nftHeart,
   nftUnHeart,
   checkHeartNFT,

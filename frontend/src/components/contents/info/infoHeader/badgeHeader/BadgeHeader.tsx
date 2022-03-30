@@ -1,11 +1,16 @@
+import { message } from "antd";
+import axios from "axios";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { ThemeType } from "../../../../../global/theme";
+import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import Badge from "../../../../containers/badge";
 
 const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  margin-bottom: 75px;
+  margin-bottom: 60px;
 `;
 const UserBackgroundImg = styled.img`
   border-radius: 3%;
@@ -16,7 +21,6 @@ const UserBackgroundImg = styled.img`
 
 const UserImg = styled.img`
   border-radius: 50%;
-  border: solid white;
   position: absolute;
   top: 100px;
   width: 200px;
@@ -30,13 +34,55 @@ const BadgeList = styled.div`
   right: 50px;
 `;
 
-export const BadgeHeader = () => {
+interface IBadgeHeader extends ThemeType {
+  isLike: boolean;
+}
+
+export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
+  const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
+
+  const onClickLike = () => {
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
+      data: {
+        userSeq: "11", // 고쳐야 합니다.
+        nftSeq: "5",
+      },
+    }).then(function (res) {
+      setLikeBadge({ ...likeBadge, isLike: true });
+      message.success("좋아요 되었습니다.");
+    });
+  };
+
+  const onClickDislike = () => {
+    axios({
+      method: "DELETE",
+      url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
+      data: {
+        userSeq: "11", // 고쳐야 합니다.
+        nftSeq: "5",
+      },
+    }).then(function (res) {
+      setLikeBadge({ ...likeBadge, isLike: false });
+      message.error("좋아요가 취소되었습니다.");
+    });
+  };
+
   return (
     <ImgDiv>
       <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <BadgeList>
-        <Badge type="like"></Badge>
+        {isLike === true ? (
+          <div onClick={onClickDislike}>
+            <Badge type="like" liked={true}></Badge>
+          </div>
+        ) : (
+          <div onClick={onClickLike}>
+            <Badge type="like"></Badge>
+          </div>
+        )}
       </BadgeList>
     </ImgDiv>
   );

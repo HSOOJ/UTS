@@ -1,6 +1,7 @@
 import { User } from "@models/user-model";
 import { Equal, getConnection } from "typeorm";
 import { Request, Response } from "express";
+import { stringify } from "querystring";
 
 function getUserInfo(userSeq: number) {
   const userRepository = getConnection().getRepository(User);
@@ -123,6 +124,16 @@ function editProfileImage(userSeq: number, newProfileImage: string) {
   } catch (error) {}
 }
 
+async function getUserProfileImage(userSeq: number) {
+  const userInfo = await getConnection()
+    .createQueryBuilder()
+    .select("user.user_profile_image")
+    .from(User, "user")
+    .where("user.user_seq = :seq", { seq: userSeq })
+    .getOne();
+  const res = (<{ user_profile_image: string }>userInfo).user_profile_image;
+  return res;
+}
 /*
 SELECT *
 FROM User user
@@ -140,6 +151,7 @@ WHERE user.user_seq = userSeq
 
 // Export default
 export default {
+  getUserProfileImage,
   editProfileImage,
   editNickname,
   getUserInfo,
