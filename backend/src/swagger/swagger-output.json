@@ -489,6 +489,17 @@
           }
         }
       }
+    },
+    "/main/nfts/popular": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }

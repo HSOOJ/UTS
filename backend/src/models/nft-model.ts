@@ -8,9 +8,11 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { Edition } from "./edition-model";
 import { Heart } from "./heart-model";
+import { NftSorting } from "./nft_sorting-model";
 import { Sale } from "./sale-model";
 
 @Entity()
@@ -36,6 +38,9 @@ export class Nft {
   @Column()
   nft_transaction_id: string;
 
+  @Column()
+  nft_transaction_count: number;
+
   @CreateDateColumn()
   reg_dt: Date;
 
@@ -57,4 +62,7 @@ export class Nft {
 
   @OneToMany(() => Sale, (sale) => sale.nftSeq2)
   sales: Sale[];
+
+  // @OneToOne((type) => NftSorting, (nftsorting) => nftsorting.nft)
+  // nftsorting: NftSorting;
 }

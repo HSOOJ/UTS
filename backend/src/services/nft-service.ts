@@ -6,6 +6,7 @@ import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
 import saleService from "./sale-service";
 import userService from "./user-service";
+import { NftSorting } from "@models/nft_sorting-model";
 
 const nowDate = new Date();
 
@@ -29,7 +30,7 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
   const checkNft = await returnNft(nftSeq);
   const checkIsOnSale = await saleService.checkIsOnSale(nftSeq);
   const curOwner = checkNft?.nft_owner_seq;
-
+  const curCount = checkNft?.nft_transaction_count;
   if (checkIsOnSale === null) {
     console.log("판매 중인 NFT가 아님");
     return 0;
@@ -45,6 +46,7 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
           },
           {
             nft_owner_seq: ownerSeq,
+            nft_transaction_count: Number(curCount) + 1,
             mod_dt: nowDate,
           }
         );
@@ -80,6 +82,7 @@ async function editionMinting(
   const nftRepository = connection.getRepository(Nft);
   const userRepository = connection.getRepository(User);
   const saleRepository = connection.getRepository(Sale);
+  // const nftsortingRepository = connection.getRepository(NftSorting);
 
   const editionNameCheck = await editionRepository.findOne({
     where: {
@@ -127,6 +130,7 @@ async function editionMinting(
         mod_dt: nowDate,
         nft_id: "",
         nft_transaction_id: artistTransactionId,
+        nft_transaction_count: 1,
       });
       const nftSeq = await nftRepository.findOne({
         where: {
