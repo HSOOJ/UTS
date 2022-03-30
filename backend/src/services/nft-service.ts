@@ -68,7 +68,9 @@ async function editionMinting(
   editionDescription: string,
   editionRoyalty: number,
   editionTotal: number,
-  salePrice: number
+  salePrice: number,
+  nftId: string,
+  nftTransactionId: string
 ) {
   const connection = getConnection();
   const artistRepository = connection.getRepository(Artist);
@@ -128,8 +130,8 @@ async function editionMinting(
         nft_num: idx,
         reg_dt: nowDate,
         mod_dt: nowDate,
-        nft_id: "",
-        nft_transaction_id: artistTransactionId,
+        nft_id: nftId,
+        nft_transaction_id: nftTransactionId,
         nft_transaction_count: 1,
       });
       const nftSeq = await nftRepository.findOne({
