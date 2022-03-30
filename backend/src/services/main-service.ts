@@ -15,7 +15,7 @@ async function nftHeart() {
     .groupBy("heart.nft_seq")
     .orderBy("heartCount", "DESC")
     .leftJoinAndSelect("heart.nftSeq2", "nft")
-    .leftJoinAndSelect("nft.editionSeq2", "nfts")
+    .leftJoinAndSelect("nft.edition", "nfts")
     .getRawMany();
   console.log(heartTotal);
 

@@ -50,7 +50,46 @@ async function deleteSale(nftSeq: number) {
   }
 }
 
+async function getTransactionCount(nftSeq: number) {
+  const saleRepository = getConnection().getRepository(Sale);
+  const res = saleRepository
+    .createQueryBuilder()
+    .select("count(nft_seq)", "transcation")
+    .addSelect("sum(sale_price)", "total")
+    .where({ nft_seq: nftSeq })
+    .getRawOne();
+  // console.log(res);
+  return res;
+}
+
+async function latest(nftSeq: number) {
+  const saleRepository = getConnection().getRepository(Sale);
+
+  const res = await saleRepository
+    .createQueryBuilder()
+    .select("sale_price", "latest")
+    .withDeleted()
+    .andWhere({ nft_seq: nftSeq })
+    .orderBy("mod_dt", "DESC")
+    .getRawOne();
+  return res;
+}
+async function getSalePrice(nftSeq: number) {
+  const saleRepository = getConnection().getRepository(Sale);
+
+  const res = await saleRepository
+    .createQueryBuilder()
+    .select("sale_price", "sale_price")
+    .andWhere({ nft_seq: nftSeq })
+    .orderBy("mod_dt", "DESC")
+    .getRawOne();
+  return res;
+}
+
 export default {
+  getSalePrice,
+  getTransactionCount,
+  latest,
   checkIsOnSale,
   sell,
   deleteSale,
