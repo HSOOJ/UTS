@@ -1,7 +1,8 @@
 import { User } from "@models/user-model";
-import { Equal, getConnection } from "typeorm";
-import { Request, Response } from "express";
+import { createQueryBuilder, Equal, getConnection } from "typeorm";
+import { json, Request, Response } from "express";
 import { stringify } from "querystring";
+import { Follow } from "@models/follow-model";
 
 function getUserInfo(userSeq: number) {
   const userRepository = getConnection().getRepository(User);
@@ -135,6 +136,31 @@ async function getUserProfileImage(userSeq: number) {
   return res;
 }
 
+async function getFollowings(myUserSeq: number, profileUserSeq: number) {
+  const followRepository = getConnection().getRepository(Follow);
+  const followList = await followRepository
+    .createQueryBuilder("follow")
+    .leftJoinAndSelect(User, "user", "user.user_seq = follow.user_to")
+    .where({ user_from: profileUserSeq })
+    .getRawMany();
+
+  return followList;
+}
+/*
+SELECT *
+FROM User user
+WHERE user.user_seq = userSeq
+*/
+// function getUserInfo(userSeq: number) {
+//   const userInfo = getConnection()
+//     .createQueryBuilder()
+//     .select(["user"])
+//     .from(User, "user")
+//     .where("user.user_seq = :seq", { seq: userSeq })
+//     .getOne();
+//   return userInfo;
+// }
+
 // Export default
 export default {
   getUserProfileImage,
@@ -147,4 +173,5 @@ export default {
   deleteUser,
   checkNickname,
   checkArtistYn,
+  getFollowings,
 } as const;
