@@ -23,7 +23,13 @@ router.get("/nfts/popular", async (req, res, next) => {
 });
 
 router.get("/artists/popular", async (req: Request, res: Response) => {
-  const artists: Artist[] | null = await artistService.getAll();
+  const artists: Artist[] | null = await artistService.getAllbyPopular();
+  if (artists != null) return res.status(200).json({ success: artists });
+  else return res.status(404).json({ fail: "fail" });
+});
+
+router.get("/artists/latest", async (req: Request, res: Response) => {
+  const artists: Artist[] | null = await artistService.getAllbyLatest();
   if (artists != null) return res.status(200).json({ success: artists });
   else return res.status(404).json({ fail: "fail" });
 });
