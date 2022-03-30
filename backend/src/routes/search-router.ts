@@ -34,7 +34,7 @@ router.get("/artists", async (req: Request, res: Response) => {
 
 router.get("/nfts/nonsale", async (req: Request, res: Response) => {
   const input = String(req.query.input);
-  const result = await searchService.name(input);
+  const result = await searchService.searchNft(input);
 
   if (result.length === 0) {
     return res.status(404).json({ fail: "검색 결과 없음" });

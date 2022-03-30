@@ -1,9 +1,12 @@
 import { Artist } from "@models/Artist";
 import { Edition } from "@models/edition-model";
+import { Heart } from "@models/heart-model";
 import { Nft } from "@models/nft-model";
+import { Sale } from "@models/sale-model";
 import { User } from "@models/user-model";
 import { Sale } from "@models/sale-model";
 import { getConnection } from "typeorm";
+import heartService from "./heart-service";
 import saleService from "./sale-service";
 import userService from "./user-service";
 import { NftSorting } from "@models/nft_sorting-model";
@@ -154,9 +157,140 @@ async function editionMinting(
   }
 }
 
-// async function nftMinting(userSeq: number);
+class ownNft {
+  editionImage: string;
+  editionName: string;
+  artistNickname: string;
+  nftNum: number;
+  nftSeq: number;
+  likes?: number;
+
+  constructor(
+    editionImage: string,
+    editionName: string,
+    artistNickname: string,
+    nftNum: number,
+    nftSeq: number,
+    likes?: number
+  ) {
+    this.editionImage = editionImage;
+    this.editionName = editionName;
+    this.artistNickname = artistNickname;
+    this.nftNum = nftNum;
+    this.nftSeq = nftSeq;
+    this.likes = likes;
+  }
+}
+
+async function getOwnNft(userSeq: number) {
+  const result = await getConnection()
+    .getRepository(Nft)
+    .createQueryBuilder("nft")
+    .leftJoinAndSelect(
+      Edition,
+      "edition",
+      "edition.edition_seq = nft.edition_seq"
+    )
+    .leftJoinAndSelect(User, "user", "user.user_seq = nft.nft_author_seq")
+    .where(`nft.nft_owner_seq = ${userSeq}`)
+    .getRawMany();
+
+  return result;
+}
+
+async function returnOwnNft(userSeq: number) {
+  const result = await getOwnNft(userSeq);
+  let res = new Array();
+  for (let i = 0; i < result.length; i++) {
+    const cur = result[i];
+
+    res.push(
+      new ownNft(
+        cur.edition_edition_image,
+        cur.edition_edition_name,
+        cur.user_user_nickname,
+        cur.nft_nft_num,
+        cur.nft_nft_seq
+      )
+    );
+  }
+  // console.log(res);
+  return res;
+}
+
+async function returnSaleNft(userSeq: number) {
+  const result = await getOwnNft(userSeq);
+  let res = new Array();
+  for (let i = 0; i < result.length; i++) {
+    const cur = result[i];
+    const onsale = await saleService.checkIsOnSale(cur.nft_nft_seq);
+
+    if (onsale != null) {
+      res.push(
+        new ownNft(
+          cur.edition_edition_image,
+          cur.edition_edition_name,
+          cur.user_user_nickname,
+          cur.nft_nft_num,
+          cur.nft_nft_seq
+        )
+      );
+    }
+  }
+  // console.log(res);
+  return res;
+}
+
+async function getHeartNft(userSeq: number) {
+  const result = await getConnection()
+    .getRepository(Nft)
+    .createQueryBuilder("nft")
+    .where((qb) => {
+      const subQuery = qb
+        .subQuery()
+        .select("heart.nft_seq")
+        .from(Heart, "heart")
+        .where(`heart.user_seq = ${userSeq}`);
+      return "nft.nft_seq in " + subQuery.getQuery();
+    })
+    .leftJoinAndSelect(
+      Edition,
+      "edition",
+      "edition.edition_seq = nft.edition_seq"
+    )
+    .leftJoinAndSelect(User, "user", "user.user_seq = nft.nft_author_seq")
+    .getRawMany();
+  return result;
+}
+
+async function returnHeartNft(userSeq: number) {
+  const result = await getHeartNft(userSeq);
+  let res = new Array();
+  for (let i = 0; i < result.length; i++) {
+    const cur = result[i];
+    const heartCount = await heartService.countHeart(cur.nft_nft_seq);
+    const heart = Number(<{ heart: string }>heartCount.heart);
+    res.push(
+      new ownNft(
+        cur.edition_edition_image,
+        cur.edition_edition_name,
+        cur.user_user_nickname,
+        cur.nft_nft_num,
+        cur.nft_nft_seq,
+        heart
+      )
+    );
+  }
+  return res;
+}
+
 export default {
+  getOwnNft,
+  getHeartNft,
   returnNft,
+  returnOwnNft,
+  returnSaleNft,
   updateOwner,
   editionMinting,
+  returnHeartNft,
 } as const;
