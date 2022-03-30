@@ -129,11 +129,20 @@ router.put("/edit/image", async (req, res, next) => {
   }
 });
 
+// 보유 중인 NFT 목록
 router.get("/nfts", async (req, res, next) => {
   const userSeq = Number(req.query.userSeq);
-  const result = await nftService.getOwnNft(userSeq);
+  const result = await nftService.returnOwnNft(userSeq);
   if (result.length > 0) return res.status(200).json({ success: result });
   else return res.status(404).json({ fail: "가지고 있는 NFT 없음" });
+});
+
+// 판매 중인 NFT 목록
+router.get("/nfts/onsale", async (req, res, next) => {
+  const userSeq = Number(req.query.userSeq);
+  const result = await nftService.returnSaleNft(userSeq);
+  if (result.length > 0) return res.status(200).json({ success: result });
+  else return res.status(404).json({ fail: "판매 중인 NFT 없음" });
 });
 
 export default router;

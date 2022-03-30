@@ -109,7 +109,7 @@ async function getAllNft(input: string) {
   return result;
 }
 
-async function name(input: string) {
+async function searchNft(input: string) {
   const result = await getAllNft(input);
   let res1 = new Array();
   for (let i: number = 0; i < result.length; i++) {
@@ -168,7 +168,7 @@ async function name(input: string) {
 export default {
   getArtists,
   getAllNft,
-  name,
+  searchNft,
   // getAll,
   // addOne,
   // updateOne,

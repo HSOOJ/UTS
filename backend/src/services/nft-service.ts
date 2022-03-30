@@ -1,6 +1,7 @@
 import { Artist } from "@models/Artist";
 import { Edition } from "@models/edition-model";
 import { Nft } from "@models/nft-model";
+import { Sale } from "@models/sale-model";
 import { User } from "@models/user-model";
 import { EditionRepository } from "@repos/edition-repo";
 import { userRepository } from "@repos/user-repo";
@@ -133,26 +134,86 @@ async function editionMinting(
   }
 }
 
+class ownNft {
+  editionImage: string;
+  artistNickname: string;
+  nftNum: number;
+  nftSeq: number;
+
+  constructor(
+    editionImage: string,
+    artistNickname: string,
+    nftNum: number,
+    nftSeq: number
+  ) {
+    this.editionImage = editionImage;
+    this.artistNickname = artistNickname;
+    this.nftNum = nftNum;
+    this.nftSeq = nftSeq;
+  }
+}
 async function getOwnNft(userSeq: number) {
   const result = await getConnection()
-    .getRepository(Edition)
-    .createQueryBuilder("edition")
-    .leftJoinAndSelect(Nft, "nft")
+    .getRepository(Nft)
+    .createQueryBuilder("nft")
+    .leftJoinAndSelect(
+      Edition,
+      "edition",
+      "edition.edition_seq = nft.edition_seq"
+    )
     .leftJoinAndSelect(User, "user", "user.user_seq = nft.nft_author_seq")
     .where(`nft.nft_owner_seq = ${userSeq}`)
-    .select("edition.edition_name AS edition_name")
-    .addSelect("edition.edition_image AS edition_image")
-    .addSelect("user.user_nickname AS artist_nickname")
-    .addSelect("nft.nft_num AS nft_num")
-    .addSelect("nft.nft_seq AS nft_seq")
     .getRawMany();
 
   return result;
 }
 
+async function returnOwnNft(userSeq: number) {
+  const result = await getOwnNft(userSeq);
+  let res = new Array();
+  for (let i = 0; i < result.length; i++) {
+    const cur = result[i];
+
+    res.push(
+      new ownNft(
+        cur.edition_edition_image,
+        cur.user_user_nickname,
+        cur.nft_nft_num,
+        cur.nft_nft_seq
+      )
+    );
+  }
+  // console.log(res);
+  return res;
+}
+
+async function returnSaleNft(userSeq: number) {
+  const result = await getOwnNft(userSeq);
+  let res = new Array();
+  for (let i = 0; i < result.length; i++) {
+    const cur = result[i];
+    const onsale = await saleService.checkIsOnSale(cur.nft_nft_seq);
+
+    if (onsale != null) {
+      res.push(
+        new ownNft(
+          cur.edition_edition_image,
+          cur.user_user_nickname,
+          cur.nft_nft_num,
+          cur.nft_nft_seq
+        )
+      );
+    }
+  }
+  // console.log(res);
+  return res;
+}
+
 export default {
   getOwnNft,
   returnNft,
+  returnOwnNft,
+  returnSaleNft,
   updateOwner,
   editionMinting,
 } as const;
