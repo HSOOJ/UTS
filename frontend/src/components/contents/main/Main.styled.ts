@@ -5,9 +5,10 @@ export const Layout = styled.div`
   width: 100%;
   margin: 1.5em auto 1.5em;
   border: solid 0.3em;
-  border-radius: 20px;
   border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
   border-image-slice: 1;
+  border-radius: 20px;
+  padding: 0 0 0 2%;
 `;
 export const Wrapper = styled.div`
   float: left;
@@ -21,60 +22,40 @@ export const StyledSlider = styled(Slider)`
   }
 `;
 export const ImageContainer = styled.div`
-  margin: 0 0 0 25px;
   padding: 1em;
   height: 100%;
   position: relative;
   cursor: pointer;
   text-align: center;
-`;
-export const ImageTop = styled.img`
-  width: 325px;
-  height: 325px;
-  border-radius: 30px;
   transition: all 0.2s linear;
   &:hover {
     transform: scale(1.08);
   }
 `;
+export const ImageTop = styled.img`
+  width: 325px;
+  height: 325px;
+  border-radius: 30px;
+`;
 export const Image = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 30px;
-  transition: all 0.2s linear;
-  &:hover {
-    transform: scale(1.2);
-  }
 `;
 export const ImageBadge = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 10% / 50%;
-  transition: all 0.2s linear;
-  &:hover {
-    transform: scale(1.2);
-  }
-  margin: 10%;
 `;
 export const ImageSeller = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 100%;
-  transition: all 0.2s linear;
-  &:hover {
-    transform: scale(1.2);
-  }
-  margin: 10%;
 `;
 export const ImageBoarding = styled.img`
   width: 300px;
   height: 300px;
   border-radius: 10px 100px / 120px;
-  transition: all 0.2s linear;
-  &:hover {
-    transform: scale(1.1);
-  }
-  margin: 2%;
 `;
 export const TextGradientRed = styled.p`
   font-size: 60px;
