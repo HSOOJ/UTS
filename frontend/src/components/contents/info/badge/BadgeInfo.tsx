@@ -30,12 +30,15 @@ export const BadgeInfo = () => {
       method: "GET",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
       params: {
-        userSeq: 11,
-        nftSeq: 5,
+        userSeq: 1,
+        nftSeq: 1,
       },
     })
       .then(function (res) {
-        setIsLike({ ...badgeDetailState, isLike: res.data.success });
+        setBadgeDetailStateVal({
+          ...badgeDetailStateVal,
+          isLike: res.data.success,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -48,11 +51,12 @@ export const BadgeInfo = () => {
 
   // 현재 edition_id 잡아내기
   const { badge_id } = useParams() as BadgeParamTypes;
-  const [isLike, setIsLike] = useRecoilState(badgeDetailState);
+  const [badgeDetailStateVal, setBadgeDetailStateVal] =
+    useRecoilState(badgeDetailState);
 
   return (
     <Layout>
-      <BadgeHeader isLike={isLike.isLike}></BadgeHeader>
+      <BadgeHeader isLike={badgeDetailStateVal.isLike}></BadgeHeader>
       <LetterBox weight="extraBold" size="h1">
         Kelly's Badge
       </LetterBox>

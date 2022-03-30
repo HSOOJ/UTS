@@ -2,8 +2,13 @@ import styled from "styled-components";
 import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
-import { Modal, Button, message } from "antd";
+import { Modal, message } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../containers/button";
+import { WalletAddressModal } from "../walletAddressModal/WalletAddressModal";
+import { useRecoilState } from "recoil";
+import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 
 const BadgeImg = styled.img`
   border-radius: 50%;
@@ -19,7 +24,7 @@ const BadgeInfoPersonDiv = styled.div<ThemeType>`
   width: 700px;
   padding: 20px;
   justify-content: center;
-  gap: 50px;
+  gap: 60px;
 `;
 
 const BadgeLeft = styled.div`
@@ -32,7 +37,7 @@ const BadgeRight = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding-bottom: 10px;
+  width: 200px;
 `;
 
 const BadgeCenter = styled.div`
@@ -47,15 +52,24 @@ interface IBadgeInfoPerson extends ThemeType {
 }
 
 export const BadgeInfoPerson = ({ isDark, badge_id }: IBadgeInfoPerson) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [badgeDetailStateVal, setBadgeDetailStateVal] =
+    useRecoilState(badgeDetailState);
+  let navigate = useNavigate();
+
   const showModal = () => {
-    setIsModalVisible(true);
+    setBadgeDetailStateVal({
+      ...badgeDetailStateVal,
+      isOpenWalletAddressModal: true,
+    });
   };
 
   const handleCopyPaste = () => {
-    setIsModalVisible(false);
     copyCodeToClipboard();
     message.success("지갑 주소가 복사되었습니다.");
+    setBadgeDetailStateVal({
+      ...badgeDetailStateVal,
+      isOpenWalletAddressModal: false,
+    });
   };
 
   const copyCodeToClipboard = () => {
@@ -66,7 +80,10 @@ export const BadgeInfoPerson = ({ isDark, badge_id }: IBadgeInfoPerson) => {
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setBadgeDetailStateVal({
+      ...badgeDetailStateVal,
+      isOpenWalletAddressModal: false,
+    });
   };
 
   return (
@@ -74,56 +91,60 @@ export const BadgeInfoPerson = ({ isDark, badge_id }: IBadgeInfoPerson) => {
       <div>
         <BadgeCenter>
           <BadgeLeft>
-            <LetterBox size="h3" weight="bold">
+            <LetterBox size="h3" weight="bold" color="shade">
               Creator
             </LetterBox>
-            <BadgeImg src="https://picsum.photos/80/80" />
+            <BadgeImg
+              src="https://picsum.photos/80/80"
+              onClick={() => {
+                navigate(`/artist/1`); // 고쳐야 합니다
+              }}
+            />
           </BadgeLeft>
           <BadgeRight>
-            <LetterBox size="h3" weight="extraBold">
-              현정이
-            </LetterBox>
-            <Button type="primary" onClick={showModal}>
+            <div
+              onClick={() => {
+                navigate(`/artist/1`); // 고쳐야 합니다
+              }}
+            >
+              <LetterBox size="h3" weight="extraBold">
+                현정이
+              </LetterBox>
+            </div>
+            <Button styleVariant="primary" onClick={showModal}>
               지갑 주소 확인하기
             </Button>
-            <Modal
-              title={`${badge_id}님의 지갑 주소`} // 고쳐야 합니다
-              visible={isModalVisible}
-              onOk={handleCopyPaste}
-              onCancel={handleCancel}
-              okText="지갑 주소 복사하기"
-              cancelText="닫기"
-            >
-              <p>안녕!</p>
-            </Modal>
+            <WalletAddressModal isDark={isDark}></WalletAddressModal>
           </BadgeRight>
         </BadgeCenter>
       </div>
       <div>
         <BadgeCenter>
           <BadgeLeft>
-            <LetterBox size="h3" weight="bold">
+            <LetterBox size="h3" weight="bold" color="shade">
               Owner
             </LetterBox>
-            <BadgeImg src="https://picsum.photos/80/80" />
+            <BadgeImg
+              onClick={() => {
+                navigate(`/artist/1`); // 고쳐야 합니다
+              }}
+              src="https://picsum.photos/80/80"
+            />
           </BadgeLeft>
           <BadgeRight>
-            <LetterBox size="h3" weight="extraBold">
-              현정이
-            </LetterBox>
-            <Button type="primary" onClick={showModal}>
+            <div
+              onClick={() => {
+                navigate(`/artist/1`); // 고쳐야 합니다
+              }}
+            >
+              <LetterBox size="h3" weight="extraBold">
+                현정이
+              </LetterBox>
+            </div>
+            <Button styleVariant="primary" onClick={showModal}>
               지갑 주소 확인하기
             </Button>
-            <Modal
-              title={`${badge_id}님의 지갑 주소`} // 고쳐야 합니다
-              visible={isModalVisible}
-              onOk={handleCopyPaste}
-              onCancel={handleCancel}
-              okText="지갑 주소 복사하기"
-              cancelText="닫기"
-            >
-              <p>안녕!</p>
-            </Modal>
+            <WalletAddressModal isDark={isDark}></WalletAddressModal>
           </BadgeRight>
         </BadgeCenter>
       </div>

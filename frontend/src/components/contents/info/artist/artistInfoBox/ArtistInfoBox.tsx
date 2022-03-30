@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
+import LetterBox from "../../../../containers/letterBox/LetterBox";
 
 const InfoMainbox = styled.div<ThemeType>`
   background-color: ${({ isDark }) =>
@@ -28,7 +29,7 @@ interface IArtistInfoBox extends ThemeType {}
 export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
   return (
     <InfoMainbox isDark={isDark}>
-      <p>아티스트 여러줄 소개 블라블라</p>
+      <LetterBox>아티스트 여러줄 소개 블라블라</LetterBox>
       <br></br>
       <InfoDetailBox>
         <InfoMoreDetailBox>아트</InfoMoreDetailBox>
