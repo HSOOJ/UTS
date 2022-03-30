@@ -12,7 +12,9 @@
     }
   ],
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/user/info": {
       "get": {
