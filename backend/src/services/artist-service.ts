@@ -43,10 +43,16 @@ async function getArtistInfo(artistSeq: number) {
 }
 
 async function report(userSeq: number, artistSeq: number) {
+  const nowDate = new Date();
   const connection = getConnection();
   return connection
     .getRepository(Report)
-    .save({ user_seq: userSeq, artist_seq: artistSeq });
+    .save({
+      user_seq: userSeq,
+      artist_seq: artistSeq,
+      reg_dt: nowDate,
+      mod_dt: nowDate,
+    });
 }
 
 // Export default

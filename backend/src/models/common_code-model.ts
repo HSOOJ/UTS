@@ -5,25 +5,20 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  JoinColumn,
-  ManyToOne,
+  OneToMany,
 } from "typeorm";
 import { Artist } from "./Artist";
 
 @Entity()
-export class Report {
+export class Common_code {
   @PrimaryGeneratedColumn()
-  report_seq: number;
+  code_seq: number;
 
   @Column()
-  artist_seq: number;
-
-  @ManyToOne(() => Artist, (artist) => artist.reports)
-  @JoinColumn({ name: "artist_seq", referencedColumnName: "artist_seq" })
-  artist: Artist;
+  code: string;
 
   @Column()
-  user_seq: number;
+  code_order: number;
 
   @CreateDateColumn()
   reg_dt: Date;
@@ -33,4 +28,7 @@ export class Report {
 
   @DeleteDateColumn()
   del_dt: Date;
+
+  @OneToMany(() => Artist, (artist) => artist.code_seq2)
+  artists: Artist[];
 }

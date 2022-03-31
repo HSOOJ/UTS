@@ -30,7 +30,7 @@ export class User {
   @Column()
   user_role: number; //(0: 일반회원, 1: 아티스트, 2: 관리자)
 
-  @Column()
+  @Column({ default: 0 })
   user_volume: number;
 
   @CreateDateColumn()
