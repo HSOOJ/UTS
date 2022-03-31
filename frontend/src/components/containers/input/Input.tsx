@@ -1,25 +1,34 @@
 import FontSize from "../../../foundation/font/size/FontSize";
 import { Icon } from "../../../foundation/Icon/Icon";
-import { InputBox, InputBoxVariants, Label, TextField } from "./Input.styled";
+import LetterBox from "../letterBox/LetterBox";
+import {
+  InputBox,
+  InputBoxVariants,
+  Label,
+  TextField,
+  LayOut,
+  ErrorLayOut,
+  errVariants,
+} from "./Input.styled";
 import { IInput } from "./Input.types";
-
 const Input = ({
-  hasError,
   label,
   isDark,
   placeholder,
   type,
   disabled,
+  errMessage,
+  register,
 }: IInput) => {
   return (
-    <>
+    <LayOut>
       {label ? (
         <Label disabled={disabled} isDark={isDark}>
           {label}
         </Label>
       ) : null}
       <InputBox
-        hasError={hasError}
+        errMessage={errMessage}
         type={type}
         isDark={isDark}
         disabled={disabled}
@@ -32,6 +41,8 @@ const Input = ({
           />
         ) : null}
         <TextField
+          {...register}
+          errMessage={errMessage}
           variants={InputBoxVariants}
           whileFocus="focus"
           whileHover="focus"
@@ -40,7 +51,18 @@ const Input = ({
           placeholder={placeholder}
         />
       </InputBox>
-    </>
+      {errMessage && (
+        <ErrorLayOut
+          key={errMessage}
+          variants={errVariants}
+          initial="initial"
+          animate="entry"
+          exit="exit"
+        >
+          <LetterBox size="body2">{errMessage}</LetterBox>
+        </ErrorLayOut>
+      )}
+    </LayOut>
   );
 };
 

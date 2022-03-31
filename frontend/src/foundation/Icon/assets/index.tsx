@@ -5,6 +5,7 @@ import Check from "./Check";
 import Exclamation from "./Exclamation";
 import Heart from "./Heart";
 import HeartSolid from "./HeartSolid";
+import Image from "./Image";
 import Moon from "./Moon";
 import SearchGlass from "./SearchGlass";
 import Sun from "./Sun";
@@ -19,6 +20,7 @@ const icon = {
   "check": Check,
   "heart": Heart,
   "heart-solid": HeartSolid,
+  "image": Image,
   "moon": Moon,
   "search-glass": SearchGlass,
   "sun": Sun,

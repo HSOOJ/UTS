@@ -11,6 +11,8 @@ router.get("/nfts/popular", async (req, res, next) => {
 
   const map1 = result.map(function (x) {
     return {
+      nftSeq: x.nft_nft_seq,
+      editionSeq: x.nfts_edition_seq,
       editionName: x.nfts_edition_name,
       editionImage: x.nfts_edition_image,
       transactionCount: x.nft_nft_transaction_count,
@@ -34,4 +36,8 @@ router.get("/artists/latest", async (req: Request, res: Response) => {
   else return res.status(404).json({ fail: "fail" });
 });
 
+router.get("/topsellers", async (req, res, next) => {
+  const result = await mainService.getTopSellers();
+  return res.status(200).json({ success: result });
+});
 export default router;

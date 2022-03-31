@@ -1,26 +1,11 @@
 import { message } from "antd";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
-import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import Button from "../../../../containers/button";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
-
-const BadgeDetailDiv = styled.div<ThemeType>`
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
-  width: 700px;
-  border-radius: 10px;
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
-  padding: 10px;
-  gap: 10px;
-`;
+import { BadgeDetailDiv, ButtonDiv } from "./BadgeDetail.styled";
 
 interface IBadgeDetail extends ThemeType {}
 

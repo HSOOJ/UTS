@@ -3,15 +3,15 @@ import styled, { css } from "styled-components";
 import Palette from "../../../foundation/color/Palette";
 import FontColor from "../../../foundation/font/color/FontColor";
 import FontWeight from "../../../foundation/font/weight/FontWeight";
-import { Icon } from "../../../foundation/Icon/Icon";
 import Svg from "../../../foundation/Icon/Icon.styled";
 import { ThemeType } from "../../../global/theme";
 import { IDisable } from "../../../types/IDisabled";
+import { FormType } from "../../../types/IForm";
 import { IInput } from "./Input.types";
 
 const bgColor = {
   light: Palette.Grigio100,
-  dark: Palette.Grigio500,
+  dark: Palette.Grigio400,
 };
 
 const textColor = {
@@ -35,10 +35,10 @@ export const InputBox = styled.label<IInput>`
   }
 
   ${({ disabled }) => disabled && disabledLayoutStyle}
-  ${({ hasError }) => hasError && erroredLayoutStyle}
+  ${({ errMessage }) => errMessage && erroredLayoutStyle}
 `;
 
-export const TextField = styled(motion.input)<IInput>`
+export const TextField = styled(motion.input)<FormType & ThemeType>`
   width: 100%;
   height: 100%;
   border-radius: 8px;
@@ -91,3 +91,22 @@ const erroredLayoutStyle = css`
   /* border: 1px solid ${Palette.Rosso100}; */
   box-shadow: 0px 0px 8px ${Palette.Rosso100};
 `;
+
+export const LayOut = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px;
+`;
+
+export const ErrorLayOut = styled(motion.div)`
+  margin-top: 5px;
+  align-self: flex-end;
+  color: ${FontColor["danger"]};
+`;
+
+export const errVariants = {
+  initial: { x: 30, opacity: 0.5 },
+  entry: { x: -5, opacity: 1 },
+  exit: {},
+};

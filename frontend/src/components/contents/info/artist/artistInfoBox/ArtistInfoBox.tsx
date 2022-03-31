@@ -1,28 +1,10 @@
-import styled from "styled-components";
-import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
-
-const InfoMainbox = styled.div<ThemeType>`
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
-  width: 700px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border-radius: 10px;
-`;
-
-const InfoDetailBox = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InfoMoreDetailBox = styled.div`
-  text-align: center;
-  width: 200px;
-`;
+import {
+  InfoDetailBox,
+  InfoMainbox,
+  InfoMoreDetailBox,
+} from "./ArtistInfoBox.styled";
 
 interface IArtistInfoBox extends ThemeType {}
 

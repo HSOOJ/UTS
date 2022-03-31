@@ -14,7 +14,11 @@ export const ThemeToggle = () => {
         });
       }}
     >
-      {theme.isDark ? "다크모드" : "라이트모드"}
+      {theme.isDark ? (
+        <img src="img/해.png"></img>
+      ) : (
+        <img src="img/달.png"></img>
+      )}
     </Toggle>
   );
 };

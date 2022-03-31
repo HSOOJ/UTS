@@ -12,7 +12,9 @@
     }
   ],
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/user/info": {
       "get": {
@@ -186,6 +188,96 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/nfts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/nfts/onsale": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/likes": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/report": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userSeq": {
+                  "example": "any"
+                },
+                "artistSeq": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -609,6 +701,17 @@
         }
       }
     },
+    "/main/topsellers": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/edition/info": {
       "get": {
         "description": "",
@@ -625,6 +728,97 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/admin/search/user": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userWalletAddress",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/admin/artist/accept": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userSeq": {
+                  "example": "any"
+                },
+                "commonCodeSeq": {
+                  "example": "any"
+                },
+                "artistDescription": {
+                  "example": "any"
+                },
+                "artistSns": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/admin/artist/cancel": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userSeq": {
+                  "example": "any"
+                },
+                "artistSeq": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/admin/report": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
