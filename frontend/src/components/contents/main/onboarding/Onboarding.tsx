@@ -1,6 +1,8 @@
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "../../../../recoil/theme";
 import {
   Container,
   TextGradientBlue,
@@ -24,6 +26,8 @@ const settings = {
 };
 
 export const Onboarding = () => {
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   let urls = [
     "https://dimg.donga.com/wps/NEWS/IMAGE/2022/02/10/111691750.2.jpg",
     "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
@@ -61,8 +65,8 @@ export const Onboarding = () => {
       {/* <h1>Onboarding Component</h1>
       <h2>아티스트 목록 - 아티스트 등록 최신 순</h2> */}
       <TextGradientBlue>On </TextGradientBlue>
-      <TextGradientAside>Boarding</TextGradientAside>
-      <Layout>
+      <TextGradientAside isDark={isDark}>Boarding</TextGradientAside>
+      <Layout isDark={isDark}>
         <Container>
           <StyledSlider {...settings}>
             {datas.map((data, index) => {

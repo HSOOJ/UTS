@@ -12,6 +12,8 @@ import {
   TextContent,
   Wrapper,
 } from "../Main.styled";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "../../../../recoil/theme";
 
 const settings = {
   dots: false,
@@ -21,6 +23,8 @@ const settings = {
 };
 
 export const HotBadge = () => {
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   let urls = [
     "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
     "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
@@ -45,8 +49,8 @@ export const HotBadge = () => {
       {/* <h1>Hot Badges Component</h1>
       <h2>NFT 목록 - 인기순(좋아요)</h2> */}
       <TextGradientRed>Hot </TextGradientRed>
-      <TextGradientAside>Badges</TextGradientAside>
-      <Layout>
+      <TextGradientAside isDark={isDark}>Badges</TextGradientAside>
+      <Layout isDark={isDark}>
         <Container>
           <StyledSlider {...settings}>
             {datas.map((data, index) => {
@@ -59,7 +63,7 @@ export const HotBadge = () => {
                       }}
                     >
                       <ImageBadge src={data.urls[0]} alt={data.rank[0]} />
-                      <TextContent>
+                      <TextContent isDark={isDark}>
                         {data.rank[0]} | {data.name[0]}
                       </TextContent>
                     </ImageContainer>
@@ -69,7 +73,7 @@ export const HotBadge = () => {
                       }}
                     >
                       <ImageBadge src={data.urls[1]} alt={data.rank[1]} />
-                      <TextContent>
+                      <TextContent isDark={isDark}>
                         {data.rank[1]} | {data.name[1]}
                       </TextContent>
                     </ImageContainer>

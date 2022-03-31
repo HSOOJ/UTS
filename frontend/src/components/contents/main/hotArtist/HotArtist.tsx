@@ -16,6 +16,8 @@ import {
   TextSubTop,
   Wrapper,
 } from "../Main.styled";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "../../../../recoil/theme";
 
 const settings = {
   dots: false,
@@ -28,6 +30,8 @@ const settings = {
 };
 
 export const HotArtist = () => {
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   let urls = [
     "https://dimg.donga.com/wps/NEWS/IMAGE/2022/02/10/111691750.2.jpg",
     "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
@@ -58,8 +62,8 @@ export const HotArtist = () => {
   return (
     <>
       <TextGradientRed>Hot </TextGradientRed>
-      <TextGradientAside>Artist</TextGradientAside>
-      <Layout>
+      <TextGradientAside isDark={isDark}>Artist</TextGradientAside>
+      <Layout isDark={isDark}>
         <Wrapper>
           <ImageContainer>
             <ImageTop

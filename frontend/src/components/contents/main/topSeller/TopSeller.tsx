@@ -12,6 +12,8 @@ import {
   TextContent,
   Wrapper,
 } from "../Main.styled";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "../../../../recoil/theme";
 
 const settings = {
   dots: false,
@@ -21,6 +23,8 @@ const settings = {
 };
 
 export const TopSeller = () => {
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   let urls = [
     "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
     "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
@@ -45,8 +49,8 @@ export const TopSeller = () => {
       {/* <h1>Top Sellers Component</h1>
       <h2>탑셀러 - 일반유저 (아티스트 아닌) 누적거래</h2> */}
       <TextGradientBlue>Top </TextGradientBlue>
-      <TextGradientAside>Sellers</TextGradientAside>
-      <Layout>
+      <TextGradientAside isDark={isDark}>Sellers</TextGradientAside>
+      <Layout isDark={isDark}>
         <Container>
           <StyledSlider {...settings}>
             {datas.map((data, index) => {
@@ -58,9 +62,8 @@ export const TopSeller = () => {
                         navigate(`/profile/${data.rank[0]}`);
                       }}
                     >
-                      <h2>{data.rank[0]}</h2>
                       <ImageSeller src={data.urls[0]} alt={data.rank[0]} />
-                      <TextContent>
+                      <TextContent isDark={isDark}>
                         {data.rank[0]} | {data.name[0]}
                       </TextContent>
                     </ImageContainer>
@@ -69,9 +72,8 @@ export const TopSeller = () => {
                         navigate(`/profile/${data.rank[1]}`);
                       }}
                     >
-                      <h2>{data.rank[1]}</h2>
                       <ImageSeller src={data.urls[1]} alt={data.rank[1]} />
-                      <TextContent>
+                      <TextContent isDark={isDark}>
                         {data.rank[1]} | {data.name[1]}
                       </TextContent>
                     </ImageContainer>

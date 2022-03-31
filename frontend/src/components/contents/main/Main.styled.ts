@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import Slider from "react-slick";
+import { ThemeType } from "../../../global/theme";
 
-export const Layout = styled.div`
+export const Layout = styled.div<ThemeType>`
   width: 100%;
   margin: 1.5em auto 1.5em;
   border: solid 0.3em;
-  border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
+  border-image: ${({ isDark }) =>
+    isDark
+      ? "linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa)"
+      : null};
   border-image-slice: 1;
   border-radius: 20px;
   padding: 0 0 0 2%;
@@ -73,15 +77,15 @@ export const TextGradientBlue = styled.p`
   -webkit-background-clip: text;
   display: inline;
 `;
-export const TextGradientAside = styled.p`
+export const TextGradientAside = styled.p<ThemeType>`
   font-size: 48px;
   display: inline;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const TextContent = styled.p`
+export const TextContent = styled.p<ThemeType>`
   font-size: 25px;
   display: inline;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
 export const TextNameTop = styled.div`
   z-index: 1;
