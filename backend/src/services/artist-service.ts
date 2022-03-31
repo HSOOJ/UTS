@@ -1,5 +1,6 @@
 // import { User } from "@models/user-model";
 import { Artist } from "@models/Artist";
+import { Report } from "@models/report-model";
 import { User } from "@models/user-model";
 
 import { getConnection } from "typeorm";
@@ -41,9 +42,17 @@ async function getArtistInfo(artistSeq: number) {
   return result;
 }
 
+async function report(userSeq: number, artistSeq: number) {
+  const connection = getConnection();
+  return connection
+    .getRepository(Report)
+    .save({ user_seq: userSeq, artist_seq: artistSeq });
+}
+
 // Export default
 export default {
   getAllbyPopular,
   getAllbyLatest,
   getArtistInfo,
+  report,
 } as const;
