@@ -18,6 +18,7 @@ export const LayOut = styled(motion.div)<IBadge>`
   border: ${({ borderColor }) => borderColor && `4px solid ${borderColor}`};
   background-color: ${({ type }) => bgColor[type]};
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 export const LayOutVariants = {
