@@ -3,11 +3,9 @@ import styled, { css } from "styled-components";
 import Palette from "../../../foundation/color/Palette";
 import FontColor from "../../../foundation/font/color/FontColor";
 import FontWeight from "../../../foundation/font/weight/FontWeight";
-import Svg from "../../../foundation/Icon/Icon.styled";
 import { ThemeType } from "../../../global/theme";
 import { IDisable } from "../../../types/IDisabled";
-import { FormType } from "../../../types/IForm";
-import { IInput } from "./Input.types";
+import { ITextArea } from "./TextArea.types";
 
 const bgColor = {
   light: Palette.Grigio100,
@@ -19,31 +17,29 @@ const textColor = {
   dark: FontColor["light"],
 };
 
-export const InputBox = styled.label<IInput>`
+export const TextAreaBox = styled.label<ITextArea>`
   display: flex;
   gap: 10px;
   align-items: center;
-  height: 36px;
+  height: 108px;
   width: 100%;
   border: 0px;
   border-radius: 8px;
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};
-  ${Svg} {
-    position: absolute;
-    margin-left: 12px;
-  }
 
   ${({ disabled }) => disabled && disabledLayoutStyle}
   ${({ errMessage }) => errMessage && erroredLayoutStyle}
 `;
 
-export const TextField = styled(motion.input)<FormType & ThemeType>`
+export const TextField = styled(motion.textarea)<ITextArea>`
+  overflow: scroll;
+  resize: none;
   width: 100%;
   height: 100%;
   border-radius: 8px;
   border: none;
-  padding: 0px 12px;
+  padding: 12px;
   padding-left: ${({ type }) => type === "search" && "36px"};
 
   color: ${({ isDark }) => (isDark ? textColor["dark"] : textColor["light"])};
@@ -98,15 +94,3 @@ export const LayOut = styled.div`
   width: 100%;
   padding: 5px;
 `;
-
-export const ErrorLayOut = styled(motion.div)`
-  margin-top: 5px;
-  align-self: flex-end;
-  color: ${FontColor["danger"]};
-`;
-
-export const errVariants = {
-  initial: { x: 30, opacity: 0.5 },
-  entry: { x: -5, opacity: 1 },
-  exit: {},
-};

@@ -1,17 +1,17 @@
 import FontSize from "../../../foundation/font/size/FontSize";
 import { Icon } from "../../../foundation/Icon/Icon";
+import { ErrorLayOut, errVariants } from "../input/Input.styled";
 import LetterBox from "../letterBox/LetterBox";
 import {
-  InputBox,
+  TextAreaBox,
   InputBoxVariants,
   Label,
   TextField,
   LayOut,
-  ErrorLayOut,
-  errVariants,
-} from "./Input.styled";
-import { IInput } from "./Input.types";
-const Input = ({
+} from "./TextArea.styled";
+import { ITextArea } from "./TextArea.types";
+
+const TextArea = ({
   label,
   isDark,
   placeholder,
@@ -19,7 +19,7 @@ const Input = ({
   disabled,
   errMessage,
   register,
-}: IInput) => {
+}: ITextArea) => {
   return (
     <LayOut>
       {label ? (
@@ -27,7 +27,7 @@ const Input = ({
           {label}
         </Label>
       ) : null}
-      <InputBox
+      <TextAreaBox
         errMessage={errMessage}
         type={type}
         isDark={isDark}
@@ -42,7 +42,6 @@ const Input = ({
         ) : null}
         <TextField
           {...register}
-          errMessage={errMessage}
           variants={InputBoxVariants}
           whileFocus="focus"
           whileHover="focus"
@@ -50,7 +49,7 @@ const Input = ({
           type={type}
           placeholder={placeholder}
         />
-      </InputBox>
+      </TextAreaBox>
       {errMessage && (
         <ErrorLayOut
           key={errMessage}
@@ -66,4 +65,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default TextArea;
