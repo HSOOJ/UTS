@@ -14,6 +14,12 @@ export const Layout = styled.div<ThemeType>`
   border-radius: 20px;
   padding: 0 0 0 2%;
 `;
+export const LayoutPaddingLeft = styled.div`
+  padding: 0 0 0 5%;
+`;
+export const LayoutPaddingLeft2 = styled.div`
+  padding: 0 0 0 3%;
+`;
 export const Wrapper = styled.div`
   float: left;
 `;
@@ -27,6 +33,7 @@ export const StyledSlider = styled(Slider)`
 `;
 export const ImageContainer = styled.div`
   padding: 1em;
+  margin: 10px 0 0 0;
   height: 100%;
   position: relative;
   cursor: pointer;
@@ -50,11 +57,13 @@ export const ImageBadge = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 10% / 50%;
+  margin: 0 0 10px 0;
 `;
 export const ImageSeller = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 100%;
+  margin: 0 0 10px 0;
 `;
 export const ImageBoarding = styled.img`
   width: 300px;
@@ -94,13 +103,15 @@ export const TextNameTop = styled.div`
   top: 10%;
   left: 10%;
   color: white;
+  font-size: 30px;
 `;
 export const TextSubTop = styled.div`
   z-index: 1;
   position: absolute;
-  top: 16%;
+  top: 22%;
   left: 10%;
   color: white;
+  font-size: 16px;
 `;
 export const TextName = styled.div`
   z-index: 1;
@@ -113,7 +124,7 @@ export const TextName = styled.div`
 export const TextSub = styled.div`
   z-index: 1;
   position: absolute;
-  top: 25%;
+  top: 27%;
   left: 12%;
   color: white;
 `;
