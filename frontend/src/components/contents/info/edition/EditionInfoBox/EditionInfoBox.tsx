@@ -1,47 +1,27 @@
-import styled from "styled-components";
-import Palette from "../../../../../foundation/color/Palette";
+import { useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { editionDetailState } from "../../../../../recoil/EditionDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
+import {
+  EditionDetail,
+  EditionImg,
+  EditionInfoBoxDiv,
+  EditionTitle,
+} from "./EditionInfoBox.styled";
 
-const EditionInfoBoxDiv = styled.div<ThemeType>`
-  display: flex;
-  /* align-items: center; */
-  /* flex-wrap: wrap; */
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
-  width: 700px;
-  gap: 5px;
-  padding-left: 30px;
-  border-radius: 10px;
-  padding: 30px;
-`;
-
-const EditionImg = styled.img`
-  border-radius: 50%;
-  float: left;
-  left: 0%;
-`;
-
-const EditionDetail = styled.div`
-  margin-left: 20px;
-  width: 500px;
-`;
-
-const EditionTitle = styled.div`
-  margin-bottom: 10px;
-  /* text-align: center; */
-`;
 interface EditionInfoBox extends ThemeType {}
 
 export const EditionInfoBox = ({ isDark }: EditionInfoBox) => {
+  const editionDetailStateVal = useRecoilValue(editionDetailState);
+
   return (
     <EditionInfoBoxDiv isDark={isDark}>
       <EditionImg src="https://picsum.photos/150/150" />
       <EditionDetail>
         <EditionTitle>
-          <LetterBox size="h1">존 메이어 골드 에디션</LetterBox>
+          <LetterBox size="h1">{editionDetailStateVal.edition_name}</LetterBox>
         </EditionTitle>
-        <LetterBox>에디션 혜택 설명</LetterBox>
+        <LetterBox>{editionDetailStateVal.edition_description}</LetterBox>
       </EditionDetail>
     </EditionInfoBoxDiv>
   );
