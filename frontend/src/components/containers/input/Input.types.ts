@@ -1,8 +1,8 @@
 import { ThemeType } from "../../../global/theme";
-import { IForm } from "../../../types/IForm";
+import { FormType, IForm } from "../../../types/IForm";
 
 type InputTypes = {
-  type: "search" | "text" | "number";
+  type: "search" | "text";
   placeholder?: string;
   label?: string;
 };
