@@ -9,7 +9,7 @@ import saleRouter from "./sale-router";
 import nftRouter from "./nft-router";
 import mainRouter from "./main-router";
 import editionRouter from "./edition-router";
-import reportRouter from "./report-router";
+import adminRouter from "./admin-router";
 // Export the base-router
 const baseRouter = Router();
 
@@ -25,7 +25,7 @@ baseRouter.use("/nft", saleRouter);
 baseRouter.use("/nft", nftRouter);
 baseRouter.use("/main", mainRouter);
 baseRouter.use("/edition", editionRouter);
-baseRouter.use("/admin", reportRouter);
+baseRouter.use("/admin", adminRouter);
 
 // Export default.
 export default baseRouter;
