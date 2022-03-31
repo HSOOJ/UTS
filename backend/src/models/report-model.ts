@@ -15,8 +15,11 @@ export class Report {
   @PrimaryGeneratedColumn()
   report_seq: number;
 
+  @Column()
+  artist_seq: number;
+
   @ManyToOne(() => Artist, (artist) => artist.reports)
-  @JoinColumn({ name: "artist_seq" })
+  @JoinColumn({ name: "artist_seq", referencedColumnName: "artist_seq" })
   artist: Artist;
 
   @Column()
