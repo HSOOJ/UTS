@@ -61,7 +61,26 @@ export const EditionInfo = () => {
       },
     })
       .then(function (res) {
-        setIsLike({ ...badgeDetailState, isLike: res.data.success });
+        setBadgeDetailStateVal({
+          ...badgeDetailStateVal,
+          isLike: res.data.success,
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  const CheckEditionDetail = () => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/edition/info", // 고쳐야 합니다
+      params: {
+        editionSeq: 1,
+      },
+    })
+      .then(function (res) {
+        console.log(res);
       })
       .catch(function (err) {
         console.log(err);
@@ -71,13 +90,15 @@ export const EditionInfo = () => {
   useEffect(() => {
     checkFollow();
     checkLike();
+    CheckEditionDetail();
   }, []);
 
   // 현재 edition_id 잡아내기
   const { edition_id } = useParams() as EditionParamTypes;
   const isDark = useRecoilValue(themeAtom).isDark;
   const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
-  const [isLike, setIsLike] = useRecoilState(badgeDetailState);
+  const [badgeDetailStateVal, setBadgeDetailStateVal] =
+    useRecoilState(badgeDetailState);
 
   return (
     <EditionInfomation>
@@ -90,14 +111,14 @@ export const EditionInfo = () => {
         </LetterBox>
       </BadgesOnMarketText>
       <BadgesOnMarket>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
-      </BadgesOnMarket>
-      <BadgesOnMarket>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
-        <BadgeItem isDark={isDark} isLike={isLike.isLike}></BadgeItem>
+        <BadgeItem
+          isDark={isDark}
+          isLike={badgeDetailStateVal.isLike}
+        ></BadgeItem>
+        <BadgeItem
+          isDark={isDark}
+          isLike={badgeDetailStateVal.isLike}
+        ></BadgeItem>
       </BadgesOnMarket>
     </EditionInfomation>
   );

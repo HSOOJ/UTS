@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Popconfirm } from "antd";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -47,8 +47,8 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
       data: {
-        userTo: "2",
-        userFrom: "33",
+        userTo: "1",
+        userFrom: "1",
       },
     }).then(function (res) {
       setFollowArtist({ ...followArtist, followArtist: true });
@@ -61,8 +61,8 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
       data: {
-        userTo: "2",
-        userFrom: "33",
+        userTo: "1",
+        userFrom: "1",
       },
     }).then(function (res) {
       setFollowArtist({ ...followArtist, followArtist: false });
@@ -72,6 +72,10 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
 
   const onClickCheck = () => {
     message.info("UTS에서 인증하는 아티스트입니다.");
+  };
+
+  const onClickReport = () => {
+    message.warning("해당 아티스트를 신고하였습니다.");
   };
 
   return (
@@ -91,7 +95,14 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
         <div onClick={onClickCheck}>
           <Badge type="verified"></Badge>
         </div>
-        <Badge type="report"></Badge>
+        <Popconfirm
+          title="해당 아티스트를 신고하시겠습니까?"
+          onConfirm={onClickReport}
+        >
+          <div>
+            <Badge type="report"></Badge>
+          </div>
+        </Popconfirm>
       </BadgeList>
     </ImgDiv>
   );

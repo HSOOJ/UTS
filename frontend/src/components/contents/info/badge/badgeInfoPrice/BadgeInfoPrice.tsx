@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
@@ -54,6 +55,7 @@ const EditionImg = styled.img`
 interface IBadgeInfoPrice extends ThemeType {}
 
 export const BadgeInfoPrice = ({ isDark }: IBadgeInfoPrice) => {
+  let navigate = useNavigate();
   return (
     <BadgeInfoPriceDiv isDark={isDark}>
       <ListPriceDiv>
@@ -66,9 +68,13 @@ export const BadgeInfoPrice = ({ isDark }: IBadgeInfoPrice) => {
       </ListPriceDiv>
       <CollectionDiv>
         <LetterBox size="h3" weight="extraBold">
-          Collection
+          Edition
         </LetterBox>
-        <CollectionInfoDiv>
+        <CollectionInfoDiv
+          onClick={() => {
+            navigate(`/edition/1`); // 고쳐야 합니다
+          }}
+        >
           <LetterBox>21st of</LetterBox>
           <EditionImg src="https://picsum.photos/80/80" />
           <CollectionInfoDetailDiv>

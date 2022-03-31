@@ -46,8 +46,8 @@ export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
       data: {
-        userSeq: "11", // 고쳐야 합니다.
-        nftSeq: "5",
+        userSeq: "1", // 고쳐야 합니다.
+        nftSeq: "1",
       },
     }).then(function (res) {
       setLikeBadge({ ...likeBadge, isLike: true });
@@ -60,8 +60,8 @@ export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
       data: {
-        userSeq: "11", // 고쳐야 합니다.
-        nftSeq: "5",
+        userSeq: "1", // 고쳐야 합니다.
+        nftSeq: "1",
       },
     }).then(function (res) {
       setLikeBadge({ ...likeBadge, isLike: false });
