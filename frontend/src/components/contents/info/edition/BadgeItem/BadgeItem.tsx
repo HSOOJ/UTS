@@ -1,77 +1,24 @@
-import styled from "styled-components";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
-import { message, Progress } from "antd";
+import { message } from "antd";
 import Button from "../../../../containers/button";
 import Badge from "../../../../containers/badge";
 import { ThemeType } from "../../../../../global/theme";
-import Palette from "../../../../../foundation/color/Palette";
 import axios from "axios";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { BuyBadgeModal } from "../../badge/buyBadgeModal/BuyBadgeModal";
-
-const BadgeImg = styled.img`
-  border-radius: 50%;
-`;
-
-const OwnerImg = styled.img`
-  border-radius: 50%;
-  margin-top: 10px;
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const BadgeInfo = styled.div`
-  padding: 15px;
-  display: flex;
-  gap: 30px;
-`;
-
-const BadgeInfoLeft = styled.div`
-  width: 70px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-`;
-
-const BadgeInfoRight = styled.div`
-  width: 70px;
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-`;
-
-const BadgeDiv = styled.div<ThemeType>`
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 230px;
-  &:hover {
-    transform: scale(1.02);
-  }
-`;
-
-const BadgeSizeControl = styled.div`
-  width: 160px;
-`;
-
-const BadgeLikeButton = styled.div`
-  width: 35px;
-  float: right;
-`;
-
-const BadgeButtonDiv = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
+import {
+  BadgeButtonDiv,
+  BadgeDiv,
+  BadgeImg,
+  BadgeInfo,
+  BadgeInfoLeft,
+  BadgeInfoRight,
+  BadgeLikeButton,
+  BadgeSizeControl,
+  OwnerImg,
+} from "./BadgeItem.style";
 
 interface IBadgeItem extends ThemeType {
   isLike: boolean;

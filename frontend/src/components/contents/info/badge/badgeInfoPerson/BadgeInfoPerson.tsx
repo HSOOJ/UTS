@@ -1,51 +1,18 @@
-import styled from "styled-components";
-import Palette from "../../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../../global/theme";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
-import { Modal, message } from "antd";
-import { useState } from "react";
+import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../containers/button";
 import { WalletAddressModal } from "../walletAddressModal/WalletAddressModal";
 import { useRecoilState } from "recoil";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
-
-const BadgeImg = styled.img`
-  border-radius: 50%;
-`;
-
-const BadgeInfoPersonDiv = styled.div<ThemeType>`
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border-radius: 10px;
-  width: 700px;
-  padding: 20px;
-  justify-content: center;
-  gap: 60px;
-`;
-
-const BadgeLeft = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const BadgeRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  width: 200px;
-`;
-
-const BadgeCenter = styled.div`
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  width: 250px;
-`;
+import {
+  BadgeCenter,
+  BadgeImg,
+  BadgeInfoPersonDiv,
+  BadgeLeft,
+  BadgeRight,
+} from "./BadgeInfoPerson.styled";
 
 interface IBadgeInfoPerson extends ThemeType {
   badge_id: string;
