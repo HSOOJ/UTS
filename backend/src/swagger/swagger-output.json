@@ -252,6 +252,36 @@
         }
       }
     },
+    "/artist/report": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userSeq": {
+                  "example": "any"
+                },
+                "artistSeq": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/market/artists": {
       "get": {
         "description": "",
