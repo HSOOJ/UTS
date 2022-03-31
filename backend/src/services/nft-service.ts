@@ -28,11 +28,16 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
   console.log("PROCEEDING update nft owner...");
 
   const nftRepository = getConnection().getRepository(Nft);
+  const userRepository = getConnection().getRepository(User);
   const checkUser = await userService.checkUserSeq(ownerSeq);
   const checkNft = await returnNft(nftSeq);
   const checkIsOnSale = await saleService.checkIsOnSale(nftSeq);
   const curOwner = checkNft?.nft_owner_seq;
   const curCount = checkNft?.nft_transaction_count;
+  const curVolume = checkNft?.nft_volume;
+  const ownerUserInfo = await userService.getUserInfo(ownerSeq);
+  const curUserInfo = await userService.getUserInfo(Number(curOwner));
+
   if (checkIsOnSale === null) {
     console.log("판매 중인 NFT가 아님");
     return 0;
@@ -42,6 +47,20 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
         console.log("현재 소유자와 동일한 회원");
         return 0;
       } else if (checkUser !== null) {
+        await userRepository.update(
+          { user_seq: ownerSeq },
+          {
+            user_volume:
+              Number(ownerUserInfo?.user_volume) + checkIsOnSale.sale_price,
+          }
+        );
+        await userRepository.update(
+          { user_seq: curOwner },
+          {
+            user_volume:
+              Number(curUserInfo?.user_volume) + checkIsOnSale.sale_price,
+          }
+        );
         await nftRepository.update(
           {
             nft_seq: nftSeq,
@@ -50,6 +69,7 @@ async function updateOwner(ownerSeq: number, nftSeq: number) {
             nft_owner_seq: ownerSeq,
             nft_transaction_count: Number(curCount) + 1,
             mod_dt: nowDate,
+            nft_volume: Number(curVolume) + checkIsOnSale.sale_price,
           }
         );
         console.log("소유자 변경 성공");
@@ -135,6 +155,7 @@ async function editionMinting(
         nft_id: nftId,
         nft_transaction_id: nftTransactionId,
         nft_transaction_count: 1,
+        nft_volume: 0,
       });
       const nftSeq = await nftRepository.findOne({
         where: {

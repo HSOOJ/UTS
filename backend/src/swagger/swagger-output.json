@@ -12,7 +12,9 @@
     }
   ],
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/user/info": {
       "get": {
@@ -186,6 +188,66 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/nfts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/nfts/onsale": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/likes": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -605,6 +667,17 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/main/topsellers": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

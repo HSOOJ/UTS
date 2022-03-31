@@ -210,3 +210,5 @@ alter table notification auto_increment=1;
 alter table report auto_increment=1;
 alter table sale auto_increment=1;
 alter table user auto_increment=1;
+ALTER TABLE `uts`.`user` 
+ADD COLUMN `user_volume` DOUBLE NOT NULL AFTER `del_dt`;

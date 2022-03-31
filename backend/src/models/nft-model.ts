@@ -42,6 +42,9 @@ export class Nft {
   @Column()
   nft_transaction_count: number;
 
+  @Column()
+  nft_volume: number;
+
   @CreateDateColumn()
   reg_dt: Date;
 

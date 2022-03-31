@@ -22,4 +22,24 @@ async function nftHeart() {
   return heartTotal.slice(0, 12);
 }
 
-export default { nftHeart } as const;
+async function getTopSellers() {
+  const userRepository = getConnection().getRepository(User);
+
+  const topsellers = await userRepository
+    .createQueryBuilder("user")
+    .where({ user_role: 0 })
+    .orderBy("user.user_volume", "DESC")
+    .limit(8)
+    .getRawMany();
+  const result = topsellers.map(function (x) {
+    return {
+      userSeq: x.user_user_seq,
+      userNickname: x.user_user_nickname,
+      userImage: x.user_user_profile_image,
+      userVolume: x.user_user_volume,
+    };
+  });
+  return result;
+}
+
+export default { nftHeart, getTopSellers } as const;
