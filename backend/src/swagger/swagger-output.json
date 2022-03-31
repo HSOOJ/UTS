@@ -701,6 +701,23 @@
           }
         }
       }
+    },
+    "/admin/search/user": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userWalletAddress",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
