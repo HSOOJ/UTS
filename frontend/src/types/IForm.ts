@@ -1,9 +1,12 @@
+import { UseFormRegisterReturn, UseFormSetValue } from "react-hook-form";
 import { IDisable } from "./IDisabled";
 
-type FormType = {
-  hasError?: boolean;
-  required?: boolean;
-  readonly?: boolean;
-};
+export interface IRegister {
+  register?: UseFormRegisterReturn;
+}
 
-export interface IForm extends FormType, IDisable {}
+export interface FormType extends IDisable {
+  errMessage?: string;
+}
+
+export interface IForm extends FormType, IRegister {}

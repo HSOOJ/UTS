@@ -1,14 +1,24 @@
 import styled from "styled-components";
 import Slider from "react-slick";
+import { ThemeType } from "../../../global/theme";
 
-export const Layout = styled.div`
+export const Layout = styled.div<ThemeType>`
   width: 100%;
   margin: 1.5em auto 1.5em;
   border: solid 0.3em;
-  border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
+  border-image: ${({ isDark }) =>
+    isDark
+      ? "linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa)"
+      : null};
   border-image-slice: 1;
   border-radius: 20px;
   padding: 0 0 0 2%;
+`;
+export const LayoutPaddingLeft = styled.div`
+  padding: 0 0 0 5%;
+`;
+export const LayoutPaddingLeft2 = styled.div`
+  padding: 0 0 0 3%;
 `;
 export const Wrapper = styled.div`
   float: left;
@@ -23,6 +33,7 @@ export const StyledSlider = styled(Slider)`
 `;
 export const ImageContainer = styled.div`
   padding: 1em;
+  margin: 10px 0 0 0;
   height: 100%;
   position: relative;
   cursor: pointer;
@@ -46,11 +57,13 @@ export const ImageBadge = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 10% / 50%;
+  margin: 0 0 10px 0;
 `;
 export const ImageSeller = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 100%;
+  margin: 0 0 10px 0;
 `;
 export const ImageBoarding = styled.img`
   width: 300px;
@@ -73,15 +86,15 @@ export const TextGradientBlue = styled.p`
   -webkit-background-clip: text;
   display: inline;
 `;
-export const TextGradientAside = styled.p`
+export const TextGradientAside = styled.p<ThemeType>`
   font-size: 48px;
   display: inline;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const TextContent = styled.p`
+export const TextContent = styled.p<ThemeType>`
   font-size: 25px;
   display: inline;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
 export const TextNameTop = styled.div`
   z-index: 1;
@@ -90,13 +103,15 @@ export const TextNameTop = styled.div`
   top: 10%;
   left: 10%;
   color: white;
+  font-size: 30px;
 `;
 export const TextSubTop = styled.div`
   z-index: 1;
   position: absolute;
-  top: 16%;
+  top: 22%;
   left: 10%;
   color: white;
+  font-size: 16px;
 `;
 export const TextName = styled.div`
   z-index: 1;
@@ -109,7 +124,7 @@ export const TextName = styled.div`
 export const TextSub = styled.div`
   z-index: 1;
   position: absolute;
-  top: 25%;
+  top: 27%;
   left: 12%;
   color: white;
 `;

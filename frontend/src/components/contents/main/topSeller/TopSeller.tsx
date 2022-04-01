@@ -11,7 +11,12 @@ import {
   StyledSlider,
   TextContent,
   Wrapper,
+  LayoutPaddingLeft,
 } from "../Main.styled";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "../../../../recoil/theme";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const settings = {
   dots: false,
@@ -21,6 +26,9 @@ const settings = {
 };
 
 export const TopSeller = () => {
+  // recoil
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   let urls = [
     "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
     "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
@@ -31,56 +39,95 @@ export const TopSeller = () => {
     "https://images.squarespace-cdn.com/content/v1/5ddad07e6a21930596a863a6/1620241984557-ZPQ8YWOWN8NIYIKZH54R/Random+Card+NFT+Cesar+Langa",
     "https://public.nftstatic.com/static/nft/zipped/a81fb83270264069b20d998e738de84b_zipped.gif",
   ];
-  const datas = [
-    { rank: ["0", "1"], name: ["name", "NAME"], urls: [urls[0], urls[1]] },
-    { rank: ["2", "3"], name: ["name", "NAME"], urls: [urls[2], urls[3]] },
-    { rank: ["4", "5"], name: ["name", "NAME"], urls: [urls[4], urls[5]] },
-    { rank: ["6", "7"], name: ["name", "NAME"], urls: [urls[6], urls[7]] },
-  ];
+  const arr = [0, 2, 4, 6];
 
+  // useState
+  const [datas, setDatas] = useState([
+    { id: 0, seq: "0", url: urls[0], name: "SellerName", vol: "vol" },
+    { id: 1, seq: "1", url: urls[1], name: "SellerName", vol: "vol" },
+    { id: 2, seq: "2", url: urls[2], name: "SellerName", vol: "vol" },
+    { id: 3, seq: "3", url: urls[3], name: "SellerName", vol: "vol" },
+    { id: 4, seq: "4", url: urls[4], name: "SellerName", vol: "vol" },
+    { id: 5, seq: "5", url: urls[5], name: "SellerName", vol: "vol" },
+    { id: 6, seq: "6", url: urls[6], name: "SellerName", vol: "vol" },
+    { id: 7, seq: "7", url: urls[7], name: "SellerName", vol: "vol" },
+  ]);
+
+  // useNavigate
   let navigate = useNavigate();
+
+  // Axios
+  const GetTopSeller = () => {
+    axios
+      .get("http://j6a105.p.ssafy.io:8080/api/main/topsellers")
+      .then((res: any) => {
+        console.log(res.data.success);
+        let updatedData = datas.slice(0);
+        res.data.success.map((i: any, index: number) => {
+          updatedData.splice(index, 1, {
+            id: index,
+            seq: i.userSeq,
+            url: i.userImage,
+            name: i.userNickname,
+            vol: i.userVolume,
+          });
+        });
+        setDatas(updatedData);
+      })
+      .catch((res: any) => {
+        console.log(res);
+      });
+  };
+
+  // useEffect
+  useEffect(GetTopSeller, []);
 
   return (
     <>
       {/* <h1>Top Sellers Component</h1>
       <h2>탑셀러 - 일반유저 (아티스트 아닌) 누적거래</h2> */}
       <TextGradientBlue>Top </TextGradientBlue>
-      <TextGradientAside>Sellers</TextGradientAside>
-      <Layout>
-        <Container>
-          <StyledSlider {...settings}>
-            {datas.map((data, index) => {
-              return (
-                <div key={index}>
-                  <Wrapper>
-                    <ImageContainer
-                      onClick={() => {
-                        navigate(`/profile/${data.rank[0]}`);
-                      }}
-                    >
-                      <h2>{data.rank[0]}</h2>
-                      <ImageSeller src={data.urls[0]} alt={data.rank[0]} />
-                      <TextContent>
-                        {data.rank[0]} | {data.name[0]}
-                      </TextContent>
-                    </ImageContainer>
-                    <ImageContainer
-                      onClick={() => {
-                        navigate(`/profile/${data.rank[1]}`);
-                      }}
-                    >
-                      <h2>{data.rank[1]}</h2>
-                      <ImageSeller src={data.urls[1]} alt={data.rank[1]} />
-                      <TextContent>
-                        {data.rank[1]} | {data.name[1]}
-                      </TextContent>
-                    </ImageContainer>
-                  </Wrapper>
-                </div>
-              );
-            })}
-          </StyledSlider>
-        </Container>
+      <TextGradientAside isDark={isDark}>Sellers</TextGradientAside>
+      <Layout isDark={isDark}>
+        <LayoutPaddingLeft>
+          <Container>
+            <StyledSlider {...settings}>
+              {arr.map((a) => {
+                return (
+                  <div key={a}>
+                    <Wrapper>
+                      <ImageContainer
+                        onClick={() => {
+                          navigate(`/profile/${datas[a].seq}`);
+                        }}
+                      >
+                        <ImageSeller src={datas[a].url} alt={datas[a].name} />
+                        <TextContent isDark={isDark}>
+                          {datas[a].name}
+                          {/* {datas[a].name} / {datas[a].vol} */}
+                        </TextContent>
+                      </ImageContainer>
+                      <ImageContainer
+                        onClick={() => {
+                          navigate(`/profile/${datas[a + 1].seq}`);
+                        }}
+                      >
+                        <ImageSeller
+                          src={datas[a + 1].url}
+                          alt={datas[a + 1].name}
+                        />
+                        <TextContent isDark={isDark}>
+                          {datas[a + 1].name}
+                          {/* {datas[a + 1].name} / {datas[a + 1].vol} */}
+                        </TextContent>
+                      </ImageContainer>
+                    </Wrapper>
+                  </div>
+                );
+              })}
+            </StyledSlider>
+          </Container>
+        </LayoutPaddingLeft>
       </Layout>
     </>
   );

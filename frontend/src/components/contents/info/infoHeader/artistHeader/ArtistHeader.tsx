@@ -1,5 +1,6 @@
 import { message, Popconfirm } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ThemeType } from "../../../../../global/theme";
@@ -41,6 +42,7 @@ interface IArtistHeader extends ThemeType {
 
 export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
   const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
+  let navigate = useNavigate();
 
   const onClickFollow = () => {
     axios({
