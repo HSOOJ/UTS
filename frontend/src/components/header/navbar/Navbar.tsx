@@ -13,7 +13,7 @@ const Nav = styled.div`
   padding-right: 50px;
   justify-content: flex-end;
   gap: 20px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid lightgray;
 `;
 
 const MainNav = styled.div`
