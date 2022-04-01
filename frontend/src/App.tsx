@@ -28,7 +28,7 @@ function App() {
 
   // useEffect
   useEffect(() => {
-    if (profileStateVal.userWallet === undefined) {
+    if (profileStateVal.userSeq === undefined) {
       setUserStateVal({ ...userStateVal, login: false });
     } else {
       setUserStateVal({ ...userStateVal, login: true });
