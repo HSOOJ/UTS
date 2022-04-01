@@ -13,7 +13,7 @@ const Nav = styled.div`
   padding-right: 50px;
   justify-content: flex-end;
   gap: 20px;
-  background-color: rgba(0, 102, 255, 0.1);
+  border-bottom: 1px solid gray;
 `;
 
 const MainNav = styled.div`
@@ -43,23 +43,36 @@ export const Navbar = () => {
       </Link>
       <MainNav>
         <NavLink to={"/artist"}>
-          <NavItem size="h2" weight="extraBold">
+          <NavItem size="h3" weight="bold">
             ARTIST
           </NavItem>
         </NavLink>
         <NavLink to={"/badge"}>
-          <NavItem size="h2" weight="extraBold">
+          <NavItem size="h3" weight="bold">
             BADGE
           </NavItem>
         </NavLink>
       </MainNav>
       <NavLink to={"/about"}>
-        <NavItem size="h2" weight="extraBold">
+        <NavItem size="h3" weight="bold">
           ABOUT
         </NavItem>
       </NavLink>
-      {isArtist ? <NavLink to={"/minting"}>Mint</NavLink> : null}
-      {isAdmin ? <NavLink to={"/admin"}>Admin</NavLink> : null}
+      {isArtist ? (
+        <NavLink to={"/minting"}>
+          <NavItem size="h3" weight="bold">
+            Mint
+          </NavItem>
+        </NavLink>
+      ) : null}
+      {isAdmin ? (
+        <NavLink to={"/admin"}>
+          {" "}
+          <NavItem size="h3" weight="bold">
+            Admin
+          </NavItem>
+        </NavLink>
+      ) : null}
       <ThemeToggle />
       <DropdownCompo />
     </Nav>

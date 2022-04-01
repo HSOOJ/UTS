@@ -22,6 +22,7 @@ export const LayOut = styled(motion.button)<IButton>`
   border-radius: 10px;
   font-size: ${FontSize.body1}px;
   background-color: ${({ styleVariant }) => bgColor[styleVariant]};
+  cursor: pointer;
 `;
 
 export const ButtonLayOutVariantPrimary = {
