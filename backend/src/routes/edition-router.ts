@@ -48,7 +48,7 @@ router.get("/nfts", async (req, res, next) => {
           nft_owner_image: cur.user_user_profile_image, // 뱃지 주인 사진
           nft_owner_seq: cur.user_user_seq, // 뱃지 주인 시퀀스
           nft_price: saleInfo.latest, // 현재 가격
-          nft_is_soldOut: saleInfo.isSale, // nft 판매 여부
+          nft_is_soldout: saleInfo.isSale, // nft 판매 여부
         },
       });
     }
