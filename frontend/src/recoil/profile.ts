@@ -5,7 +5,7 @@ interface profileType {
   modifyNickname: string;
   userWallet: string | undefined | null;
   userSeq: string | undefined | null;
-  userProfileImage: string | undefined | null;
+  userProfileImage: string | undefined;
   clickProfile: boolean;
   modalLoading: boolean;
   modalVisible: boolean;
