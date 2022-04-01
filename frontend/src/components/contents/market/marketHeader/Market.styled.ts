@@ -6,8 +6,8 @@ import { ThemeType } from "../../../../global/theme";
 const bannerGradient = css<ThemeType>`
   background: linear-gradient(
     140.33deg,
-    ${({ isDark }) => (isDark ? Palette.Blu300 : Palette.Blu200)},
     ${({ isDark }) => (isDark ? Palette.Blu200 : Palette.Blu100)},
+    ${({ isDark }) => (isDark ? Palette.BluOpacity100 : Palette.Blu200)},
     ${Palette.Rosso100}
   );
 `;
@@ -26,7 +26,7 @@ export const LayOut = styled.div<ThemeType>`
   padding: 30px;
   margin-bottom: 1.5rem;
   gap: 10px;
-  ${bannerGradient}
+
   span,
   image {
     z-index: 1;
@@ -37,11 +37,12 @@ export const LayOut = styled.div<ThemeType>`
     position: absolute;
     bottom: 0;
     left: 0;
+    border-radius: 50%;
     width: 100%;
     height: 100%;
-    filter: blur(25px);
+    filter: blur(110px);
     ${bannerGradient}
-    transform: translateY(0.7rem) scale(0.9);
+    transform: translateY(0.5rem)
   }
 `;
 export const ImageLayOut = styled(motion.div)`

@@ -10,7 +10,7 @@ const ArtistMarketHeader = () => {
   return (
     <LayOut isDark={isDark}>
       <ImageLayOut
-        initial={{ y: -10 }}
+        initial={{ y: -20 }}
         animate={{ y: 10 }}
         transition={{ repeat: Infinity, repeatType: "reverse", duration: 2.4 }}
       >
