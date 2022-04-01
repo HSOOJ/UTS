@@ -13,12 +13,11 @@ export const Edition = ({ isDark }: IEdition) => {
   return (
     <Input
       register={register("editionTotal", {
-        required: "발행할 에디션 수를 입력해주세요",
-        min: {
-          value: 0,
-          message: "에디션 갯수는 0보다 커야합니다",
-        },
+        required: "발행할 에디션 숫자를 입력해주세요",
         validate: {
+          shouldPositive: (v: number) =>
+            (typeof v === "number" && v > 0) ||
+            "에디션 갯수는 0보다 커야합니다",
           shouldInt: (v: number) => v % 1 === 0 || "자연수만 올 수 있어요",
         },
       })}

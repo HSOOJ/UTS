@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../recoil/theme";
+import { SERVICE_FEE } from "../../../../types/IServiceFee";
 import ImageInput from "../../../containers/imageInput";
 import { Label } from "../../../containers/input/Input.styled";
 import LetterBox from "../../../containers/letterBox/LetterBox";
@@ -21,7 +22,15 @@ import { Royalty } from "./Royalty";
 
 export const PublishBox = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
-  const { register, watch, control, formState } = useFormContext<IMinting>();
+  const { register, control, formState, watch } = useFormContext<IMinting>();
+  const price = watch("salePrice");
+  const edition = watch("editionTotal");
+  const estimate = () => {
+    return typeof price === "number" && typeof edition === "number"
+      ? (price * edition * (1 - SERVICE_FEE)).toFixed(2)
+      : 0;
+  };
+
   return (
     <LayOut>
       <Controller
@@ -66,7 +75,7 @@ export const PublishBox = () => {
                 Service Fee: 2.5%
               </LetterBox>
               <LetterBox color={isDark ? "light" : "primary"}>
-                You will receive {} ETH
+                You will receive {edition && price ? estimate() : 0} ETH
               </LetterBox>
             </LayOutFlexEnd>
           </BottomHalfLayOut>
