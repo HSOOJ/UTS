@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   Container,
@@ -8,15 +9,32 @@ import {
   TextNftNum,
 } from "../NftBadgeList.style";
 
-export const OwnCompo = () => {
+interface PropsType {
+  artistNickname: string;
+  editionImage: string;
+  editionName: string;
+  nftNum: string;
+  nftSeq: string;
+}
+
+export const OwnCompo = ({
+  artistNickname,
+  editionImage,
+  editionName,
+  nftNum,
+  nftSeq,
+}: PropsType) => {
+  // useNavigate
+  let navigate = useNavigate();
+
   return (
     <>
-      <Container>
-        <Image src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg" />
+      <Container onClick={() => navigate(`/edition/${nftSeq}`)}>
+        <Image src={editionImage} />
         <ContainerText>
-          <TextEditionName>Edition Name: ....</TextEditionName>
-          <TextArtistName>Artist Name: ....</TextArtistName>
-          <TextNftNum>Nft Number: ....</TextNftNum>
+          <TextEditionName>Edition Name: {editionName}</TextEditionName>
+          <TextArtistName>Artist Name: {artistNickname}</TextArtistName>
+          <TextNftNum>Nft Number: {nftNum}</TextNftNum>
         </ContainerText>
       </Container>
     </>
