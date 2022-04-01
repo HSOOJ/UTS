@@ -202,6 +202,7 @@ class ownNft {
   }
 }
 
+// 보유하고 있는 NFT의 전체 정보
 async function getOwnNft(userSeq: number) {
   const result = await getConnection()
     .getRepository(Nft)
@@ -218,6 +219,7 @@ async function getOwnNft(userSeq: number) {
   return result;
 }
 
+// 보유하고 있는 NFT 정보 중에서 리턴할 값
 async function returnOwnNft(userSeq: number) {
   const result = await getOwnNft(userSeq);
   let res = new Array();
@@ -238,6 +240,7 @@ async function returnOwnNft(userSeq: number) {
   return res;
 }
 
+// 판매중인 NFT 정보 중에서 리턴할 값
 async function returnSaleNft(userSeq: number) {
   const result = await getOwnNft(userSeq);
   let res = new Array();
@@ -261,6 +264,7 @@ async function returnSaleNft(userSeq: number) {
   return res;
 }
 
+// 좋아요한 NFT의 전체 정보
 async function getHeartNft(userSeq: number) {
   const result = await getConnection()
     .getRepository(Nft)
@@ -283,6 +287,7 @@ async function getHeartNft(userSeq: number) {
   return result;
 }
 
+// 좋아요한 NFT의 정보 중에서 리턴할 값
 async function returnHeartNft(userSeq: number) {
   const result = await getHeartNft(userSeq);
   let res = new Array();
@@ -304,6 +309,29 @@ async function returnHeartNft(userSeq: number) {
   return res;
 }
 
+// NFT 소유자 리턴
+async function returnNFTOwner(editionSeq: number) {
+  // const res = await getConnection()
+  //   .createQueryBuilder()
+  //   .select("nft.nft_owner_seq")
+  //   .from(Nft, "nft")
+  //   .where("nft.edition_seq = :eSeq", { eSeq: editionSeq })
+  //   .getOne();
+
+  // const owner = (<{ nft_owner_seq: number }>res).nft_owner_seq;
+  // return owner;
+
+  const res = await getConnection()
+    .getRepository(Nft)
+    .createQueryBuilder("nft")
+    .leftJoinAndSelect(User, "user", "user.user_seq = nft.nft_owner_seq")
+    .where(`nft.edition_seq = ${editionSeq}`)
+    .getRawMany();
+
+  return res;
+  // return res.getRawMany();
+}
+
 export default {
   getOwnNft,
   getHeartNft,
@@ -313,4 +341,5 @@ export default {
   updateOwner,
   editionMinting,
   returnHeartNft,
+  returnNFTOwner,
 } as const;
