@@ -28,18 +28,6 @@ router.get("/info", async (req, res, next) => {
   } else return res.status(404).json({ fail: "에디션 정보가 유효 하지 않음" });
 });
 
-/*
-NFT 시퀀스
-에디션 사진
-NFT 번호 
-
-현재 소유자 유저 시퀀스
-현재 소유자 프로필 사진
-
-현재 가격
-판매 여부
-*/
-
 router.get("/nfts", async (req, res, next) => {
   const editionSeq = Number(req.query.editionSeq);
 
@@ -60,7 +48,7 @@ router.get("/nfts", async (req, res, next) => {
           nft_owner_image: cur.user_user_profile_image, // 뱃지 주인 사진
           nft_owner_seq: cur.user_user_seq, // 뱃지 주인 시퀀스
           nft_price: saleInfo.latest, // 현재 가격
-          nft_isSale: saleInfo.isSale, // nft 판매 여부
+          nft_is_soldOut: saleInfo.isSale, // nft 판매 여부
         },
       });
     }

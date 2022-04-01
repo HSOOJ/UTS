@@ -309,18 +309,7 @@ async function returnHeartNft(userSeq: number) {
   return res;
 }
 
-// NFT 소유자 리턴
 async function returnNFTOwner(editionSeq: number) {
-  // const res = await getConnection()
-  //   .createQueryBuilder()
-  //   .select("nft.nft_owner_seq")
-  //   .from(Nft, "nft")
-  //   .where("nft.edition_seq = :eSeq", { eSeq: editionSeq })
-  //   .getOne();
-
-  // const owner = (<{ nft_owner_seq: number }>res).nft_owner_seq;
-  // return owner;
-
   const res = await getConnection()
     .getRepository(Nft)
     .createQueryBuilder("nft")
