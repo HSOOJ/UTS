@@ -9,13 +9,21 @@ export const bgColor = {
   dark2: Palette.Grigio500,
 };
 
+const borderColor = {
+  light: Palette.Blu100,
+  dark: Palette.Grigio500,
+};
+
 export const FormLayOut = styled.form<ThemeType>`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
   gap: 10px;
-  margin: 0px 30px;
+  margin: 20px 30px;
+
+  border: 1px solid
+    ${({ isDark }) => (isDark ? borderColor["dark"] : borderColor["light"])};
 
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark1"] : bgColor["light1"]};
