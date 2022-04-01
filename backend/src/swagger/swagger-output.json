@@ -732,6 +732,26 @@
         }
       }
     },
+    "/edition/nfts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "editionSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/admin/search/user": {
       "get": {
         "description": "",

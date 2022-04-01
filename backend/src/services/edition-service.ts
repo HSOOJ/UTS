@@ -18,8 +18,8 @@ async function returnEditionImage(editionSeq: number) {
     .where("edition.edition_seq = :eSeq", { eSeq: editionSeq })
     .getOne();
 
-  const t = (<{ edition_image: string }>res).edition_image;
-  return t;
+  const img = (<{ edition_image: string }>res).edition_image;
+  return img;
 }
 
 export default {
