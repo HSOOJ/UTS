@@ -1,4 +1,5 @@
-FROM node:16
+#FROM node:16
+FROM nginx
 
 # root 에 app 폴더를 생성
 RUN mkdir /app
@@ -12,13 +13,13 @@ RUN mkdir ./build
 # host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
 ADD ./build ./build
 
-COPY . /app
-COPY package.json /app/package.json
-RUN npm i
+#COPY . /app
+#COPY package.json /app/package.json
+#RUN npm i
 
 #CMD ["npm", "start"]
 
-FROM nginx
+#FROM nginx
 
 # nginx 의 default.conf 를 삭제
 RUN rm /etc/nginx/conf.d/default.conf
