@@ -26,7 +26,7 @@ export const PublishBox = () => {
   const price = watch("salePrice");
   const edition = watch("editionTotal");
   const estimate = () => {
-    return typeof price === "number" && typeof edition === "number"
+    return !isNaN(price * edition)
       ? (price * edition * (1 - SERVICE_FEE)).toFixed(2)
       : 0;
   };
