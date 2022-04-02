@@ -13,8 +13,8 @@ RUN mkdir ./build
 # host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
 ADD ./build ./build
 
-#COPY . /app
-#COPY package.json /app/package.json
+COPY . /app
+COPY package.json /app/package.json
 #RUN npm i
 
 #CMD ["npm", "start"]
