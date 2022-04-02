@@ -136,6 +136,22 @@ async function getUserProfileImage(userSeq: number) {
   return res;
 }
 
+async function getAllUserProfileImage(userSeq: number) {
+  const userInfo = await getConnection()
+    .createQueryBuilder()
+    .select("user.user_profile_image")
+    .from(User, "user")
+    .where("user.user_seq = :seq", { seq: userSeq })
+    .withDeleted()
+    .getOne();
+  if (userInfo !== null) {
+    const res = (<{ user_profile_image: string }>userInfo).user_profile_image;
+    return res;
+  } else {
+    return null;
+  }
+}
+
 async function getFollowings(myUserSeq: number, profileUserSeq: number) {
   const followRepository = getConnection().getRepository(Follow);
   const followList = await followRepository
@@ -146,24 +162,11 @@ async function getFollowings(myUserSeq: number, profileUserSeq: number) {
 
   return followList;
 }
-/*
-SELECT *
-FROM User user
-WHERE user.user_seq = userSeq
-*/
-// function getUserInfo(userSeq: number) {
-//   const userInfo = getConnection()
-//     .createQueryBuilder()
-//     .select(["user"])
-//     .from(User, "user")
-//     .where("user.user_seq = :seq", { seq: userSeq })
-//     .getOne();
-//   return userInfo;
-// }
 
 // Export default
 export default {
   getUserProfileImage,
+  getAllUserProfileImage,
   editProfileImage,
   editNickname,
   getUserInfo,
