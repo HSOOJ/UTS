@@ -1,5 +1,4 @@
-#FROM node:16
-FROM nginx
+FROM node:16
 
 # root 에 app 폴더를 생성
 RUN mkdir /app
@@ -15,9 +14,11 @@ ADD ./build ./build
 
 COPY . /app
 COPY package.json /app/package.json
-#RUN npm i
+RUN npm i
 
 #CMD ["npm", "start"]
+
+FROM nginx
 
 # nginx 의 default.conf 를 삭제
 RUN rm /etc/nginx/conf.d/default.conf
