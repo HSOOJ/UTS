@@ -61,7 +61,6 @@ export const TopSeller = () => {
     axios
       .get("http://j6a105.p.ssafy.io:8080/api/main/topsellers")
       .then((res: any) => {
-        console.log(res.data.success);
         let updatedData = datas.slice(0);
         res.data.success.map((i: any, index: number) => {
           updatedData.splice(index, 1, {
