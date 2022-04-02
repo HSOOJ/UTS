@@ -17,6 +17,7 @@ const xsmall =
   defaultGridCardMaxWidth * 2 + paddingAndGap * 1 + ControllerMaxWidth;
 
 export const GridLayOut = styled.div`
+  z-index: 99;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: ${paddingAndGap}px;

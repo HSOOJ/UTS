@@ -1,6 +1,12 @@
 import styled from "styled-components";
+import Palette from "../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../global/theme";
 import { bgColor } from "../Minting.styled";
+
+const borderColor = {
+  light: Palette.BluOpacity100,
+  dark: Palette.Grigio400,
+};
 
 export const LayOut = styled.div`
   display: grid;
@@ -19,6 +25,9 @@ export const InfoLayOut = styled.div<ThemeType>`
   min-width: 540px;
   padding: 10px;
   width: 100%;
+  gap: 10px;
+  border: 1px solid
+    ${({ isDark }) => (isDark ? borderColor["dark"] : borderColor["light"])};
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark2"] : bgColor["light2"]};
   border-radius: 8px;

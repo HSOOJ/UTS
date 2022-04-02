@@ -141,6 +141,9 @@ router.get("/followings", async (req, res, next) => {
   );
   console.log(followList);
   const mylist: Array<any> = [];
+  if (followList.length === 0) {
+    return res.status(404).json({ fail: "" });
+  }
   if (Number(myUserSeq) === Number(profileUserSeq)) {
     console.log("same");
     for (let idx = 0; idx < followList.length; idx++) {

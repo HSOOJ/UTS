@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { ThemeType } from "../../../../global/theme";
 
 export const Container = styled.div`
-  cursor: pointer;
   margin: 0;
   display: flex;
   align-items: left;
@@ -12,33 +12,35 @@ export const Image = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 30px;
+  cursor: pointer;
 `;
 export const ContainerText = styled.div`
   padding: 15px 0 0 15px;
   display: block;
   text-align: left;
+  cursor: pointer;
 `;
-export const TextEditionName = styled.p`
+export const TextEditionName = styled.p<ThemeType>`
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const TextArtistName = styled.p`
+export const TextArtistName = styled.p<ThemeType>`
   font-size: 21px;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const TextNftNum = styled.p`
+export const TextNftNum = styled.p<ThemeType>`
   font-size: 18px;
-  color: white;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const ButtonLoad = styled.button`
+export const ButtonLoad = styled.button<ThemeType>`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
   background: none;
   border: 1px solid #a8c1f8;
-  color: #fff;
+  color: ${({ isDark }) => (isDark ? "white" : "black")};
   display: inline;
   font-size: 17px;
   font-weight: bold;

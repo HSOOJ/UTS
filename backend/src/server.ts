@@ -17,10 +17,6 @@ import http from "http";
 import swaggerUi from "swagger-ui-express";
 const swaggerFile = require("./swagger/swagger-output.json");
 
-// let CorsOptions = {
-//   origin: "http://j6a105.p.ssafy.io:3000",
-//   credentials: true
-// };
 // Constants
 const app = express();
 

@@ -17,7 +17,7 @@ export const ModifyModalPic = () => {
         <Image
           style={{ float: "left" }}
           width={200}
-          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          src={profileStateVal.userProfileImage}
         />
         <div>{profileStateVal.userProfileImage}</div>
         <button onClick={clickModalModifyPic}>프로필 사진 수정</button>

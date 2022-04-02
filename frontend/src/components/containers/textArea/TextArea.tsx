@@ -1,14 +1,12 @@
 import FontSize from "../../../foundation/font/size/FontSize";
 import { Icon } from "../../../foundation/Icon/Icon";
-import { ErrorLayOut, errVariants } from "../input/Input.styled";
-import LetterBox from "../letterBox/LetterBox";
 import {
-  TextAreaBox,
+  ErrorLayOut,
+  errVariants,
   InputBoxVariants,
-  Label,
-  TextField,
-  LayOut,
-} from "./TextArea.styled";
+} from "../input/Input.styled";
+import LetterBox from "../letterBox/LetterBox";
+import { TextAreaBox, Label, TextField, LayOut } from "./TextArea.styled";
 import { ITextArea } from "./TextArea.types";
 
 const TextArea = ({
