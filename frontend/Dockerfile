@@ -15,7 +15,7 @@ ADD ./build ./build
 
 COPY . /app
 COPY package.json /app/package.json
-#RUN npm i
+RUN npm i
 
 #CMD ["npm", "start"]
 
