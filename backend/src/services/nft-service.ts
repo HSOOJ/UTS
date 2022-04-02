@@ -4,11 +4,10 @@ import { Heart } from "@models/heart-model";
 import { Nft } from "@models/nft-model";
 import { Sale } from "@models/sale-model";
 import { User } from "@models/user-model";
-import { getConnection } from "typeorm";
+import { Code, getConnection } from "typeorm";
 import heartService from "./heart-service";
 import saleService from "./sale-service";
 import userService from "./user-service";
-import { NftSorting } from "@models/nft_sorting-model";
 
 const nowDate = new Date();
 
@@ -318,7 +317,6 @@ async function returnNFTOwner(editionSeq: number) {
     .getRawMany();
 
   return res;
-  // return res.getRawMany();
 }
 
 export default {

@@ -307,6 +307,31 @@
         }
       }
     },
+    "/market/nfts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "sortby",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/search/artists": {
       "get": {
         "description": "",
