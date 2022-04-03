@@ -34,7 +34,12 @@ export const AdminCompo = () => {
   };
 
   const onClickReportUser = () => {
-    setAdminStateVal({ ...adminStateVal, manageUser: false });
+    setAdminStateVal({
+      ...adminStateVal,
+      manageUser: false,
+      userNickname: "",
+      userRole: 0,
+    });
   };
 
   const { manageUser } = useRecoilValue(adminState);
@@ -48,7 +53,7 @@ export const AdminCompo = () => {
           신고 관리하기
         </Button>
       </ButtonBox>
-      {manageUser ? <ManageUser /> : <ReportUser />}
+      {manageUser ? <ManageUser isDark={isDark} /> : <ReportUser />}
     </ModalDiv>
   );
 };
