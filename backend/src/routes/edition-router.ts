@@ -15,16 +15,19 @@ router.get("/info", async (req, res, next) => {
     const artistInfo = await artistService.getArtistInfo(
       editionInfo.artist_seq
     );
-    return res.status(200).json({
-      success: {
-        edition_seq: editionInfo.edition_seq,
-        edition_name: editionInfo.edition_name,
-        edition_image: editionInfo.edition_image,
-        edition_description: editionInfo.edition_description,
-        artist_image: artistInfo.artist_image,
-        artist_seq: artistInfo.artist_artist_seq,
-      },
-    });
+    if (artistInfo) {
+      return res.status(200).json({
+        success: {
+          edition_seq: editionInfo.edition_seq,
+          edition_name: editionInfo.edition_name,
+          edition_image: editionInfo.edition_image,
+          edition_description: editionInfo.edition_description,
+          artist_image: artistInfo.user_user_profile_image,
+          artist_seq: artistInfo.artist_artist_seq,
+        },
+      });
+    } else
+      return res.status(404).json({ fail: "아티스트 정보가 유효 하지 않음" });
   } else return res.status(404).json({ fail: "에디션 정보가 유효 하지 않음" });
 });
 
