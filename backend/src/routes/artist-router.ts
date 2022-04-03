@@ -1,8 +1,47 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { Artist } from "@models/Artist";
 import artistService from "@services/artist-service";
 import { Request, Response, Router } from "express";
 
 const router = Router();
+
+router.get("/info", async (req: Request, res: Response) => {
+  const artistSeq = Number(req.query.artistSeq);
+
+  const result: Promise<Artist | null> = await artistService.getArtistInfo(
+    artistSeq
+  );
+
+  if (result) {
+    return res.status(200).json({ success: result });
+  } else {
+    return res.status(404).json({ fail: "fail" });
+  }
+});
+
+// router.get("/nfts", async (req: Request, res: Response) => {
+// const artistSeq = Number(req.body.artistSeq);
+
+// const result = artistService.nfts(artistSeq);
+
+// if ((await result).report_seq) {
+// return res.status(200).json({ success: result });
+// } else {
+// return res.status(404).json({ fail: "fail" });
+// }
+// });
+
+// router.get("/editions", async (req: Request, res: Response) => {
+// const artistSeq = Number(req.body.artistSeq);
+
+// const result = artistService.editions(artistSeq);
+
+// if ((await result).report_seq) {
+// return res.status(200).json({ success: result });
+// } else {
+// return res.status(404).json({ fail: "fail" });
+// }
+// });
 
 router.post("/report", async (req: Request, res: Response) => {
   const userSeq = Number(req.body.userSeq);
