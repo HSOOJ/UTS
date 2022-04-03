@@ -3,19 +3,11 @@ import { User } from "@models/user-model";
 import { Artist } from "@models/Artist";
 // import { common_code } from "@models/common_code";
 // import { UserNotFoundError } from '@shared/errors';
-import logger from "jet-logger";
-import {
-  getConnection,
-  QueryResult,
-  SimpleConsoleLogger,
-  Unique,
-} from "typeorm";
+import { getConnection } from "typeorm";
 import { Nft } from "@models/nft-model";
 import { Sale } from "@models/sale-model";
 import { Edition } from "@models/edition-model";
-import editionService from "./edition-service";
 import userService from "./user-service";
-import nftSortingService from "./nft-sorting-service";
 import saleService from "./sale-service";
 import heartService from "./heart-service";
 
@@ -34,6 +26,123 @@ function getArtists(input: string): Promise<Artist[] | null> {
   const result = connection
     .getRepository(Artist)
     .createQueryBuilder("artist")
+    .innerJoinAndSelect("artist.user", "user")
+    .leftJoinAndSelect(
+      (qb) =>
+        qb
+          .select("sum(sale.sale_price)", "artist_sum")
+          .addSelect("artist2.artist_seq", "sum_all_artist_seq")
+          .withDeleted()
+          .from(Sale, "sale")
+          .addFrom(Artist, "artist2")
+          .groupBy("artist2.artist_seq")
+          .where(
+            // eslint-disable-next-line max-len
+            "artist2.artist_seq = (select nft.nft_author_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere("sale.del_dt is not null"),
+      "sum_all",
+      "artist.artist_seq = sum_all.sum_all_artist_seq"
+    )
+    .leftJoinAndSelect(
+      (qb) =>
+        qb
+          .select("max(sale.sale_price)", "artist_max")
+          .addSelect("artist2.artist_seq", "max_artist_seq")
+          .withDeleted()
+          .from(Sale, "sale")
+          .addFrom(Artist, "artist2")
+          .groupBy("artist2.artist_seq")
+          .where(
+            // eslint-disable-next-line max-len
+            "artist2.artist_seq = (select nft.nft_author_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere("sale.del_dt is not null"),
+      "max",
+      "artist.artist_seq = max.max_artist_seq"
+    )
+    .leftJoinAndSelect(
+      (qb) =>
+        qb
+          .select("count(*)", "artist_txs")
+          .addSelect("artist2.artist_seq", "txs_artist_seq")
+          .withDeleted()
+          .from(Sale, "sale")
+          .addFrom(Artist, "artist2")
+          .groupBy("artist2.artist_seq")
+          .where(
+            // eslint-disable-next-line max-len
+            "artist2.artist_seq = (select nft.nft_author_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere("sale.del_dt is not null"),
+      "txs",
+      "artist.artist_seq = txs.txs_artist_seq"
+    )
+    .leftJoinAndSelect(
+      (qb) =>
+        qb
+          .select("sum(temp.tsum)", "volume")
+          .addSelect("temp.nft_edition_seq", "volume_edition_seq")
+          .from(
+            (qb) =>
+              qb
+                .select("sum(sale.sale_price)", "tsum")
+                .addSelect("sale.nft_seq")
+                .addSelect("nft.edition_seq")
+                .withDeleted()
+                .from(Nft, "nft")
+                .addFrom(Sale, "sale")
+                .where("sale.nft_seq = nft.nft_seq")
+                .andWhere("sale.del_dt is not null")
+                .groupBy("nft_seq"),
+            "temp"
+          )
+          .groupBy("volume_edition_seq")
+          .orderBy("volume")
+          .limit(1),
+      "sum_volume", // AS
+      // eslint-disable-next-line max-len
+      "artist.artist_seq = (select edition.artist_seq from edition where edition.edition_seq = sum_volume.volume_edition_seq)" // ON
+    )
+    .leftJoinAndSelect(
+      Edition,
+      "bestSeller",
+      "bestSeller.edition_seq = volume_edition_seq"
+    )
+    .leftJoinAndSelect(
+      (qb) =>
+        qb
+          .select("sum(temp.tsum)", "latest_volume")
+          .addSelect("temp.nft_edition_seq", "latest_edition_seq")
+          .addSelect("edition.reg_dt", "edition_reg_dt")
+          .from(Edition, "edition")
+          .addFrom(
+            (qb) =>
+              qb
+                .select("sum(sale.sale_price)", "tsum")
+                .addSelect("sale.nft_seq")
+                .addSelect("nft.edition_seq")
+                .withDeleted()
+                .from(Nft, "nft")
+                .addFrom(Sale, "sale")
+                .where("sale.nft_seq = nft.nft_seq")
+                .andWhere("sale.del_dt is not null")
+                .groupBy("nft_seq"),
+            "temp"
+          )
+          .where("temp.nft_edition_seq = edition.edition_seq")
+          .groupBy("latest_edition_seq")
+          .orderBy("edition_reg_dt")
+          .limit(1),
+      "sum_latest", // AS
+      // eslint-disable-next-line max-len
+      "artist.artist_seq = (select edition.artist_seq from edition where edition.edition_seq = sum_latest.latest_edition_seq)" // ON
+    )
+    .leftJoinAndSelect(
+      Edition,
+      "newest",
+      "newest.edition_seq = latest_edition_seq"
+    )
     .where((qb) => {
       const subQuery = qb
         .subQuery()
@@ -43,7 +152,7 @@ function getArtists(input: string): Promise<Artist[] | null> {
       return "artist.user_seq in " + subQuery.getQuery();
     });
 
-  return result.getMany();
+  return result.getRawMany();
 }
 
 class returnValue {
