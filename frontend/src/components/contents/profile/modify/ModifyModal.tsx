@@ -17,6 +17,28 @@ export const ModifyModal = () => {
   // useNavigate
   const naviagate = useNavigate();
 
+  // Axios
+  const PutWidthdraw = (userSeq: string | null) => {
+    axios
+      .put("http://j6a105.p.ssafy.io:8080/api/user/withdraw", {
+        userSeq,
+      })
+      .then((res) => {
+        console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
+        localStorage.removeItem("userAccount");
+        localStorage.removeItem("userSeq");
+        setUserStateVal({ ...userStateVal, login: false });
+        setProfileStateVal({
+          ...profileStateVal,
+          modalVisible: false,
+        });
+        naviagate("/");
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
   // function
   const handleCancel = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
@@ -24,15 +46,8 @@ export const ModifyModal = () => {
 
   // click button _ modify
   const clickModifyDelete = () => {
-    console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
-    localStorage.removeItem("userAccount");
-    localStorage.removeItem("userSeq");
-    setUserStateVal({ ...userStateVal, login: false });
-    setProfileStateVal({
-      ...profileStateVal,
-      modalVisible: false,
-    });
-    naviagate("/");
+    let userSeq = localStorage.getItem("userSeq");
+    PutWidthdraw(userSeq);
   };
   const clickModifyNicknameChange = () => {
     console.log("change nickname / " + profileStateVal.modifyNickname);

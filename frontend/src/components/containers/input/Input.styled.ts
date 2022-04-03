@@ -14,6 +14,11 @@ const bgColor = {
   dark: Palette.Grigio400,
 };
 
+const borderColor = {
+  light: Palette.BluOpacity100,
+  dark: Palette.Nero100,
+};
+
 const textColor = {
   light: Palette.Grigio400,
   dark: FontColor["light"],
@@ -25,8 +30,9 @@ export const InputBox = styled.label<IInput>`
   align-items: center;
   height: 36px;
   width: 100%;
-  border: 0px;
   border-radius: 8px;
+  border: 1px solid
+    ${({ isDark }) => (isDark ? borderColor["dark"] : borderColor["light"])};
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};
   ${Svg} {
@@ -72,8 +78,7 @@ export const Label = styled.span<IDisable & ThemeType>`
 
 export const InputBoxVariants = {
   focus: {
-    border: `1px solid ${Palette.Blu100}`,
-    boxShadow: `0px 0px 12px ${Palette.BluOpacity100}`,
+    boxShadow: `0px 0px 12px ${Palette.Blu200}`,
   },
 };
 
@@ -88,7 +93,6 @@ const disabledLabelStyle = css`
 `;
 
 const erroredLayoutStyle = css`
-  /* border: 1px solid ${Palette.Rosso100}; */
   box-shadow: 0px 0px 8px ${Palette.Rosso100};
 `;
 

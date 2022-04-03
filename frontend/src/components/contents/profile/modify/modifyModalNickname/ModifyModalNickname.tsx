@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../../recoil/profile";
@@ -7,6 +8,23 @@ export const ModifyModalNickname = () => {
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // useState
+
+  // Axios
+  const GetCheckNickname = (userNickname: string) => {
+    axios
+      .get("http://j6a105.p.ssafy.io:8080/api/user/check/nickname", {
+        params: { userNickname },
+      })
+      .then((res) => {
+        console.log(res.data.success);
+        console.log(
+          "confirm nickname duplicate / " + profileStateVal.modifyNickname
+        );
+      })
+      .catch((res) => {
+        console.log("Duplicate Nickname!!!");
+      });
+  };
 
   // input on method
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +36,7 @@ export const ModifyModalNickname = () => {
 
   // click button
   const clickModifyNicknameConfirm = () => {
-    console.log(
-      "confirm nickname duplicate / " + profileStateVal.modifyNickname
-    );
+    GetCheckNickname(profileStateVal.modifyNickname);
   };
 
   // useEffect

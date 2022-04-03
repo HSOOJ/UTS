@@ -86,6 +86,30 @@ async function getSalePrice(nftSeq: number) {
   return res;
 }
 
+async function returnNft(nftSeq: number) {
+  const saleRepository = getConnection().getRepository(Sale);
+
+  const res = await saleRepository
+    .createQueryBuilder()
+    .select("sale_price", "latest")
+    .addSelect("del_dt", "isSale")
+    .withDeleted()
+    .andWhere({ nft_seq: nftSeq })
+    .orderBy("mod_dt", "DESC")
+    .getRawOne();
+  return res;
+}
+
+async function getNftDESC() {
+  const saleRepository = getConnection().getRepository(Sale);
+
+  const res = await saleRepository.find({
+    select: ["nft_seq", "sale_price"],
+    order: { reg_dt: "DESC" },
+  });
+  return res;
+}
+
 export default {
   getSalePrice,
   getTransactionCount,
@@ -93,4 +117,6 @@ export default {
   checkIsOnSale,
   sell,
   deleteSale,
+  returnNft,
+  getNftDESC,
 } as const;

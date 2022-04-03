@@ -9,8 +9,14 @@ const bgColor = {
   dark: Palette.Nero100,
 };
 
+const borderColor = {
+  light: Palette.Blu100,
+  dark: Palette.Grigio500,
+};
+
 export const ControllerBox = styled.div<IController>`
-  border: 0px;
+  border: 1px solid
+    ${({ isDark }) => (isDark ? borderColor["dark"] : borderColor["light"])};
   border-radius: 12px;
   display: flex;
   gap: 6px;
