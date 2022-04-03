@@ -1,4 +1,5 @@
 import { Artist } from "@models/Artist";
+import { Edition } from "@models/edition-model";
 import { Report } from "@models/report-model";
 import { Sale } from "@models/sale-model";
 
@@ -30,7 +31,9 @@ function getAllbyLatest(): Promise<Artist[] | null> {
   return result.getRawMany();
 }
 
-async function getArtistInfo(artistSeq: number) {
+async function getArtistInfo(
+  artistSeq: number
+): Promise<Artist | null | undefined> {
   const connection = getConnection();
 
   const baseQuery = connection
@@ -93,6 +96,63 @@ async function getArtistInfo(artistSeq: number) {
   return baseQuery.getRawOne();
 }
 
+async function getEditions(artistSeq: number): Promise<Edition[] | null> {
+  const connection = getConnection();
+
+  const baseQuery = connection
+    .getRepository(Edition)
+    .createQueryBuilder("edition")
+    .innerJoinAndSelect(
+      (qb) =>
+        qb
+          .select("min(sale.sale_price)", "min_price")
+          .addSelect("edition.edition_seq", "edition_seq")
+          .from(Sale, "sale")
+          .addFrom(Edition, "edition")
+          .groupBy("edition_seq")
+          .where(
+            "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere(`edition.artist_seq = ${artistSeq}`),
+      "min",
+      ""
+    )
+    .innerJoinAndSelect(
+      (qb) =>
+        qb
+          .select("count(*)", "on_sale")
+          .addSelect("edition.edition_seq", "edition_seq")
+          .from(Sale, "sale")
+          .addFrom(Edition, "edition")
+          .groupBy("edition_seq")
+          .where(
+            "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere(`edition.artist_seq = ${artistSeq}`),
+      "on_sale",
+      ""
+    )
+    .innerJoinAndSelect(
+      (qb) =>
+        qb
+          .select("count(*)", "all_count")
+          .addSelect("edition.edition_seq", "edition_seq")
+          .from(Sale, "sale")
+          .withDeleted()
+          .addFrom(Edition, "edition")
+          .groupBy("edition_seq")
+          .where(
+            "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
+          )
+          .andWhere(`edition.artist_seq = ${artistSeq}`),
+      "all",
+      ""
+    )
+    .where(`edition.artist_seq = ${artistSeq}`);
+
+  return baseQuery.getRawMany();
+}
+
 async function report(userSeq: number, artistSeq: number) {
   const nowDate = new Date();
   const connection = getConnection();
@@ -109,5 +169,6 @@ export default {
   getAllbyPopular,
   getAllbyLatest,
   getArtistInfo,
+  getEditions,
   report,
 } as const;
