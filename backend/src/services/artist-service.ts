@@ -12,7 +12,7 @@ function getAllbyPopular(): Promise<Artist[] | null> {
     .createQueryBuilder("artist")
     .innerJoinAndSelect("artist.user", "user")
     .orderBy("artist_artist_followers_total", "DESC")
-    .limit(12);
+    .limit(13);
 
   return result.getRawMany();
 }
@@ -25,7 +25,7 @@ function getAllbyLatest(): Promise<Artist[] | null> {
     .createQueryBuilder("artist")
     .innerJoinAndSelect("artist.user", "user")
     .orderBy("artist_reg_dt", "DESC")
-    .limit(12);
+    .limit(13);
 
   return result.getRawMany();
 }
