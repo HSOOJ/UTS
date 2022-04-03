@@ -1,4 +1,3 @@
-// import { User } from "@models/user-model";
 import { Artist } from "@models/Artist";
 import { Report } from "@models/report-model";
 import { User } from "@models/user-model";
@@ -35,7 +34,7 @@ async function getArtistInfo(artistSeq: number) {
   const result = await getConnection()
     .getRepository(Artist)
     .createQueryBuilder("artist")
-    .innerJoinAndSelect("artist.user", "user")
+    .leftJoinAndSelect(User, "user", "artist.user_seq = user.user_seq")
     .where(`artist.artist_seq = ${artistSeq}`)
     .getRawOne();
 
@@ -45,14 +44,12 @@ async function getArtistInfo(artistSeq: number) {
 async function report(userSeq: number, artistSeq: number) {
   const nowDate = new Date();
   const connection = getConnection();
-  return connection
-    .getRepository(Report)
-    .save({
-      user_seq: userSeq,
-      artist_seq: artistSeq,
-      reg_dt: nowDate,
-      mod_dt: nowDate,
-    });
+  return connection.getRepository(Report).save({
+    user_seq: userSeq,
+    artist_seq: artistSeq,
+    reg_dt: nowDate,
+    mod_dt: nowDate,
+  });
 }
 
 // Export default
