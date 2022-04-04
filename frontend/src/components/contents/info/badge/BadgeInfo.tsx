@@ -20,6 +20,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 50px;
 `;
 
 export const BadgeInfo = () => {

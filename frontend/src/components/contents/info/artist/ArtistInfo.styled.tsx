@@ -5,6 +5,7 @@ export const ArtistInfomation = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  margin-top: 50px;
 `;
 
 export const ButtonSize = styled.div`
