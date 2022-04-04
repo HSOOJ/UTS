@@ -72,7 +72,16 @@ router.post("/join", async (req, res, next) => {
       });
     } else {
       const newUser = await userService.createUser(userWalletAddress);
-      return res.status(200).json({ success: "join success" });
+      return res.status(200).json({
+        success: {
+          userSeq: newUser,
+          userNickname: "user" + newUser,
+          userProfileImage:
+            "https://cdn.pixabay.com/photo/2022/03/18/19/09/blue-throat-7077261_960_720.jpg",
+          userWalletAddress: userWalletAddress,
+          userRole: 0,
+        },
+      });
     }
   } catch (error) {
     return res.status(404).json({ fail: error });
