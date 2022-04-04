@@ -179,6 +179,7 @@ router.get("/followings", async (req, res, next) => {
           userNickname: followList[idx].user_user_nickname,
           userProfileImage: followList[idx].user_user_profile_image,
           following: "y",
+          artistSeq: followList[idx].artist_artist_seq,
         });
       } else {
         mylist.push({
@@ -186,10 +187,10 @@ router.get("/followings", async (req, res, next) => {
           userNickname: followList[idx].user_user_nickname,
           userProfileImage: followList[idx].user_user_profile_image,
           following: "n",
+          artistSeq: followList[idx].artist_artist_seq,
         });
       }
     }
-    console.log(mylist);
   }
   return res.status(200).json({ success: mylist });
 });
