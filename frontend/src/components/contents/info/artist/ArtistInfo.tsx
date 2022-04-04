@@ -3,7 +3,6 @@ import { useParams, Params } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArtistHeader } from "../infoHeader/artistHeader/ArtistHeader";
 import { ArtistInfoBox } from "./artistInfoBox/ArtistInfoBox";
-import { EditionItem } from "./editionItem/EditionItem";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { artistDetailState } from "../../../../recoil/artistDetail";
@@ -11,6 +10,7 @@ import { themeAtom } from "../../../../recoil/theme";
 import Button from "../../../containers/button";
 import { WalletAddressModal } from "./walletAddressModal/WalletAddressModal";
 import { ArtistInfomation, ButtonSize } from "./ArtistInfo.styled";
+import { EditionItem } from "./editionItem/EditionItem";
 
 interface ArtistParamTypes extends Params {
   artist_id: string;
