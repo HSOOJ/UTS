@@ -1,23 +1,17 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 import { ThemeType } from "../../../global/theme";
-import Palette from "../../../foundation/color/Palette";
 
-export const MainDiv = styled.div`
-  margin-top: 20px;
-`;
 export const Layout = styled.div<ThemeType>`
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Nero100 : Palette.BluOpacity100};
   width: 100%;
   margin: 1.5em auto 1.5em;
   border: solid 0.3em;
   border-image: ${({ isDark }) =>
     isDark
       ? "linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa)"
-      : "linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa)"};
+      : null};
   border-image-slice: 1;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 0 0 0 2%;
 `;
 export const LayoutPaddingLeft = styled.div`
@@ -46,7 +40,7 @@ export const ImageContainer = styled.div`
   text-align: center;
   transition: all 0.2s linear;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 `;
 export const ImageTop = styled.img`
@@ -77,7 +71,7 @@ export const ImageBoarding = styled.img`
   border-radius: 10px 100px / 120px;
 `;
 export const TextGradientRed = styled.p`
-  font-size: 40px;
+  font-size: 60px;
   font-weight: bold;
   background: linear-gradient(to top, #f3ea62, #d32029);
   color: transparent;
@@ -85,7 +79,7 @@ export const TextGradientRed = styled.p`
   display: inline;
 `;
 export const TextGradientBlue = styled.p`
-  font-size: 40px;
+  font-size: 60px;
   font-weight: bold;
   background: linear-gradient(to top, #a8c1f8, #177ddc);
   color: transparent;
@@ -93,7 +87,7 @@ export const TextGradientBlue = styled.p`
   display: inline;
 `;
 export const TextGradientAside = styled.p<ThemeType>`
-  font-size: 35px;
+  font-size: 48px;
   display: inline;
   color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
