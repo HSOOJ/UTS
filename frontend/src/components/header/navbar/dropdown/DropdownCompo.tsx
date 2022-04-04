@@ -42,7 +42,7 @@ export const DropdownCompo = () => {
   const AxiosSignup = (walletAddress: string) => {
     axios
       .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
-        userWalletAddress: walletAddress,
+        body: { userWalletAddress: walletAddress },
       })
       .then((res) => {
         console.log(res.data);
@@ -51,6 +51,7 @@ export const DropdownCompo = () => {
           ...profileStateVal,
           userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
           userSeq: localStorage.getItem("userSeq"),
+          userProfileImage: res.data.success.ProfileImage,
         });
         setUserStateVal({ ...userStateVal, login: true });
       })
@@ -110,10 +111,11 @@ export const DropdownCompo = () => {
     <>
       <Dropdown overlay={menu}>
         {userStateVal.login ? (
-          <Avatar
-            style={{ backgroundColor: "#87d068" }}
-            icon={<UserOutlined />}
-          />
+          // <Avatar
+          //   style={{ backgroundColor: "#87d068" }}
+          //   icon={<UserOutlined />}
+          // />
+          <img src={profileStateVal.userProfileImage} />
         ) : (
           <Avatar icon={<UserOutlined />} />
         )}

@@ -47,18 +47,24 @@ export const ModifyModal = () => {
       })
       .then(() => {
         console.log("change nickname / " + profileStateVal.modifyNickname);
-        setProfileStateVal({
-          ...profileStateVal,
-          modalLoading: true,
-        });
-        setTimeout(() => {
-          setProfileStateVal({
-            ...profileStateVal,
-            modalLoading: false,
-            modalVisible: false,
-            userNickname: profileStateVal.modifyNickname,
-          });
-        }, 1500);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  const PutImage = (
+    userSeq: string | null,
+    userProfileImage: string | undefined
+  ) => {
+    axios
+      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/image", {
+        userSeq,
+        userProfileImage,
+      })
+      .then((res) => {
+        console.log(
+          "change profileImg / " + profileStateVal.modifyUserProfileImage
+        );
       })
       .catch((res) => {
         console.log(res);
@@ -69,13 +75,37 @@ export const ModifyModal = () => {
   const handleCancel = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
   };
+  const modifyFunc = () => {
+    if (profileStateVal.userNickname !== profileStateVal.modifyNickname) {
+      PutNickname(userSeq, profileStateVal.modifyNickname);
+    }
+    if (
+      profileStateVal.userProfileImage !==
+      profileStateVal.modifyUserProfileImage
+    ) {
+      PutImage(userSeq, profileStateVal.modifyUserProfileImage);
+    }
+  };
 
   // click button _ modify
   const clickModifyDelete = () => {
     PutWidthdraw(userSeq);
   };
-  const clickModifyNicknameChange = () => {
-    PutNickname(userSeq, profileStateVal.modifyNickname);
+  const clickModifyButton = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      modalLoading: true,
+    });
+    setTimeout(() => {
+      modifyFunc();
+      setProfileStateVal({
+        ...profileStateVal,
+        modalLoading: false,
+        modalVisible: false,
+        userNickname: profileStateVal.modifyNickname,
+        userProfileImage: profileStateVal.modifyUserProfileImage,
+      });
+    }, 1500);
   };
 
   return (
@@ -98,7 +128,7 @@ export const ModifyModal = () => {
           <Button
             type="primary"
             loading={profileStateVal.modalLoading}
-            onClick={clickModifyNicknameChange}
+            onClick={clickModifyButton}
             key="1"
           >
             수정하기
