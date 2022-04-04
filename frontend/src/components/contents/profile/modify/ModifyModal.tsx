@@ -28,6 +28,7 @@ export const ModifyModal = () => {
         console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
         localStorage.removeItem("userAccount");
         localStorage.removeItem("userSeq");
+        localStorage.removeItem("userProfileImage");
         setUserStateVal({ ...userStateVal, login: false });
         setProfileStateVal({
           ...profileStateVal,
@@ -54,7 +55,7 @@ export const ModifyModal = () => {
   };
   const PutImage = (
     userSeq: string | null,
-    userProfileImage: string | undefined
+    userProfileImage: string | undefined | null
   ) => {
     axios
       .put("http://j6a105.p.ssafy.io:8080/api/user/edit/image", {
