@@ -12,6 +12,11 @@ const bgColor = {
   dark: Palette.Grigio400,
 };
 
+const borderColor = {
+  light: Palette.BluOpacity100,
+  dark: Palette.Nero100,
+};
+
 const textColor = {
   light: Palette.Grigio400,
   dark: FontColor["light"],
@@ -23,7 +28,8 @@ export const TextAreaBox = styled.label<ITextArea>`
   align-items: center;
   height: 108px;
   width: 100%;
-  border: 0px;
+  border: 1px solid
+    ${({ isDark }) => (isDark ? borderColor["dark"] : borderColor["light"])};
   border-radius: 8px;
   background-color: ${({ isDark }) =>
     isDark ? bgColor["dark"] : bgColor["light"]};
@@ -65,13 +71,6 @@ export const Label = styled.span<IDisable & ThemeType>`
 
   ${({ disabled }) => disabled && disabledLabelStyle}
 `;
-
-export const InputBoxVariants = {
-  focus: {
-    border: `1px solid ${Palette.Blu100}`,
-    boxShadow: `0px 0px 12px ${Palette.BluOpacity100}`,
-  },
-};
 
 const disabledLayoutStyle = css`
   border: 1px solid ${Palette.Grigio200};

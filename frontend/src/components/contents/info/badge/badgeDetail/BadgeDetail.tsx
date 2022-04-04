@@ -5,6 +5,7 @@ import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import Button from "../../../../containers/button";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
+import { SellBadgeModal } from "../sellBadgeModal/SellBadgeModal";
 import { BadgeDetailDiv, ButtonDiv } from "./BadgeDetail.styled";
 
 interface IBadgeDetail extends ThemeType {}
@@ -29,6 +30,13 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
     });
   };
 
+  const onClickSell = () => {
+    setBadgeDetailStateVal({
+      ...badgeDetailStateVal,
+      isOpenSellModal: true,
+    });
+  };
+
   return (
     <BadgeDetailDiv isDark={isDark}>
       <div>
@@ -48,6 +56,15 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
         </Button>
       </ButtonDiv>
       <BuyBadgeModal isDark={isDark}></BuyBadgeModal>
+      <ButtonDiv>
+        <Button styleVariant="primary" onClick={onClickSell}>
+          Sell this Badge
+        </Button>
+        <Button styleVariant="primary" onClick={copyCodeToClipboard}>
+          Share with Friends
+        </Button>
+      </ButtonDiv>
+      <SellBadgeModal isDark={isDark}></SellBadgeModal>
     </BadgeDetailDiv>
   );
 };

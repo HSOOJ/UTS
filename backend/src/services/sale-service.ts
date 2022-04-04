@@ -100,6 +100,16 @@ async function returnNft(nftSeq: number) {
   return res;
 }
 
+async function getNftDESC() {
+  const saleRepository = getConnection().getRepository(Sale);
+
+  const res = await saleRepository.find({
+    select: ["nft_seq", "sale_price"],
+    order: { reg_dt: "DESC" },
+  });
+  return res;
+}
+
 export default {
   getSalePrice,
   getTransactionCount,
@@ -108,4 +118,5 @@ export default {
   sell,
   deleteSale,
   returnNft,
+  getNftDESC,
 } as const;

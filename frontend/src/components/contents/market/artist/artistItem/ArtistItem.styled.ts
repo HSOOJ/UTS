@@ -7,6 +7,11 @@ export const borderColor = {
   dark: Palette.Nero100,
 };
 
+const LayOutBorderColor = {
+  light: Palette.BluOpacity100,
+  dark: Palette.Grigio400,
+};
+
 export const LayOut = styled.div`
   min-width: 320px;
   padding: 12px;
@@ -47,6 +52,9 @@ export const SalesLayOut = styled.div`
 `;
 
 export const SalesItemBox = styled.div<ThemeType>`
+  border: 1px solid
+    ${({ isDark }) =>
+      isDark ? LayOutBorderColor["dark"] : LayOutBorderColor["light"]};
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ThemeType } from "../../../global/theme";
 
 export const Container = styled.div`
   overflow: hidden;
@@ -33,7 +34,7 @@ export const TextMain = styled.p`
   color: transparent;
   -webkit-background-clip: text;
 `;
-export const ButtonModify = styled.button`
+export const ButtonModify = styled.button<ThemeType>`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -41,7 +42,7 @@ export const ButtonModify = styled.button`
   background: none;
   border: 2px solid #b2e58b;
   border-radius: 25px;
-  color: #fff;
+  color: ${({ isDark }) => (isDark ? "#fff" : "black")};
   display: inline;
   font-size: 13px;
   font-weight: bold;
@@ -52,7 +53,10 @@ export const ButtonModify = styled.button`
     color: #b2e58b;
   }
 `;
-export const ButtonSelect = styled.button<{ isSelected: boolean }>`
+export const ButtonSelect = styled.button<{
+  isDark?: boolean;
+  isSelected: boolean;
+}>`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -60,7 +64,10 @@ export const ButtonSelect = styled.button<{ isSelected: boolean }>`
   background: none;
   border: 3px solid #58d1c9;
   border-radius: 5px;
-  color: ${(props) => (props.isSelected ? "#58d1c9" : "#fff")};
+  color: ${({ isDark }) =>
+    isDark
+      ? ({ isSelected }) => (isSelected ? "#58d1c9" : "#fff")
+      : ({ isSelected }) => (isSelected ? "#58d1c9" : "black")};
   display: inline;
   font-size: 18px;
   font-weight: bold;
