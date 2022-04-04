@@ -26,6 +26,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=builder /app /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 52000
 
 CMD ["nginx", "-g", "daemon off;"]
