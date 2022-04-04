@@ -67,11 +67,14 @@ async function createUser(userWalletAddress: string) {
   const newUser = userRepository.insert({
     user_wallet_address: userWalletAddress,
     user_nickname: "user" + (latestUserSeq["max"] + 1),
-    user_profile_image: "defaultimageurl",
+    user_profile_image:
+      "https://cdn.pixabay.com/photo/2022/03/18/19/09/blue-throat-7077261_960_720.jpg",
+    user_volume: 0,
     reg_dt: nowDate,
     mod_dt: nowDate,
   });
-  return newUser;
+
+  return (await newUser).raw.insertId;
 }
 
 async function deleteUser(userSeq: number) {

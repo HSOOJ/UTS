@@ -12,6 +12,7 @@ import {
   TextContent,
   Wrapper,
   LayoutPaddingLeft,
+  BadgeImageContainer,
 } from "../Main.styled";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../recoil/theme";
@@ -94,21 +95,23 @@ export const TopSeller = () => {
                 return (
                   <div key={a}>
                     <Wrapper>
-                      <ImageContainer
+                      <BadgeImageContainer
                         onClick={() => {
                           navigate(`/profile/${datas[a].seq}`);
                         }}
                       >
+                        <p>{a + 1}</p>
                         <ImageSeller src={datas[a].url} alt={datas[a].name} />
                         <TextContent isDark={isDark}>
                           {datas[a].name}
                         </TextContent>
-                      </ImageContainer>
-                      <ImageContainer
+                      </BadgeImageContainer>
+                      <BadgeImageContainer
                         onClick={() => {
                           navigate(`/profile/${datas[a + 1].seq}`);
                         }}
                       >
+                        <p>{a + 2}</p>
                         <ImageSeller
                           src={datas[a + 1].url}
                           alt={datas[a + 1].name}
@@ -116,7 +119,7 @@ export const TopSeller = () => {
                         <TextContent isDark={isDark}>
                           {datas[a + 1].name}
                         </TextContent>
-                      </ImageContainer>
+                      </BadgeImageContainer>
                     </Wrapper>
                   </div>
                 );
