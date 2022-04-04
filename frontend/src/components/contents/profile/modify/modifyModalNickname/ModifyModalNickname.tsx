@@ -22,10 +22,12 @@ export const ModifyModalNickname = () => {
         console.log(
           "confirm nickname duplicate / " + profileStateVal.modifyNickname
         );
+        SetWarning(false);
         SetSuccess(true);
       })
       .catch((res) => {
         console.log(res);
+        SetSuccess(false);
         SetWarning(true);
       });
   };
