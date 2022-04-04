@@ -1,6 +1,6 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   TextGradientRed,
@@ -29,6 +29,7 @@ export const HotBadge = () => {
   // recoil
   const isDark = useRecoilValue(themeAtom).isDark;
 
+  // let, const
   let urls = [
     "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
     "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
@@ -43,10 +44,6 @@ export const HotBadge = () => {
 
   // useState
   const [datas, setDatas] = useState([
-    // { rank: ["0", "1"], name: ["name", "NAME"], urls: [urls[0], urls[1]] },
-    // { rank: ["2", "3"], name: ["name", "NAME"], urls: [urls[2], urls[3]] },
-    // { rank: ["4", "5"], name: ["name", "NAME"], urls: [urls[4], urls[5]] },
-    // { rank: ["6", "7"], name: ["name", "NAME"], urls: [urls[6], urls[7]] },
     { id: 0, seq: "0", url: urls[0], name: "BadgeName" },
     { id: 1, seq: "1", url: urls[1], name: "BadgeName" },
     { id: 2, seq: "2", url: urls[2], name: "BadgeName" },
