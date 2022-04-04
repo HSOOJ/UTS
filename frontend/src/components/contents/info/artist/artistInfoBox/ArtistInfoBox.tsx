@@ -4,6 +4,7 @@ import { artistDetailState } from "../../../../../recoil/artistDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   InfoDetailBox,
+  InfoDetailDescript,
   InfoMainbox,
   InfoMoreDetailBox,
   InfoMoreDetailBoxa,
@@ -37,20 +38,30 @@ export const ArtistInfoBox = ({
 
   return (
     <InfoMainbox isDark={isDark}>
-      <LetterBox>{description}</LetterBox>
+      <InfoDetailDescript isDark={isDark}>
+        <LetterBox>{description}</LetterBox>
+      </InfoDetailDescript>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>{CategoryList[Number(category)]}</InfoMoreDetailBox>
-        <InfoMoreDetailBoxa href={`https://${artistSns}`} target="_blank">
+        <InfoMoreDetailBox isDark={isDark}>
+          {CategoryList[Number(category)]}
+        </InfoMoreDetailBox>
+        <InfoMoreDetailBoxa
+          isDark={isDark}
+          href={`https://${artistSns}`}
+          target="_blank"
+        >
           {artistSns}
         </InfoMoreDetailBoxa>
-        <InfoMoreDetailBox>{artistFollowersTotal}명의 팔로워</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>
+          {artistFollowersTotal}명의 팔로워
+        </InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>총 매출</InfoMoreDetailBox>
-        <InfoMoreDetailBox>최고가</InfoMoreDetailBox>
-        <InfoMoreDetailBox>거래량</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>총 매출</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>최고가</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>거래량</InfoMoreDetailBox>
       </InfoDetailBox>
     </InfoMainbox>
   );

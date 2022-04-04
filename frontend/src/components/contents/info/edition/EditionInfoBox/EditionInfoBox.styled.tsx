@@ -27,3 +27,10 @@ export const EditionDetail = styled.div`
 export const EditionTitle = styled.div`
   margin-bottom: 10px;
 `;
+
+export const EditionContent = styled.div`
+  /* background-color: black; */
+  width: 470px;
+  overflow: scroll;
+  word-break: break-all;
+`;

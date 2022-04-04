@@ -1,9 +1,10 @@
 import { message } from "antd";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ThemeType } from "../../../../../global/theme";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
+import { profileState } from "../../../../../recoil/profile";
 import Badge from "../../../../containers/badge";
 
 const ImgDiv = styled.div`
@@ -35,22 +36,22 @@ const BadgeList = styled.div`
 `;
 
 interface IBadgeHeader extends ThemeType {
-  isLike: boolean;
+  badge_id: string;
 }
 
-export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
+export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
   const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
+  const profileStateVal = useRecoilValue(profileState);
 
   const onClickLike = () => {
     axios({
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
       data: {
-        userSeq: "1", // 고쳐야 합니다.
-        nftSeq: "1",
+        userSeq: profileStateVal.userSeq, // 고쳐야 합니다.
+        nftSeq: badge_id,
       },
     }).then(function (res) {
-      setLikeBadge({ ...likeBadge, isLike: true });
       message.success("좋아요 되었습니다.");
     });
   };
@@ -60,11 +61,10 @@ export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
       data: {
-        userSeq: "1", // 고쳐야 합니다.
-        nftSeq: "1",
+        userSeq: profileStateVal.userSeq, // 고쳐야 합니다.
+        nftSeq: badge_id,
       },
     }).then(function (res) {
-      setLikeBadge({ ...likeBadge, isLike: false });
       message.error("좋아요가 취소되었습니다.");
     });
   };
@@ -74,7 +74,7 @@ export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
       <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <BadgeList>
-        {isLike === true ? (
+        {/* {isLike === true ? (
           <div onClick={onClickDislike}>
             <Badge type="like" liked={true}></Badge>
           </div>
@@ -82,7 +82,7 @@ export const BadgeHeader = ({ isLike }: IBadgeHeader) => {
           <div onClick={onClickLike}>
             <Badge type="like"></Badge>
           </div>
-        )}
+        )} */}
       </BadgeList>
     </ImgDiv>
   );
