@@ -68,6 +68,7 @@ async function createUser(userWalletAddress: string) {
     user_wallet_address: userWalletAddress,
     user_nickname: "user" + (latestUserSeq["max"] + 1),
     user_profile_image: "defaultimageurl",
+    user_volume: 0,
     reg_dt: nowDate,
     mod_dt: nowDate,
   });
