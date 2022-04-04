@@ -1,3 +1,4 @@
+import { Col, Row } from "antd";
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams, Params } from "react-router-dom";
@@ -91,11 +92,10 @@ export const EditionInfo = () => {
       },
     })
       .then(function (res) {
-        console.log(res);
-        // setEditionDetailStateVal({
-        //   ...editionDetailStateVal,
-        //   // badge_list: res.data.
-        // });
+        setEditionDetailStateVal({
+          ...editionDetailStateVal,
+          badge_list: res.data.success,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -129,14 +129,15 @@ export const EditionInfo = () => {
         </LetterBox>
       </BadgesOnMarketText>
       <BadgesOnMarket>
-        <BadgeItem
-          isDark={isDark}
-          isLike={badgeDetailStateVal.isLike}
-        ></BadgeItem>
-        <BadgeItem
-          isDark={isDark}
-          isLike={badgeDetailStateVal.isLike}
-        ></BadgeItem>
+        <Row justify="space-between">
+          {editionDetailStateVal.badge_list.map((i) => (
+            <BadgeItem
+              isDark={isDark}
+              isLike={badgeDetailStateVal.isLike}
+              badgeItem={i}
+            ></BadgeItem>
+          ))}
+        </Row>
       </BadgesOnMarket>
     </EditionInfomation>
   );

@@ -24,13 +24,12 @@ export const EditionItem = ({ isDark, editionItem }: IEditionItem) => {
     ((editionItem.all_count - editionItem.on_sale) / editionItem.all_count) *
     100; // 게이지 = 판매 개수 / 전체 개수 * 100
   let editionNum = editionItem.edition_seq;
-  console.log(editionNum);
 
   return (
     <EditionItemDiv
       isDark={isDark}
       onClick={() => {
-        navigate(`/edition/${editionItem.edition_seq}`); // 고쳐야 합니다
+        navigate(`/edition/${editionNum}`); // 고쳐야 합니다
       }}
     >
       <EditionItemImg src="https://picsum.photos/50/50" />
