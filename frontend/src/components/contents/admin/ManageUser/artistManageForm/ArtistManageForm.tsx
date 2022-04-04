@@ -1,9 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
 import { UseFormHandleSubmit } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
-import Palette from "../../../../../foundation/color/Palette";
+import { useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
 import { adminState } from "../../../../../recoil/admin";
 import Button from "../../../../containers/button";
@@ -11,28 +9,17 @@ import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { Inputbox } from "../inputBox/Inputbox";
 import { ButtonBox } from "../ManageUser.styled";
 import { IManageUser } from "../ManageUser.types";
-
-const ArtistManageFormDiv = styled.div<ThemeType>`
-  margin-top: 10px;
-  padding: 20px;
-  background-color: ${({ isDark }) =>
-    isDark ? Palette.Grigio500 : Palette.Blu100};
-  border-radius: 10px;
-`;
-
-const ArtistAcceptDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  gap: 10px;
-`;
+import {
+  ArtistAcceptDiv,
+  ArtistManageFormDiv,
+} from "./ArtistManageForm.styled";
 
 interface IArtistManage extends ThemeType {
   handleSubmit: UseFormHandleSubmit<IManageUser>;
 }
 
 export const ArtistManageForm = ({ isDark, handleSubmit }: IArtistManage) => {
-  const [adminStateVal, setAdminStateVal] = useRecoilState(adminState);
+  const adminStateVal = useRecoilValue(adminState);
 
   const onSubmit = (res: any) => {
     let commonCodeSeq = res.commonCodeSeq;

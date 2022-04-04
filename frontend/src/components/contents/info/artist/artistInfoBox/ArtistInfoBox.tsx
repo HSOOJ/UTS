@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { artistDetailState } from "../../../../../recoil/artistDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   InfoDetailBox,
@@ -9,14 +11,18 @@ import {
 interface IArtistInfoBox extends ThemeType {}
 
 export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
+  const artistDetailStateVal = useRecoilValue(artistDetailState);
+
   return (
     <InfoMainbox isDark={isDark}>
-      <LetterBox>아티스트 여러줄 소개 블라블라</LetterBox>
+      <LetterBox>{artistDetailStateVal.description}</LetterBox>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>아트</InfoMoreDetailBox>
-        <InfoMoreDetailBox>소셜 링크</InfoMoreDetailBox>
-        <InfoMoreDetailBox>팔로워 수</InfoMoreDetailBox>
+        <InfoMoreDetailBox>{artistDetailStateVal.category}</InfoMoreDetailBox>
+        <InfoMoreDetailBox>{artistDetailStateVal.artistSns}</InfoMoreDetailBox>
+        <InfoMoreDetailBox>
+          {artistDetailStateVal.artistFollowersTotal}
+        </InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>
