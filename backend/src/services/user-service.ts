@@ -3,6 +3,7 @@ import { createQueryBuilder, Equal, getConnection } from "typeorm";
 import { json, Request, Response } from "express";
 import { stringify } from "querystring";
 import { Follow } from "@models/follow-model";
+import { Artist } from "@models/Artist";
 
 function getUserInfo(userSeq: number) {
   const userRepository = getConnection().getRepository(User);
@@ -160,6 +161,7 @@ async function getFollowings(myUserSeq: number, profileUserSeq: number) {
   const followList = await followRepository
     .createQueryBuilder("follow")
     .leftJoinAndSelect(User, "user", "user.user_seq = follow.user_to")
+    .leftJoinAndSelect(Artist, "artist", "artist.user_seq = user.user_seq")
     .where({ user_from: profileUserSeq })
     .getRawMany();
 
