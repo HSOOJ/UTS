@@ -61,7 +61,7 @@ async function nfts(editionSeq: number, userSeq: number) {
         nft_owner_seq: cur.user_user_seq, // 뱃지 주인 시퀀스
         nft_price: saleInfo.latest, // 현재 가격
         nft_is_soldout: saleInfo.isSale, // nft 판매 여부
-        isheart: isHeart, // 하트 여부
+        isheart: isHeart, // NFT 하트 여부
       });
     }
   }
