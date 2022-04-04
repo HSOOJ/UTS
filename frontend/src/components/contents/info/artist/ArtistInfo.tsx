@@ -46,6 +46,12 @@ export const ArtistInfo = () => {
     })
       .then(function (res) {
         console.log(res);
+        setDescription(res.data.success.artist_artist_description);
+        setCategory(res.data.success.artist_code_seq);
+        setArtistSns(res.data.success.artist_artist_sns);
+        setArtistFollowersTotal(res.data.success.artist_artist_followers_total);
+        setUserNickname(res.data.success.user_user_nickname);
+        setWalletAddress(res.data.success.user_user_wallet_address);
         setArtistDetailStateVal({
           ...artistDetailStateVal,
           description: res.data.success.artist_artist_description,
@@ -55,7 +61,6 @@ export const ArtistInfo = () => {
           userNickname: res.data.success.user_user_nickname,
           walletAddress: res.data.success.user_user_wallet_address,
         });
-        console.log(artistDetailStateVal.artistFollowersTotal);
       })
       .catch(function (err) {
         console.log(err);
@@ -84,6 +89,12 @@ export const ArtistInfo = () => {
 
   // 현재 artist_id 잡아내기
   const { artist_id } = useParams() as ArtistParamTypes;
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [artistSns, setArtistSns] = useState("");
+  const [artistFollowersTotal, setArtistFollowersTotal] = useState("");
+  const [userNickname, setUserNickname] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
   const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
   const [artistDetailStateVal, setArtistDetailStateVal] =
     useRecoilState(artistDetailState);
@@ -109,24 +120,33 @@ export const ArtistInfo = () => {
         <ArtistHeader isFollow={followArtist.followArtist} />
         {/* <p>{artist_id}번째 아티스트</p> */}
         <LetterBox size="h1" weight="extraBold">
-          {artistDetailStateVal.userNickname}
+          {userNickname}
         </LetterBox>
         <ButtonSize>
           <Button styleVariant="primary" onClick={showModal}>
             지갑 주소 확인하기
           </Button>
         </ButtonSize>
-        <WalletAddressModal isDark={isDark}></WalletAddressModal>
+        <WalletAddressModal
+          walletAddress={walletAddress}
+          isDark={isDark}
+        ></WalletAddressModal>
         <br />
-        <ArtistInfoBox isDark={isDark} />
+        <ArtistInfoBox
+          isDark={isDark}
+          description={description}
+          category={category}
+          artistSns={artistSns}
+          artistFollowersTotal={artistFollowersTotal}
+        />
         <br />
         <LetterBox size="h2" weight="extraBold">
           BADGE EDITION
         </LetterBox>
         <div>
-          <EditionItem isDark={isDark} />
-          <EditionItem isDark={isDark} />
-          <EditionItem isDark={isDark} />
+          {artistDetailStateVal.artistEditionList.map((i) => (
+            <EditionItem isDark={isDark} editionItem={i}></EditionItem>
+          ))}
         </div>
       </ArtistInfomation>
     </div>

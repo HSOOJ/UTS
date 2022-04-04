@@ -6,23 +6,45 @@ import {
   InfoDetailBox,
   InfoMainbox,
   InfoMoreDetailBox,
+  InfoMoreDetailBoxa,
 } from "./ArtistInfoBox.styled";
 
-interface IArtistInfoBox extends ThemeType {}
+interface IArtistInfoBox extends ThemeType {
+  description: string;
+  category: string;
+  artistSns: string;
+  artistFollowersTotal: string;
+}
 
-export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
+export const ArtistInfoBox = ({
+  isDark,
+  description,
+  category,
+  artistSns,
+  artistFollowersTotal,
+}: IArtistInfoBox) => {
   const artistDetailStateVal = useRecoilValue(artistDetailState);
+  const CategoryList = [
+    "",
+    "🎵 Music",
+    "🎨 Art",
+    "⚽ Sport",
+    "🎞️ Actors",
+    "👜 Fashion",
+    "🎙️ Creator",
+    "🎸 Other",
+  ];
 
   return (
     <InfoMainbox isDark={isDark}>
-      <LetterBox>{artistDetailStateVal.description}</LetterBox>
+      <LetterBox>{description}</LetterBox>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>{artistDetailStateVal.category}</InfoMoreDetailBox>
-        <InfoMoreDetailBox>{artistDetailStateVal.artistSns}</InfoMoreDetailBox>
-        <InfoMoreDetailBox>
-          {artistDetailStateVal.artistFollowersTotal}
-        </InfoMoreDetailBox>
+        <InfoMoreDetailBox>{CategoryList[Number(category)]}</InfoMoreDetailBox>
+        <InfoMoreDetailBoxa href={`https://${artistSns}`} target="_blank">
+          {artistSns}
+        </InfoMoreDetailBoxa>
+        <InfoMoreDetailBox>{artistFollowersTotal}명의 팔로워</InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>
