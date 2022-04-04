@@ -9,7 +9,6 @@ export const EditionInfomation = styled.div`
 
 export const BadgesOnMarket = styled.div`
   display: flex;
-  gap: 10px;
   margin-bottom: 10px;
   width: 700px;
 `;

@@ -10,6 +10,8 @@ interface artistDetailTypes {
   artistFollowersTotal: string;
   userNickname: string;
   walletAddress: string;
+  artistId: string;
+  userId: string;
 }
 
 export const artistDetailState = atom<artistDetailTypes>({
@@ -24,5 +26,7 @@ export const artistDetailState = atom<artistDetailTypes>({
     artistFollowersTotal: "",
     userNickname: "",
     walletAddress: "",
+    artistId: "",
+    userId: "",
   },
 });

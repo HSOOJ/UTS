@@ -13,11 +13,13 @@ import {
 
 interface IWalletAddressModal extends ThemeType {
   walletAddress: string;
+  userNickname: string;
 }
 
 export const WalletAddressModal = ({
   isDark,
   walletAddress,
+  userNickname,
 }: IWalletAddressModal) => {
   const [artistDetailStateVal, setArtistDetailStateVal] =
     useRecoilState(artistDetailState);
@@ -44,7 +46,7 @@ export const WalletAddressModal = ({
         <ModalDiv isDark={isDark}>
           <TextBox>
             <LetterBox size="h1" weight="extraBold">
-              {artistDetailStateVal.userNickname}님의 지갑 주소
+              {userNickname}님의 지갑 주소
             </LetterBox>
             <LetterBox size="h3">{walletAddress}</LetterBox>
           </TextBox>

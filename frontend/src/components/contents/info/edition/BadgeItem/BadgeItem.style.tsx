@@ -36,6 +36,7 @@ export const BadgeInfoRight = styled.div`
 
 export const BadgeDiv = styled.div<ThemeType>`
   margin-bottom: 10px;
+  margin-right: 3px;
   background-color: ${({ isDark }) =>
     isDark ? Palette.Nero100 : Palette.BluOpacity100};
   border-radius: 10px;
