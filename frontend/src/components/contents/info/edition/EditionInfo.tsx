@@ -23,23 +23,23 @@ interface EditionParamTypes extends Params {
 }
 
 export const EditionInfo = () => {
-  const checkFollow = () => {
-    axios({
-      method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
-      params: {
-        userTo: followArtist.artistId,
-        userFrom: profileStateVal.userSeq,
-      },
-    })
-      .then(function (res) {
-        setFollowArtist({ ...followArtist, followArtist: res.data.success });
-        console.log(res.data.success);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
+  // const checkFollow = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
+  //     params: {
+  //       userTo: followArtist.artistId,
+  //       userFrom: profileStateVal.userSeq,
+  //     },
+  //   })
+  //     .then(function (res) {
+  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
+  //       console.log(res.data.success);
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
 
   const getEditionDetail = () => {
     axios({
@@ -89,7 +89,7 @@ export const EditionInfo = () => {
   };
 
   useEffect(() => {
-    checkFollow();
+    // checkFollow();
     getEditionDetail();
     getBadgeList();
   }, []);
@@ -105,6 +105,49 @@ export const EditionInfo = () => {
   const [editionName, setEditionName] = useState("");
   const [editionDescription, setEditionDescription] = useState("");
   const profileStateVal = useRecoilValue(profileState);
+
+  // const getArtistInfo = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/info", // 고쳐야 합니다
+  //     params: {
+  //       artistSeq: followArtist.artistId,
+  //     },
+  //   })
+  //     .then(function (res) {
+  //       checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
+
+  // axios
+  // const checkFollow = (userTo: string, userFrom: string | null | undefined) => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
+  //     params: {
+  //       // userTo: artistUserId,
+  //       // userFrom: profileStateVal.userSeq,
+  //       userTo,
+  //       userFrom,
+  //     },
+  //   })
+  //     .then(function (res) {
+  //       console.log(res);
+  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
+
+  // // useEffect
+  // useEffect(
+  //   () => checkFollow(followArtist.artistId, profileStateVal.userSeq),
+  //   []
+  // );
 
   return (
     <EditionInfomation>

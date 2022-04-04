@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import { message, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -33,27 +34,27 @@ IArtistHeader) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    checkFollow();
-  }, [isFollow]);
+    console.log(followArtist.followArtist);
+  }, []);
 
-  const checkFollow = () => {
-    axios({
-      method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
-      params: {
-        userTo: artistUserId,
-        userFrom: profileStateVal.userSeq,
-      },
-    })
-      .then(function (res) {
-        console.log(res);
-        setIsFollow(res.data.success);
-        setFollowArtist({ ...followArtist, followArtist: res.data.success });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
+  // const checkFollow = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
+  //     params: {
+  //       userTo: artistUserId,
+  //       userFrom: profileStateVal.userSeq,
+  //     },
+  //   })
+  //     .then(function (res) {
+  //       console.log(res);
+  //       setIsFollow(res.data.success);
+  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
 
   const onClickFollow = () => {
     axios({
@@ -63,10 +64,18 @@ IArtistHeader) => {
         userTo: artistUserId,
         userFrom: profileStateVal.userSeq,
       },
-    }).then(function (res) {
-      setFollowArtist({ ...followArtist, followArtist: true });
-      message.success("팔로우 되었습니다.");
-    });
+    })
+      .then(function (res) {
+        console.log(res);
+        setFollowArtist({ ...followArtist, followArtist: true });
+        message.success("팔로우 되었습니다.");
+        // setIsFollow(true);
+      })
+      .catch((res) => {
+        console.log(res);
+        // setIsFollow(false);
+        setFollowArtist({ ...followArtist, followArtist: false });
+      });
   };
 
   const onClickUnfollow = () => {
@@ -77,11 +86,17 @@ IArtistHeader) => {
         userTo: artistUserId,
         userFrom: profileStateVal.userSeq,
       },
-    }).then(function (res) {
-      setFollowArtist({ ...followArtist, followArtist: false });
-
-      message.error("팔로우가 취소되었습니다.");
-    });
+    })
+      .then(function (res) {
+        setFollowArtist({ ...followArtist, followArtist: false });
+        // setIsFollow(false);
+        message.error("팔로우가 취소되었습니다.");
+      })
+      .catch((res) => {
+        console.log(res);
+        // setIsFollow(true);
+        setFollowArtist({ ...followArtist, followArtist: true });
+      });
   };
 
   const onClickCheck = () => {
@@ -107,7 +122,7 @@ IArtistHeader) => {
       <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <BadgeList>
-        {isFollow === true ? (
+        {followArtist.followArtist === true ? (
           <div onClick={onClickUnfollow}>
             <Badge type="like" liked={true}></Badge>
           </div>
