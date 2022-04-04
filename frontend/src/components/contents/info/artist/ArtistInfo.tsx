@@ -76,7 +76,7 @@ export const ArtistInfo = () => {
       },
     })
       .then(function (res) {
-        console.log(res);
+        setArtistEditionList(res.data.success);
         setArtistDetailStateVal({
           ...artistDetailStateVal,
           artistEditionList: res.data.success,
@@ -95,6 +95,7 @@ export const ArtistInfo = () => {
   const [artistFollowersTotal, setArtistFollowersTotal] = useState("");
   const [userNickname, setUserNickname] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
+  const [artistEditionList, setArtistEditionList] = useState([]);
   const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
   const [artistDetailStateVal, setArtistDetailStateVal] =
     useRecoilState(artistDetailState);
@@ -144,7 +145,7 @@ export const ArtistInfo = () => {
           BADGE EDITION
         </LetterBox>
         <div>
-          {artistDetailStateVal.artistEditionList.map((i) => (
+          {artistEditionList.map((i) => (
             <EditionItem isDark={isDark} editionItem={i}></EditionItem>
           ))}
         </div>
