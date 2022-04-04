@@ -5,7 +5,7 @@ import FollowList from "./followList";
 import ModifyModal from "./modify";
 import NftBadgeList from "./nftBadgeList";
 import TradeList from "./tradeList";
-import { Popover, Button, Modal, Popconfirm } from "antd";
+import { Popover, Button, Modal, Popconfirm, Alert } from "antd";
 import { userState } from "../../../recoil/user";
 import { Params, useParams } from "react-router-dom";
 import axios from "axios";
@@ -31,10 +31,12 @@ export const ProfileCompo = () => {
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
   const isDark = useRecoilValue(themeAtom).isDark;
 
+  // useParams
   const { userSeq } = useParams() as ProfileParamTypes;
 
   // useState
   const [modifyBool, setModifyBool] = useState(true);
+  const [showAddr, SetShowAddr] = useState(false);
 
   // function _ modal
   const showModal = () => {
@@ -65,10 +67,10 @@ export const ProfileCompo = () => {
 
   // click button
   const clickAddr = () => {
-    console.log("Check Wallet Address");
+    SetShowAddr(!showAddr);
   };
   const clickRegist = () => {
-    console.log("click Artist Regist Button");
+    window.open("https://forms.gle/KJUHZF2AWpHVT1z29");
   };
   const clickNftBadgeList = () => {
     setProfileStateVal({
@@ -133,6 +135,17 @@ export const ProfileCompo = () => {
             </>
           ) : null}
         </ProfileContainerModify>
+        {showAddr ? (
+          <Alert
+            message={profileStateVal.userWallet}
+            type="info"
+            showIcon
+            closable
+            onClose={() => {
+              SetShowAddr(false);
+            }}
+          />
+        ) : null}
         <ProfileContainerInfo>
           <ButtonSelect
             isDark={isDark}
