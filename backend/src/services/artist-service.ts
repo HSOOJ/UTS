@@ -164,6 +164,9 @@ async function report(userSeq: number, artistSeq: number) {
   });
 }
 
+// async function name(params:type) {
+
+// }
 // Export default
 export default {
   getAllbyPopular,

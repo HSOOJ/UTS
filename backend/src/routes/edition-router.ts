@@ -16,14 +16,18 @@ router.get("/info", async (req, res, next) => {
       editionInfo.artist_seq
     );
     if (artistInfo) {
+      const artistImage = Object.values(
+        JSON.parse(JSON.stringify(artistInfo))
+      )[12];
+
       return res.status(200).json({
         success: {
           edition_seq: editionInfo.edition_seq,
           edition_name: editionInfo.edition_name,
           edition_image: editionInfo.edition_image,
           edition_description: editionInfo.edition_description,
-          artist_image: artistInfo.user_user_profile_image,
-          artist_seq: artistInfo.artist_artist_seq,
+          artist_image: artistImage,
+          artist_seq: editionInfo.artist_seq,
         },
       });
     } else
