@@ -161,6 +161,7 @@ router.get("/followings", async (req, res, next) => {
         userNickname: followList[idx].user_user_nickname,
         userProfileImage: followList[idx].user_user_profile_image,
         following: "y",
+        artistSeq: followList[idx].artist_artist_seq,
       });
     }
   } else {
