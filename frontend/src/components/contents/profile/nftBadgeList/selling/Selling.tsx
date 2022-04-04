@@ -1,9 +1,7 @@
-import { Avatar, List, Empty } from "antd";
+import { Empty } from "antd";
 import { useEffect, useState } from "react";
-import VirtualList from "rc-virtual-list";
 import { profileState } from "../../../../../recoil/profile";
 import { useRecoilValue } from "recoil";
-import { SellingCompo } from "./SellingCompo";
 import { ButtonLoad } from "../NftBadgeList.style";
 import { Params, useParams } from "react-router-dom";
 import axios from "axios";
@@ -47,6 +45,7 @@ export const Selling = () => {
         setEmpty(false);
       })
       .catch((res) => {
+        console.log(res);
         setDatas([]);
         setEmpty(true);
       });

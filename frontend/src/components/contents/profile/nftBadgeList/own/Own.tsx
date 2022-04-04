@@ -1,11 +1,9 @@
-import { Avatar, Button, Empty, List } from "antd";
-import { forwardRef, useEffect, useRef, useState } from "react";
-import VirtualList from "rc-virtual-list";
+import { Empty } from "antd";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Params, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { profileState } from "../../../../../recoil/profile";
-import styled from "styled-components";
 import { ButtonLoad } from "../NftBadgeList.style";
 import { NftBadgeListCompo } from "../NftBadgeListCompo";
 import { themeAtom } from "../../../../../recoil/theme";
@@ -47,6 +45,7 @@ export const Own = () => {
         setEmpty(false);
       })
       .catch((res) => {
+        console.log(res);
         setDatas([]);
         setEmpty(true);
       });

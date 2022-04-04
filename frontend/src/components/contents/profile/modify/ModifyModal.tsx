@@ -1,9 +1,7 @@
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../recoil/profile";
-import { ModifyModalDelete } from "./modifyModalDelete/ModifyModalDelete";
 import ModifyModalNickname from "./modifyModalNickname";
-import { Popover, Button, Modal, Popconfirm } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Modal, Popconfirm } from "antd";
 import { userState } from "../../../../recoil/user";
 import ModifyModalPic from "./modifyModalPic";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +12,9 @@ export const ModifyModal = () => {
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
+  // let
+  let userSeq = localStorage.getItem("userSeq");
+
   // useNavigate
   const naviagate = useNavigate();
 
@@ -23,7 +24,7 @@ export const ModifyModal = () => {
       .put("http://j6a105.p.ssafy.io:8080/api/user/withdraw", {
         userSeq,
       })
-      .then((res) => {
+      .then(() => {
         console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
         localStorage.removeItem("userAccount");
         localStorage.removeItem("userSeq");
@@ -38,6 +39,31 @@ export const ModifyModal = () => {
         console.log(res);
       });
   };
+  const PutNickname = (userSeq: string | null, userNickname: string | null) => {
+    axios
+      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/nickname", {
+        userSeq,
+        userNickname,
+      })
+      .then(() => {
+        console.log("change nickname / " + profileStateVal.modifyNickname);
+        setProfileStateVal({
+          ...profileStateVal,
+          modalLoading: true,
+        });
+        setTimeout(() => {
+          setProfileStateVal({
+            ...profileStateVal,
+            modalLoading: false,
+            modalVisible: false,
+            userNickname: profileStateVal.modifyNickname,
+          });
+        }, 1500);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
 
   // function
   const handleCancel = () => {
@@ -46,24 +72,10 @@ export const ModifyModal = () => {
 
   // click button _ modify
   const clickModifyDelete = () => {
-    let userSeq = localStorage.getItem("userSeq");
     PutWidthdraw(userSeq);
   };
   const clickModifyNicknameChange = () => {
-    console.log("change nickname / " + profileStateVal.modifyNickname);
-    setProfileStateVal({
-      ...profileStateVal,
-      modalLoading: true,
-    });
-    setTimeout(() => {
-      setProfileStateVal({
-        ...profileStateVal,
-        modalLoading: false,
-        modalVisible: false,
-        userNickname: profileStateVal.modifyNickname,
-      });
-      localStorage.setItem("token", profileStateVal.modifyNickname);
-    }, 1500);
+    PutNickname(userSeq, profileStateVal.modifyNickname);
   };
 
   return (
