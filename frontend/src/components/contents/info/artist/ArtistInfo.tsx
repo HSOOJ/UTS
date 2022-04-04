@@ -10,7 +10,7 @@ import { themeAtom } from "../../../../recoil/theme";
 import Button from "../../../containers/button";
 import { WalletAddressModal } from "./walletAddressModal/WalletAddressModal";
 import { ArtistInfomation, ButtonSize } from "./ArtistInfo.styled";
-import { EditionItem } from "./editionItem/EditionItem";
+import { EditionItem } from "./EditionItem/EditionItem";
 
 interface ArtistParamTypes extends Params {
   artist_id: string;
