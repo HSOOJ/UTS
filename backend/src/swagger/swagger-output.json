@@ -808,6 +808,11 @@
             "name": "editionSeq",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "userSeq",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
