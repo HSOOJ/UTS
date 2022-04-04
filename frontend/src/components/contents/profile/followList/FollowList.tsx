@@ -1,6 +1,4 @@
-import { Avatar, List } from "antd";
 import { useEffect, useState } from "react";
-import VirtualList from "rc-virtual-list";
 import { FollowListCompo } from "./FollowListCompo";
 import axios from "axios";
 import { Params, useParams } from "react-router-dom";

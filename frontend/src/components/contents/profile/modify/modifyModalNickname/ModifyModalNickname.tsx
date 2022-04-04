@@ -1,13 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../../recoil/profile";
 
 export const ModifyModalNickname = () => {
   // recoil
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
-
-  // useState
 
   // Axios
   const GetCheckNickname = (userNickname: string) => {
@@ -22,7 +19,7 @@ export const ModifyModalNickname = () => {
         );
       })
       .catch((res) => {
-        console.log("Duplicate Nickname!!!");
+        console.log(res);
       });
   };
 
@@ -38,8 +35,6 @@ export const ModifyModalNickname = () => {
   const clickModifyNicknameConfirm = () => {
     GetCheckNickname(profileStateVal.modifyNickname);
   };
-
-  // useEffect
 
   return (
     <>

@@ -1,6 +1,4 @@
-import { Avatar, List } from "antd";
-import { useEffect, useState } from "react";
-import VirtualList from "rc-virtual-list";
+import { useState } from "react";
 import { TradeListCompo } from "./TradeListCompo";
 
 export const TradeList = () => {

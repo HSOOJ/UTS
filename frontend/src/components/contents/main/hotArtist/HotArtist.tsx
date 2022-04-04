@@ -25,15 +25,7 @@ export const HotArtist = () => {
   // recoil
   const isDark = useRecoilValue(themeAtom).isDark;
 
-  const settings = {
-    dots: false,
-    slidesToShow: 4,
-    slidesToScroll: 2,
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    pauseOnHover: true,
-  };
+  // let, const
   let urls = [
     "https://dimg.donga.com/wps/NEWS/IMAGE/2022/02/10/111691750.2.jpg",
     "http://newsimg.hankookilbo.com/2019/06/11/201906111677046181_1.jpg",
@@ -49,6 +41,15 @@ export const HotArtist = () => {
     "https://w.namu.la/s/5bd1f7b3210a6deba5560683c0cd62f61445e3d1069ef2325a2ed8de6050cb2454f98c27478a9db4a7b3fc052366431d626c38525e371e08fbe70e14de391f5d9f8a3ea241d9e8db2c534c41b01c81ae",
     "https://opgg-com-image.akamaized.net/attach/images/20210525033339.1367998.jpg",
   ];
+  const settings = {
+    dots: false,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    infinite: true,
+    autoplay: true,
+    speed: 500,
+    pauseOnHover: true,
+  };
   const arr = [1, 3, 5, 7, 9, 11];
 
   // useState

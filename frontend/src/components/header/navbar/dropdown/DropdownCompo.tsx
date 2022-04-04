@@ -1,11 +1,8 @@
 import { Menu, Dropdown, Avatar } from "antd";
-import { UserOutlined, IdcardTwoTone } from "@ant-design/icons";
-import { useEffect } from "react";
+import { UserOutlined } from "@ant-design/icons";
 import { userState } from "../../../../recoil/user";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import { profileState } from "../../../../recoil/profile";
 import { ethers } from "ethers";
 import axios from "axios";
@@ -17,12 +14,12 @@ export const DropdownCompo = () => {
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
+  // let
   let userSeq = localStorage.getItem("userSeq");
 
-  // router navigate
+  // useNavigate
   let navigate = useNavigate();
 
-  // function
   // function
   const metamaskLogin = async () => {
     try {
@@ -69,6 +66,10 @@ export const DropdownCompo = () => {
       ...profileStateVal,
       clickProfile: !profileStateVal.clickProfile,
     });
+    if (userSeq === undefined || userSeq === null) {
+      console.log("userSeq is undefined OR null");
+      clickLogout();
+    }
     navigate(`/profile/${userSeq}`);
   };
   const clickLogout = () => {
@@ -98,11 +99,6 @@ export const DropdownCompo = () => {
       ) : (
         <>
           <Menu.Item key="1">
-            {/* <div
-              onClick={() => {
-                navigate("/user");
-              }}
-            > */}
             <div onClick={metamaskLogin}>Login</div>
           </Menu.Item>
         </>

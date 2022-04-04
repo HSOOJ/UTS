@@ -1,21 +1,16 @@
 import { Col, Row } from "antd";
-import { useEffect, useState } from "react";
-import { Params, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import ProfileCompo from "../../../components/contents/profile";
 import { profileState } from "../../../recoil/profile";
-import { userState } from "../../../recoil/user";
 
 export const Profile = () => {
   // recoil
-  const { login } = useRecoilValue(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
   // useEffect
   useEffect(() => {
-    // const token = localStorage.getItem("token");
-    // if (token === null) return;
     setProfileStateVal({
       ...profileStateVal,
       userNickname: "",
