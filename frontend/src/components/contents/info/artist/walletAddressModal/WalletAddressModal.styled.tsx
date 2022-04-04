@@ -11,7 +11,7 @@ export const ModalDiv = styled.div<ThemeType>`
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: ${({ isDark }) => (isDark ? Palette.Nero100 : `#e3ebff`)};
-  width: 500px;
+  width: 550px;
   gap: 10px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.6) 0 0 0 9999px;

@@ -1,22 +1,50 @@
+import { useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { artistDetailState } from "../../../../../recoil/artistDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   InfoDetailBox,
   InfoMainbox,
   InfoMoreDetailBox,
+  InfoMoreDetailBoxa,
 } from "./ArtistInfoBox.styled";
 
-interface IArtistInfoBox extends ThemeType {}
+interface IArtistInfoBox extends ThemeType {
+  description: string;
+  category: string;
+  artistSns: string;
+  artistFollowersTotal: string;
+}
 
-export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
+export const ArtistInfoBox = ({
+  isDark,
+  description,
+  category,
+  artistSns,
+  artistFollowersTotal,
+}: IArtistInfoBox) => {
+  const artistDetailStateVal = useRecoilValue(artistDetailState);
+  const CategoryList = [
+    "",
+    "🎵 Music",
+    "🎨 Art",
+    "⚽ Sport",
+    "🎞️ Actors",
+    "👜 Fashion",
+    "🎙️ Creator",
+    "🎸 Other",
+  ];
+
   return (
     <InfoMainbox isDark={isDark}>
-      <LetterBox>아티스트 여러줄 소개 블라블라</LetterBox>
+      <LetterBox>{description}</LetterBox>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>아트</InfoMoreDetailBox>
-        <InfoMoreDetailBox>소셜 링크</InfoMoreDetailBox>
-        <InfoMoreDetailBox>팔로워 수</InfoMoreDetailBox>
+        <InfoMoreDetailBox>{CategoryList[Number(category)]}</InfoMoreDetailBox>
+        <InfoMoreDetailBoxa href={`https://${artistSns}`} target="_blank">
+          {artistSns}
+        </InfoMoreDetailBoxa>
+        <InfoMoreDetailBox>{artistFollowersTotal}명의 팔로워</InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>

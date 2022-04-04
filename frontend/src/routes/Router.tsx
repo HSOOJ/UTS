@@ -9,9 +9,9 @@ import Edition from "../pages/contents/edition";
 import Main from "../pages/contents/main";
 import Minting from "../pages/contents/minting";
 import Profile from "../pages/contents/profile";
-import User from "../pages/contents/user";
 import Footer from "../pages/footer";
 import Header from "../pages/header";
+import Page404 from "./Page404";
 
 export const UtsRouter = () => {
   return (
@@ -25,10 +25,10 @@ export const UtsRouter = () => {
         <Route path="/badge" element={<Badge />} />
         <Route path="/badge/:badge_id" element={<BadgeDetail />} />
         <Route path="/edition/:edition_id" element={<Edition />} />
-        {/* <Route path="/user" element={<User />} /> */}
         <Route path="/profile/:userSeq" element={<Profile />} />
         <Route path="/minting" element={<Minting />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path={"*"} element={<Page404 />} />
       </Routes>
       <Footer />
     </BrowserRouter>

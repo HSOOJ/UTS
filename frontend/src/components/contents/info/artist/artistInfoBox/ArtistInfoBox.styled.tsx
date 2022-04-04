@@ -22,3 +22,8 @@ export const InfoMoreDetailBox = styled.div`
   text-align: center;
   width: 200px;
 `;
+
+export const InfoMoreDetailBoxa = styled.a`
+  text-align: center;
+  width: 200px;
+`;

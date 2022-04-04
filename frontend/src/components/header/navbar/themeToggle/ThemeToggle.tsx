@@ -15,9 +15,9 @@ export const ThemeToggle = () => {
       }}
     >
       {theme.isDark ? (
-        <img src="img/해.png"></img>
-      ) : (
         <img src="img/달.png"></img>
+      ) : (
+        <img src="img/해.png"></img>
       )}
     </Toggle>
   );

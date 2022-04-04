@@ -1,9 +1,7 @@
-import { Avatar, List, Empty } from "antd";
+import { Empty } from "antd";
 import { useEffect, useState } from "react";
-import VirtualList from "rc-virtual-list";
 import { useRecoilValue } from "recoil";
 import { profileState } from "../../../../../recoil/profile";
-import { LikeCompo } from "./LikeCompo";
 import { ButtonLoad } from "../NftBadgeList.style";
 import { Params, useParams } from "react-router-dom";
 import axios from "axios";
@@ -58,6 +56,7 @@ export const Like = () => {
         setEmpty(false);
       })
       .catch((res) => {
+        console.log(res);
         setDatas([]);
         setEmpty(true);
       });

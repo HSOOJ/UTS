@@ -1,9 +1,7 @@
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../recoil/profile";
-import { ModifyModalDelete } from "./modifyModalDelete/ModifyModalDelete";
 import ModifyModalNickname from "./modifyModalNickname";
-import { Popover, Button, Modal, Popconfirm } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Modal, Popconfirm } from "antd";
 import { userState } from "../../../../recoil/user";
 import ModifyModalPic from "./modifyModalPic";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +12,9 @@ export const ModifyModal = () => {
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
+  // let
+  let userSeq = localStorage.getItem("userSeq");
+
   // useNavigate
   const naviagate = useNavigate();
 
@@ -23,7 +24,7 @@ export const ModifyModal = () => {
       .put("http://j6a105.p.ssafy.io:8080/api/user/withdraw", {
         userSeq,
       })
-      .then((res) => {
+      .then(() => {
         console.log(`SUCCESS Delete Account\n${profileStateVal.userNickname}`);
         localStorage.removeItem("userAccount");
         localStorage.removeItem("userSeq");
@@ -38,31 +39,72 @@ export const ModifyModal = () => {
         console.log(res);
       });
   };
+  const PutNickname = (userSeq: string | null, userNickname: string | null) => {
+    axios
+      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/nickname", {
+        userSeq,
+        userNickname,
+      })
+      .then(() => {
+        console.log("change nickname / " + profileStateVal.modifyNickname);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  const PutImage = (
+    userSeq: string | null,
+    userProfileImage: string | undefined
+  ) => {
+    axios
+      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/image", {
+        userSeq,
+        userProfileImage,
+      })
+      .then((res) => {
+        console.log(
+          "change profileImg / " + profileStateVal.modifyUserProfileImage
+        );
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
 
   // function
   const handleCancel = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
   };
+  const modifyFunc = () => {
+    if (profileStateVal.userNickname !== profileStateVal.modifyNickname) {
+      PutNickname(userSeq, profileStateVal.modifyNickname);
+    }
+    if (
+      profileStateVal.userProfileImage !==
+      profileStateVal.modifyUserProfileImage
+    ) {
+      PutImage(userSeq, profileStateVal.modifyUserProfileImage);
+    }
+  };
 
   // click button _ modify
   const clickModifyDelete = () => {
-    let userSeq = localStorage.getItem("userSeq");
     PutWidthdraw(userSeq);
   };
-  const clickModifyNicknameChange = () => {
-    console.log("change nickname / " + profileStateVal.modifyNickname);
+  const clickModifyButton = () => {
     setProfileStateVal({
       ...profileStateVal,
       modalLoading: true,
     });
     setTimeout(() => {
+      modifyFunc();
       setProfileStateVal({
         ...profileStateVal,
         modalLoading: false,
         modalVisible: false,
         userNickname: profileStateVal.modifyNickname,
+        userProfileImage: profileStateVal.modifyUserProfileImage,
       });
-      localStorage.setItem("token", profileStateVal.modifyNickname);
     }, 1500);
   };
 
@@ -86,7 +128,7 @@ export const ModifyModal = () => {
           <Button
             type="primary"
             loading={profileStateVal.modalLoading}
-            onClick={clickModifyNicknameChange}
+            onClick={clickModifyButton}
             key="1"
           >
             수정하기

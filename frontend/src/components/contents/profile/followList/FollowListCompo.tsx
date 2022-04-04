@@ -1,11 +1,9 @@
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ThemeType } from "../../../../global/theme";
-import { profileState } from "../../../../recoil/profile";
 import { themeAtom } from "../../../../recoil/theme";
 import { userState } from "../../../../recoil/user";
 

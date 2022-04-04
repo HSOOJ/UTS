@@ -24,11 +24,11 @@ function App() {
   // recoil
   const theme = useRecoilValue(themeAtom);
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
-  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+  const { userSeq } = useRecoilValue(profileState);
 
   // useEffect
   useEffect(() => {
-    if (profileStateVal.userSeq === undefined) {
+    if (userSeq === undefined || userSeq === null) {
       setUserStateVal({ ...userStateVal, login: false });
     } else {
       setUserStateVal({ ...userStateVal, login: true });

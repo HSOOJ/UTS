@@ -188,6 +188,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -238,6 +241,46 @@
         "parameters": [
           {
             "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/editions": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
             "in": "query",
             "type": "string"
           }

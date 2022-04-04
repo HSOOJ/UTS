@@ -1,11 +1,8 @@
 import { Menu, Dropdown, Avatar } from "antd";
-import { UserOutlined, IdcardTwoTone } from "@ant-design/icons";
-import { useEffect } from "react";
+import { UserOutlined } from "@ant-design/icons";
 import { userState } from "../../../../recoil/user";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import { profileState } from "../../../../recoil/profile";
 import { ethers } from "ethers";
 import axios from "axios";
@@ -17,12 +14,12 @@ export const DropdownCompo = () => {
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
 
+  // let
   let userSeq = localStorage.getItem("userSeq");
 
-  // router navigate
+  // useNavigate
   let navigate = useNavigate();
 
-  // function
   // function
   const metamaskLogin = async () => {
     try {
@@ -45,7 +42,7 @@ export const DropdownCompo = () => {
   const AxiosSignup = (walletAddress: string) => {
     axios
       .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
-        userWalletAddress: walletAddress,
+        body: { userWalletAddress: walletAddress },
       })
       .then((res) => {
         console.log(res.data);
@@ -54,6 +51,7 @@ export const DropdownCompo = () => {
           ...profileStateVal,
           userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
           userSeq: localStorage.getItem("userSeq"),
+          userProfileImage: res.data.success.ProfileImage,
         });
         setUserStateVal({ ...userStateVal, login: true });
       })
@@ -69,6 +67,10 @@ export const DropdownCompo = () => {
       ...profileStateVal,
       clickProfile: !profileStateVal.clickProfile,
     });
+    if (userSeq === undefined || userSeq === null) {
+      console.log("userSeq is undefined OR null");
+      clickLogout();
+    }
     navigate(`/profile/${userSeq}`);
   };
   const clickLogout = () => {
@@ -98,11 +100,6 @@ export const DropdownCompo = () => {
       ) : (
         <>
           <Menu.Item key="1">
-            {/* <div
-              onClick={() => {
-                navigate("/user");
-              }}
-            > */}
             <div onClick={metamaskLogin}>Login</div>
           </Menu.Item>
         </>
@@ -114,10 +111,11 @@ export const DropdownCompo = () => {
     <>
       <Dropdown overlay={menu}>
         {userStateVal.login ? (
-          <Avatar
-            style={{ backgroundColor: "#87d068" }}
-            icon={<UserOutlined />}
-          />
+          // <Avatar
+          //   style={{ backgroundColor: "#87d068" }}
+          //   icon={<UserOutlined />}
+          // />
+          <img src={profileStateVal.userProfileImage} />
         ) : (
           <Avatar icon={<UserOutlined />} />
         )}

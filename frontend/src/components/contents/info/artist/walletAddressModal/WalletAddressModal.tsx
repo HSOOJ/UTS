@@ -11,14 +11,19 @@ import {
   UnderLine,
 } from "./WalletAddressModal.styled";
 
-interface IWalletAddressModal extends ThemeType {}
+interface IWalletAddressModal extends ThemeType {
+  walletAddress: string;
+}
 
-export const WalletAddressModal = ({ isDark }: IWalletAddressModal) => {
+export const WalletAddressModal = ({
+  isDark,
+  walletAddress,
+}: IWalletAddressModal) => {
   const [artistDetailStateVal, setArtistDetailStateVal] =
     useRecoilState(artistDetailState);
 
   const copyCodeToClipboard = () => {
-    const el = "주소주소주~~"; //고쳐야 합니다
+    const el = artistDetailStateVal.walletAddress; //고쳐야 합니다
     console.log(navigator.clipboard);
     navigator.clipboard.writeText(el).then(() => {
       console.log(`${el} success`);
@@ -39,11 +44,9 @@ export const WalletAddressModal = ({ isDark }: IWalletAddressModal) => {
         <ModalDiv isDark={isDark}>
           <TextBox>
             <LetterBox size="h1" weight="extraBold">
-              Kelly Jung님의 지갑 주소
+              {artistDetailStateVal.userNickname}님의 지갑 주소
             </LetterBox>
-            <LetterBox size="h3">
-              0x23D5ecFf8a5b9f9f5f57EAFE35268bC566BDda55
-            </LetterBox>
+            <LetterBox size="h3">{walletAddress}</LetterBox>
           </TextBox>
           <UnderLine isDark={isDark}></UnderLine>
           <ButtonBox>

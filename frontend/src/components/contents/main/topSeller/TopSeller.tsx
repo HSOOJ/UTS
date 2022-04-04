@@ -1,6 +1,6 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   TextGradientBlue,
@@ -12,6 +12,7 @@ import {
   TextContent,
   Wrapper,
   LayoutPaddingLeft,
+  BadgeImageContainer,
 } from "../Main.styled";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../recoil/theme";
@@ -29,6 +30,7 @@ export const TopSeller = () => {
   // recoil
   const isDark = useRecoilValue(themeAtom).isDark;
 
+  // let, const
   let urls = [
     "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoacAK%2FbtrtITSdtOg%2FVEhZQHJ0y7eroYe2KNF6q0%2Fimg.jpg",
     "https://media4.giphy.com/media/ho0xXatV7b3Fo1ZRXN/giphy.gif",
@@ -83,8 +85,6 @@ export const TopSeller = () => {
 
   return (
     <>
-      {/* <h1>Top Sellers Component</h1>
-      <h2>탑셀러 - 일반유저 (아티스트 아닌) 누적거래</h2> */}
       <TextGradientBlue>Top </TextGradientBlue>
       <TextGradientAside isDark={isDark}>Sellers</TextGradientAside>
       <Layout isDark={isDark}>
@@ -95,31 +95,31 @@ export const TopSeller = () => {
                 return (
                   <div key={a}>
                     <Wrapper>
-                      <ImageContainer
+                      <BadgeImageContainer
                         onClick={() => {
                           navigate(`/profile/${datas[a].seq}`);
                         }}
                       >
+                        <p>{a + 1}</p>
                         <ImageSeller src={datas[a].url} alt={datas[a].name} />
                         <TextContent isDark={isDark}>
                           {datas[a].name}
-                          {/* {datas[a].name} / {datas[a].vol} */}
                         </TextContent>
-                      </ImageContainer>
-                      <ImageContainer
+                      </BadgeImageContainer>
+                      <BadgeImageContainer
                         onClick={() => {
                           navigate(`/profile/${datas[a + 1].seq}`);
                         }}
                       >
+                        <p>{a + 2}</p>
                         <ImageSeller
                           src={datas[a + 1].url}
                           alt={datas[a + 1].name}
                         />
                         <TextContent isDark={isDark}>
                           {datas[a + 1].name}
-                          {/* {datas[a + 1].name} / {datas[a + 1].vol} */}
                         </TextContent>
-                      </ImageContainer>
+                      </BadgeImageContainer>
                     </Wrapper>
                   </div>
                 );

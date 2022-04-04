@@ -2,39 +2,15 @@ import { message, Popconfirm } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
 import { ThemeType } from "../../../../../global/theme";
 import { artistDetailState } from "../../../../../recoil/artistDetail";
 import Badge from "../../../../containers/badge";
-
-const ImgDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 75px;
-`;
-
-const UserBackgroundImg = styled.img`
-  border-radius: 3%;
-  filter: blur(2px);
-  width: 700px;
-  height: 250px;
-`;
-
-const UserImg = styled.img`
-  border-radius: 50%;
-  position: absolute;
-  top: 100px;
-  width: 200px;
-`;
-
-const BadgeList = styled.div`
-  display: flex;
-  gap: 15px;
-  position: absolute;
-  top: 235px;
-  right: 50px;
-`;
+import {
+  BadgeList,
+  ImgDiv,
+  UserBackgroundImg,
+  UserImg,
+} from "./ArtistHeader.styled";
 
 interface IArtistHeader extends ThemeType {
   isFollow: boolean;
@@ -47,10 +23,10 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
   const onClickFollow = () => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow", // 고쳐야 합니다
       data: {
-        userTo: "1",
-        userFrom: "1",
+        userTo: "2",
+        userFrom: "6",
       },
     }).then(function (res) {
       setFollowArtist({ ...followArtist, followArtist: true });
@@ -61,10 +37,10 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
   const onClickUnfollow = () => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow", // 고쳐야 합니다
       data: {
-        userTo: "1",
-        userFrom: "1",
+        userTo: "2",
+        userFrom: "6",
       },
     }).then(function (res) {
       setFollowArtist({ ...followArtist, followArtist: false });
@@ -77,7 +53,17 @@ export const ArtistHeader = ({ isFollow }: IArtistHeader) => {
   };
 
   const onClickReport = () => {
-    message.warning("해당 아티스트를 신고하였습니다.");
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/report", // 고쳐야 합니다
+      data: {
+        userSeq: "1",
+        artistSeq: "2",
+      },
+    }).then(function (res) {
+      setFollowArtist({ ...followArtist, followArtist: false });
+      message.warning("해당 아티스트를 신고하였습니다.");
+    });
   };
 
   return (
