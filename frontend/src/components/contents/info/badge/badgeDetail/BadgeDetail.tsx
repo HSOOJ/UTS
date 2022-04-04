@@ -1,7 +1,9 @@
 import { message } from "antd";
-import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
+import { profileState } from "../../../../../recoil/profile";
 import Button from "../../../../containers/button";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
@@ -13,6 +15,8 @@ interface IBadgeDetail extends ThemeType {}
 export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
+
+  const userDetailStateVal = useRecoilValue(profileState);
 
   const copyCodeToClipboard = () => {
     const el = "주소주소주~~"; //고쳐야 합니다
@@ -36,6 +40,8 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
       isOpenSellModal: true,
     });
   };
+
+  console.log(userDetailStateVal.userWallet); // badgeDetailStateVal.userWallet이랑 같으면 어떻게 하고 아니면 어떻게 하게 해결 해야함
 
   return (
     <BadgeDetailDiv isDark={isDark}>
