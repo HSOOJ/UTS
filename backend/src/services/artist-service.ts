@@ -112,10 +112,9 @@ async function getEditions(artistSeq: number): Promise<Edition[] | null> {
           .groupBy("edition_seq")
           .where(
             "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
-          )
-          .andWhere(`edition.artist_seq = ${artistSeq}`),
+          ),
       "min",
-      ""
+      "min.edition_seq = edition.edition_seq"
     )
     .innerJoinAndSelect(
       (qb) =>
@@ -127,10 +126,9 @@ async function getEditions(artistSeq: number): Promise<Edition[] | null> {
           .groupBy("edition_seq")
           .where(
             "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
-          )
-          .andWhere(`edition.artist_seq = ${artistSeq}`),
+          ),
       "on_sale",
-      ""
+      "on_sale.edition_seq = edition.edition_seq"
     )
     .innerJoinAndSelect(
       (qb) =>
@@ -143,13 +141,11 @@ async function getEditions(artistSeq: number): Promise<Edition[] | null> {
           .groupBy("edition_seq")
           .where(
             "edition_seq = (select nft.edition_seq from nft nft where nft.nft_seq = sale.nft_seq)"
-          )
-          .andWhere(`edition.artist_seq = ${artistSeq}`),
+          ),
       "all",
-      ""
+      "all.edition_seq = edition.edition_seq"
     )
     .where(`edition.artist_seq = ${artistSeq}`);
-
   return baseQuery.getRawMany();
 }
 
@@ -164,9 +160,6 @@ async function report(userSeq: number, artistSeq: number) {
   });
 }
 
-// async function name(params:type) {
-
-// }
 // Export default
 export default {
   getAllbyPopular,

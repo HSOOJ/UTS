@@ -11,9 +11,16 @@ import {
   UnderLine,
 } from "./WalletAddressModal.styled";
 
-interface IWalletAddressModal extends ThemeType {}
+interface IWalletAddressModal extends ThemeType {
+  walletAddress: string;
+  userNickname: string;
+}
 
-export const WalletAddressModal = ({ isDark }: IWalletAddressModal) => {
+export const WalletAddressModal = ({
+  isDark,
+  walletAddress,
+  userNickname,
+}: IWalletAddressModal) => {
   const [artistDetailStateVal, setArtistDetailStateVal] =
     useRecoilState(artistDetailState);
 
@@ -39,11 +46,9 @@ export const WalletAddressModal = ({ isDark }: IWalletAddressModal) => {
         <ModalDiv isDark={isDark}>
           <TextBox>
             <LetterBox size="h1" weight="extraBold">
-              {artistDetailStateVal.userNickname}님의 지갑 주소
+              {userNickname}님의 지갑 주소
             </LetterBox>
-            <LetterBox size="h3">
-              {artistDetailStateVal.walletAddress}
-            </LetterBox>
+            <LetterBox size="h3">{walletAddress}</LetterBox>
           </TextBox>
           <UnderLine isDark={isDark}></UnderLine>
           <ButtonBox>

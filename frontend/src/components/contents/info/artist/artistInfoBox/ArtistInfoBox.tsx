@@ -4,31 +4,64 @@ import { artistDetailState } from "../../../../../recoil/artistDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   InfoDetailBox,
+  InfoDetailDescript,
   InfoMainbox,
   InfoMoreDetailBox,
+  InfoMoreDetailBoxa,
 } from "./ArtistInfoBox.styled";
 
-interface IArtistInfoBox extends ThemeType {}
+interface IArtistInfoBox extends ThemeType {
+  description: string;
+  category: string;
+  artistSns: string;
+  artistFollowersTotal: string;
+}
 
-export const ArtistInfoBox = ({ isDark }: IArtistInfoBox) => {
+export const ArtistInfoBox = ({
+  isDark,
+  description,
+  category,
+  artistSns,
+  artistFollowersTotal,
+}: IArtistInfoBox) => {
   const artistDetailStateVal = useRecoilValue(artistDetailState);
+  const CategoryList = [
+    "",
+    "🎵 Music",
+    "🎨 Art",
+    "⚽ Sport",
+    "🎞️ Actors",
+    "👜 Fashion",
+    "🎙️ Creator",
+    "🎸 Other",
+  ];
 
   return (
     <InfoMainbox isDark={isDark}>
-      <LetterBox>{artistDetailStateVal.description}</LetterBox>
+      <InfoDetailDescript isDark={isDark}>
+        <LetterBox>{description}</LetterBox>
+      </InfoDetailDescript>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>{artistDetailStateVal.category}</InfoMoreDetailBox>
-        <InfoMoreDetailBox>{artistDetailStateVal.artistSns}</InfoMoreDetailBox>
-        <InfoMoreDetailBox>
-          {artistDetailStateVal.artistFollowersTotal}
+        <InfoMoreDetailBox isDark={isDark}>
+          {CategoryList[Number(category)]}
+        </InfoMoreDetailBox>
+        <InfoMoreDetailBoxa
+          isDark={isDark}
+          href={`https://${artistSns}`}
+          target="_blank"
+        >
+          {artistSns}
+        </InfoMoreDetailBoxa>
+        <InfoMoreDetailBox isDark={isDark}>
+          {artistFollowersTotal}명의 팔로워
         </InfoMoreDetailBox>
       </InfoDetailBox>
       <br></br>
       <InfoDetailBox>
-        <InfoMoreDetailBox>총 매출</InfoMoreDetailBox>
-        <InfoMoreDetailBox>최고가</InfoMoreDetailBox>
-        <InfoMoreDetailBox>거래량</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>총 매출</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>최고가</InfoMoreDetailBox>
+        <InfoMoreDetailBox isDark={isDark}>거래량</InfoMoreDetailBox>
       </InfoDetailBox>
     </InfoMainbox>
   );

@@ -2,13 +2,13 @@
   "swagger": "2.0",
   "info": {
     "title": "This is my API Document",
-    "description": "local 용 스웨거 생성",
+    "description": "이렇게 스웨거 자동생성이 됩니다.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080/api",
+  "host": "j6a105.p.ssafy.io:8080/api",
   "servers": [
     {
-      "url": "localhost:8080"
+      "url": "http://j6a105.p.ssafy.io:8080"
     }
   ],
   "basePath": "/",
@@ -806,6 +806,11 @@
         "parameters": [
           {
             "name": "editionSeq",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userSeq",
             "in": "query",
             "type": "string"
           }

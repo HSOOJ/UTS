@@ -19,7 +19,6 @@ async function artistCheckFollow(userTo: number, userFrom: number) {
 async function artistFollow(userTo: number, userFrom: number) {
   const followRepository = getConnection().getRepository(Follow);
   const check_f = await userService.checkArtistYn(userTo);
-  console.log(check_f?.user_role);
   const nowDate = new Date();
   try {
     const check_1 = await userService.checkUserSeq(userTo);

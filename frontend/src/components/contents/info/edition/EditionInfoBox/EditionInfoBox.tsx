@@ -1,27 +1,37 @@
-import { useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
-import { editionDetailState } from "../../../../../recoil/EditionDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
+  EditionContent,
   EditionDetail,
   EditionImg,
   EditionInfoBoxDiv,
   EditionTitle,
 } from "./EditionInfoBox.styled";
 
-interface EditionInfoBox extends ThemeType {}
+interface EditionInfoBox extends ThemeType {
+  editionName: string;
+  editionDescription: string;
+}
 
-export const EditionInfoBox = ({ isDark }: EditionInfoBox) => {
-  const editionDetailStateVal = useRecoilValue(editionDetailState);
-
+export const EditionInfoBox = ({
+  isDark,
+  editionName,
+  editionDescription,
+}: EditionInfoBox) => {
   return (
     <EditionInfoBoxDiv isDark={isDark}>
       <EditionImg src="https://picsum.photos/150/150" />
       <EditionDetail>
         <EditionTitle>
-          <LetterBox size="h1">{editionDetailStateVal.edition_name}</LetterBox>
+          <LetterBox size="h2" weight="bold">
+            {editionName}
+          </LetterBox>
         </EditionTitle>
-        <LetterBox>{editionDetailStateVal.edition_description}</LetterBox>
+        <div>
+          <EditionContent>
+            <LetterBox>{editionDescription}</LetterBox>
+          </EditionContent>
+        </div>
       </EditionDetail>
     </EditionInfoBoxDiv>
   );

@@ -4,6 +4,7 @@ import { useParams, Params } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { badgeDetailState } from "../../../../recoil/BadgeDetail";
+import { profileState } from "../../../../recoil/profile";
 import { themeAtom } from "../../../../recoil/theme";
 import LetterBox from "../../../containers/letterBox/LetterBox";
 import { BadgeHeader } from "../infoHeader/badgeHeader/BadgeHeader";
@@ -20,6 +21,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 50px;
 `;
 
 export const BadgeInfo = () => {
@@ -30,16 +32,11 @@ export const BadgeInfo = () => {
       method: "GET",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
       params: {
-        userSeq: 1,
-        nftSeq: 1,
+        userSeq: profileStateVal.userSeq,
+        nftSeq: badge_id,
       },
     })
-      .then(function (res) {
-        setBadgeDetailStateVal({
-          ...badgeDetailStateVal,
-          isLike: res.data.success,
-        });
-      })
+      .then(function (res) {})
       .catch(function (err) {
         console.log(err);
       });
@@ -53,10 +50,11 @@ export const BadgeInfo = () => {
   const { badge_id } = useParams() as BadgeParamTypes;
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
+  const profileStateVal = useRecoilValue(profileState);
 
   return (
     <Layout>
-      <BadgeHeader isLike={badgeDetailStateVal.isLike}></BadgeHeader>
+      <BadgeHeader badge_id={badge_id}></BadgeHeader>
       <LetterBox weight="extraBold" size="h1">
         Kelly's Badge
       </LetterBox>

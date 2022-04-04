@@ -5,7 +5,7 @@ import Badge from "../../../../containers/badge";
 import { ThemeType } from "../../../../../global/theme";
 import axios from "axios";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { BuyBadgeModal } from "../../badge/buyBadgeModal/BuyBadgeModal";
 import {
@@ -19,27 +19,44 @@ import {
   BadgeSizeControl,
   OwnerImg,
 } from "./BadgeItem.style";
+import { profileState } from "../../../../../recoil/profile";
+import { useEffect } from "react";
 
 interface IBadgeItem extends ThemeType {
-  isLike: boolean;
+  badgeItem: any;
 }
 
-export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
+export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
+  const checkLike = () => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
+      params: {
+        userSeq: profileStateVal.userSeq,
+        nftSeq: badgeItem.nft_num,
+      },
+    })
+      .then(function (res) {})
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
   let navigate = useNavigate();
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
-
+  const profileStateVal = useRecoilValue(profileState);
   const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
   const onClickLike = () => {
     axios({
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
       data: {
-        userSeq: "1", // 고쳐야 합니다.
-        nftSeq: "1",
+        userSeq: profileStateVal.userSeq,
+        nftSeq: badgeItem.nft_num,
       },
     }).then(function (res) {
-      setLikeBadge({ ...likeBadge, isLike: true });
+      console.log(res);
       message.success("좋아요 되었습니다.");
     });
   };
@@ -49,11 +66,10 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
       data: {
-        userSeq: "1", // 고쳐야 합니다.
-        nftSeq: "1",
+        userSeq: profileStateVal.userSeq,
+        nftSeq: badgeItem.nft_num,
       },
     }).then(function (res) {
-      setLikeBadge({ ...likeBadge, isLike: false });
       message.error("좋아요가 취소되었습니다.");
     });
   };
@@ -62,6 +78,12 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
     setBadgeDetailStateVal({ ...badgeDetailStateVal, isOpenBuyModal: true });
   };
 
+  console.log();
+
+  useEffect(() => {
+    checkLike();
+  }, []);
+
   return (
     <div>
       <BadgeDiv isDark={isDark}>
@@ -69,23 +91,23 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
           <BadgeImg
             src="https://picsum.photos/150/150"
             onClick={() => {
-              navigate(`/badge/1`); // 고쳐야 합니다
+              navigate(`/badge/${badgeItem.nft_num}`);
             }}
           />
         </div>
         <BadgeInfo>
           <BadgeInfoLeft
             onClick={() => {
-              navigate(`/badge/1`); // 고쳐야 합니다
+              navigate(`/badge/${badgeItem.nft_num}`);
             }}
           >
             <LetterBox size="h2" weight="extraBold">
-              #1
+              #{badgeItem.nft_num}
             </LetterBox>
             <br></br>
             <LetterBox color="shade">Price</LetterBox>
             <LetterBox size="h3" weight="extraBold">
-              1000SSF
+              {badgeItem.nft_price}SSF
             </LetterBox>
           </BadgeInfoLeft>
           <BadgeInfoRight>
@@ -93,7 +115,7 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
             <OwnerImg
               src="https://picsum.photos/50/50"
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${badgeItem.nft_owner_seq}`);
               }}
             />
           </BadgeInfoRight>
@@ -106,7 +128,7 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
                 Buy
               </Button>
             </BadgeSizeControl>
-            <BadgeLikeButton>
+            {/* <BadgeLikeButton>
               {isLike === true ? (
                 <div onClick={onClickDislike}>
                   <Badge type="like" liked={true}></Badge>
@@ -116,7 +138,7 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
                   <Badge type="like"></Badge>
                 </div>
               )}
-            </BadgeLikeButton>
+            </BadgeLikeButton> */}
           </BadgeButtonDiv>
         </div>
       </BadgeDiv>

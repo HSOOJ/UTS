@@ -1,10 +1,12 @@
+import { Row } from "antd";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Params } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { artistDetailState } from "../../../../recoil/artistDetail";
 import { badgeDetailState } from "../../../../recoil/BadgeDetail";
 import { editionDetailState } from "../../../../recoil/EditionDetail";
+import { profileState } from "../../../../recoil/profile";
 import { themeAtom } from "../../../../recoil/theme";
 import LetterBox from "../../../containers/letterBox/LetterBox";
 import { ArtistHeader } from "../infoHeader/artistHeader/ArtistHeader";
@@ -26,33 +28,13 @@ export const EditionInfo = () => {
       method: "GET",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
       params: {
-        userTo: 2,
-        userFrom: 33,
+        userTo: followArtist.artistId,
+        userFrom: profileStateVal.userSeq,
       },
     })
       .then(function (res) {
         setFollowArtist({ ...followArtist, followArtist: res.data.success });
         console.log(res.data.success);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const checkLike = () => {
-    axios({
-      method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
-      params: {
-        userSeq: 11,
-        nftSeq: 5,
-      },
-    })
-      .then(function (res) {
-        setBadgeDetailStateVal({
-          ...badgeDetailStateVal,
-          isLike: res.data.success,
-        });
       })
       .catch(function (err) {
         console.log(err);
@@ -68,6 +50,9 @@ export const EditionInfo = () => {
       },
     })
       .then(function (res) {
+        console.log(res);
+        setEditionName(res.data.success.edition_name);
+        setEditionDescription(res.data.success.edition_description);
         setEditionDetailStateVal({
           ...editionDetailStateVal,
           artist_seq: res.data.success.artist_seq,
@@ -88,14 +73,15 @@ export const EditionInfo = () => {
       url: "http://j6a105.p.ssafy.io:8080/api/edition/nfts", // 고쳐야 합니다
       params: {
         editionSeq: edition_id,
+        userSeq: profileStateVal.userSeq,
       },
     })
       .then(function (res) {
         console.log(res);
-        // setEditionDetailStateVal({
-        //   ...editionDetailStateVal,
-        //   // badge_list: res.data.
-        // });
+        setEditionDetailStateVal({
+          ...editionDetailStateVal,
+          badge_list: res.data.success,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -104,7 +90,6 @@ export const EditionInfo = () => {
 
   useEffect(() => {
     checkFollow();
-    checkLike();
     getEditionDetail();
     getBadgeList();
   }, []);
@@ -117,26 +102,34 @@ export const EditionInfo = () => {
     useRecoilState(badgeDetailState);
   const [editionDetailStateVal, setEditionDetailStateVal] =
     useRecoilState(editionDetailState);
+  const [editionName, setEditionName] = useState("");
+  const [editionDescription, setEditionDescription] = useState("");
+  const profileStateVal = useRecoilValue(profileState);
 
   return (
     <EditionInfomation>
       {/* <p>{editionDetailStateVal.artist_seq}번째 에디션</p> */}
-      <ArtistHeader isFollow={followArtist.followArtist} />
-      <EditionInfoBox isDark={isDark}></EditionInfoBox>
+      <ArtistHeader
+        artist_id={followArtist.artistId}
+        // isFollow={followArtist.followArtist}
+        artistUserId={followArtist.userId}
+      />
+      <EditionInfoBox
+        isDark={isDark}
+        editionName={editionName}
+        editionDescription={editionDescription}
+      ></EditionInfoBox>
       <BadgesOnMarketText>
         <LetterBox size="h1" weight="extraBold">
           Badges on Market
         </LetterBox>
       </BadgesOnMarketText>
       <BadgesOnMarket>
-        <BadgeItem
-          isDark={isDark}
-          isLike={badgeDetailStateVal.isLike}
-        ></BadgeItem>
-        <BadgeItem
-          isDark={isDark}
-          isLike={badgeDetailStateVal.isLike}
-        ></BadgeItem>
+        <Row justify="start">
+          {editionDetailStateVal.badge_list.map((i) => (
+            <BadgeItem isDark={isDark} badgeItem={i}></BadgeItem>
+          ))}
+        </Row>
       </BadgesOnMarket>
     </EditionInfomation>
   );
