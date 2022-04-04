@@ -2,13 +2,13 @@
   "swagger": "2.0",
   "info": {
     "title": "This is my API Document",
-    "description": "이렇게 스웨거 자동생성이 됩니다.",
+    "description": "local 용 스웨거 생성",
     "version": "1.0.0"
   },
-  "host": "j6a105.p.ssafy.io:8080/api",
+  "host": "localhost:8080/api",
   "servers": [
     {
-      "url": "http://j6a105.p.ssafy.io:8080"
+      "url": "localhost:8080"
     }
   ],
   "basePath": "/",
@@ -241,6 +241,46 @@
         "parameters": [
           {
             "name": "userSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/editions": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
             "in": "query",
             "type": "string"
           }

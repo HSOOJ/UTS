@@ -4,6 +4,6 @@ import { localStorageEffect } from "../utils/localStorage";
 
 export const themeAtom = atom<ThemeType>({
   key: "themeState",
-  default: { isDark: false },
+  default: { isDark: true },
   effects: [localStorageEffect("theme")],
 });

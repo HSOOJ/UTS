@@ -9,6 +9,7 @@ interface EditionDetailTypes {
   edition_image: string;
   edition_name: string;
   edition_seq: string;
+  badge_list: [];
 }
 
 export const editionDetailState = atom<EditionDetailTypes>({
@@ -22,5 +23,6 @@ export const editionDetailState = atom<EditionDetailTypes>({
     edition_image: "",
     edition_name: "",
     edition_seq: "",
+    badge_list: []
   },
 });
