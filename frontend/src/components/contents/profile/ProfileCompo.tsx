@@ -115,7 +115,13 @@ export const ProfileCompo = () => {
       <Container>
         <ProfileContainerModify>
           <ImageContainer>
-            <Image src={profileStateVal.userProfileImage} />
+            <Image
+              src={
+                profileStateVal.userProfileImage
+                  ? profileStateVal.userProfileImage
+                  : undefined
+              }
+            />
           </ImageContainer>
           <TextMain>{profileStateVal.userNickname}님의 컬렉션</TextMain>
         </ProfileContainerModify>

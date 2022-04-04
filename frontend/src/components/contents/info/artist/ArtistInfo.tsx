@@ -21,13 +21,6 @@ export const ArtistInfo = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
   const profileStateVal = useRecoilValue(profileState);
 
-  // useEffect
-  // 고쳐야 합니다
-  useEffect(() => {
-    getArtistInfo();
-    getArtistEdition();
-  }, []);
-
   const getArtistInfo = () => {
     axios({
       method: "GET",
@@ -56,6 +49,7 @@ export const ArtistInfo = () => {
           artistId: res.data.success.artist_artist_seq,
           userId: res.data.success.artist_user_seq,
         });
+        checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
       })
       .catch(function (err) {
         console.log(err);
@@ -102,6 +96,38 @@ export const ArtistInfo = () => {
       isOpenWalletAddressModal: true,
     });
   };
+
+  // axios
+  const checkFollow = (userTo: string, userFrom: string | null | undefined) => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
+      params: {
+        // userTo: artistUserId,
+        // userFrom: profileStateVal.userSeq,
+        userTo,
+        userFrom,
+      },
+    })
+      .then(function (res) {
+        console.log(res);
+        setFollowArtist({ ...followArtist, followArtist: res.data.success });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // useEffect
+  // useEffect(checkFollow, []);
+
+  // useEffect
+  // 고쳐야 합니다
+  useEffect(() => {
+    getArtistInfo();
+    getArtistEdition();
+    setFollowArtist({ ...followArtist, artistId: artist_id });
+  }, []);
 
   return (
     <div>

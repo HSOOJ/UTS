@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { profileState } from "../../../../recoil/profile";
 import { ethers } from "ethers";
 import axios from "axios";
+import { useEffect } from "react";
+import styled from "styled-components";
 
 declare let window: any;
 
@@ -47,11 +49,15 @@ export const DropdownCompo = () => {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("userSeq", res.data.success.userSeq);
+        localStorage.setItem(
+          "userProfileImage",
+          res.data.success.userProfileImage
+        );
         setProfileStateVal({
           ...profileStateVal,
           userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
           userSeq: localStorage.getItem("userSeq"),
-          userProfileImage: res.data.success.ProfileImage,
+          userProfileImage: localStorage.getItem("userProfileImage"),
         });
         setUserStateVal({ ...userStateVal, login: true });
       })
@@ -77,6 +83,7 @@ export const DropdownCompo = () => {
     console.log(`LOGOUT & Clear localStorage`);
     localStorage.removeItem("userAccount");
     localStorage.removeItem("userSeq");
+    localStorage.removeItem("userProfileImage");
     setUserStateVal({ ...userStateVal, login: false });
     setProfileStateVal({
       ...profileStateVal,
@@ -107,6 +114,9 @@ export const DropdownCompo = () => {
     </Menu>
   );
 
+  // useEffect
+  useEffect(() => {}, []);
+
   return (
     <>
       <Dropdown overlay={menu}>
@@ -115,7 +125,13 @@ export const DropdownCompo = () => {
           //   style={{ backgroundColor: "#87d068" }}
           //   icon={<UserOutlined />}
           // />
-          <img src={profileStateVal.userProfileImage} />
+          <Image
+            src={
+              profileStateVal.userProfileImage
+                ? profileStateVal.userProfileImage
+                : undefined
+            }
+          />
         ) : (
           <Avatar icon={<UserOutlined />} />
         )}
@@ -123,3 +139,10 @@ export const DropdownCompo = () => {
     </>
   );
 };
+
+// styled component
+const Image = styled.img`
+  width: 70px;
+  height: 70px;
+  border-radius: 30px;
+`;

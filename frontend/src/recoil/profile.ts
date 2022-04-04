@@ -5,8 +5,8 @@ interface profileType {
   modifyNickname: string;
   userWallet: string | undefined | null;
   userSeq: string | undefined | null;
-  userProfileImage: string | undefined;
-  modifyUserProfileImage: string | undefined;
+  userProfileImage: string | undefined | null;
+  modifyUserProfileImage: string | undefined | null;
   clickProfile: boolean;
   modalLoading: boolean;
   modalVisible: boolean;
@@ -28,7 +28,7 @@ export const profileState = atom<profileType>({
     modifyNickname: "",
     userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
     userSeq: localStorage.getItem("userSeq"),
-    userProfileImage: "",
+    userProfileImage: localStorage.getItem("userProfileImage"),
     modifyUserProfileImage: "",
     clickProfile: false,
     modalLoading: false,
