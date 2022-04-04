@@ -22,9 +22,10 @@ import {
 
 interface IBadgeItem extends ThemeType {
   isLike: boolean;
+  badgeItem: any;
 }
 
-export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
+export const BadgeItem = ({ isDark, isLike, badgeItem }: IBadgeItem) => {
   let navigate = useNavigate();
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
@@ -62,6 +63,8 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
     setBadgeDetailStateVal({ ...badgeDetailStateVal, isOpenBuyModal: true });
   };
 
+  console.log();
+
   return (
     <div>
       <BadgeDiv isDark={isDark}>
@@ -69,7 +72,7 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
           <BadgeImg
             src="https://picsum.photos/150/150"
             onClick={() => {
-              navigate(`/badge/1`); // 고쳐야 합니다
+              navigate(`/badge/${badgeItem.nft_num}`); // 고쳐야 합니다
             }}
           />
         </div>
@@ -80,12 +83,12 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
             }}
           >
             <LetterBox size="h2" weight="extraBold">
-              #1
+              #{badgeItem.nft_num}
             </LetterBox>
             <br></br>
             <LetterBox color="shade">Price</LetterBox>
             <LetterBox size="h3" weight="extraBold">
-              1000SSF
+              {badgeItem.nft_price}SSF
             </LetterBox>
           </BadgeInfoLeft>
           <BadgeInfoRight>
@@ -93,7 +96,7 @@ export const BadgeItem = ({ isDark, isLike }: IBadgeItem) => {
             <OwnerImg
               src="https://picsum.photos/50/50"
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${badgeItem.nft_owner_seq}`); // 고쳐야 합니다
               }}
             />
           </BadgeInfoRight>
