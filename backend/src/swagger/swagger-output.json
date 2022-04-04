@@ -255,6 +255,46 @@
         }
       }
     },
+    "/artist/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/artist/editions": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "artistSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/artist/report": {
       "post": {
         "description": "",
