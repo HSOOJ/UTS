@@ -9,6 +9,7 @@ CREATE TABLE `user` (
   `user_wallet_address` varchar(100) NOT NULL,
   `user_profile_image` varchar(100) NOT NULL,
   `user_role` int NOT NULL DEFAULT '0' COMMENT '0:회원, 1:아티스트, 2: 관리자',
+  `user_volume` DOUBLE NOT NULL,
   `reg_dt` DATETIME NOT NULL,
   `mod_dt` DATETIME NOT NULL,
   `del_dt` DATETIME NULL,
@@ -122,6 +123,7 @@ CREATE TABLE `nft` (
   `nft_id` varchar(50) NOT NULL COMMENT '이더리움 상의 id',
   `nft_transaction_id` varchar(50) NOT NULL,
   `nft_transaction_count` int NOT NULL,
+  `nft_volume` varchar(45) NOT NULL,
   `reg_dt` datetime NOT NULL,
   `mod_dt` datetime NOT NULL,
   `del_dt` datetime DEFAULT NULL,
@@ -132,7 +134,7 @@ CREATE TABLE `nft` (
   KEY `user_nft_fk_idx` (`nft_owner_seq`),
   CONSTRAINT `edition_nft_fk` FOREIGN KEY (`edition_seq`) REFERENCES `edition` (`edition_seq`),
   CONSTRAINT `user_nft_fk` FOREIGN KEY (`nft_owner_seq`) REFERENCES `user` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- nft 정렬 기준 테이블
 CREATE TABLE `nft_sorting` (
@@ -210,5 +212,3 @@ alter table notification auto_increment=1;
 alter table report auto_increment=1;
 alter table sale auto_increment=1;
 alter table user auto_increment=1;
-ALTER TABLE `uts`.`user` 
-ADD COLUMN `user_volume` DOUBLE NOT NULL AFTER `del_dt`;
