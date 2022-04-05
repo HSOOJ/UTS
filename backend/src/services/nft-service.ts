@@ -146,8 +146,8 @@ async function editionMinting(
     for (let idx = 1; idx <= editionTotal; idx++) {
       await nftRepository.insert({
         edition_seq: editionSequence,
-        nft_author_seq: artistSequence,
-        nft_owner_seq: artistSequence,
+        nft_author_seq: userSeq,
+        nft_owner_seq: userSeq,
         nft_num: idx,
         reg_dt: nowDate,
         mod_dt: nowDate,
