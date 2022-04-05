@@ -3,8 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Params } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { artistDetailState } from "../../../../recoil/artistDetail";
-import { badgeDetailState } from "../../../../recoil/BadgeDetail";
+import { artistState } from "../../../../recoil/artist";
 import { editionDetailState } from "../../../../recoil/EditionDetail";
 import { profileState } from "../../../../recoil/profile";
 import { themeAtom } from "../../../../recoil/theme";
@@ -23,34 +22,31 @@ interface EditionParamTypes extends Params {
 }
 
 export const EditionInfo = () => {
-  // const checkFollow = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
-  //     params: {
-  //       userTo: followArtist.artistId,
-  //       userFrom: profileStateVal.userSeq,
-  //     },
-  //   })
-  //     .then(function (res) {
-  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
-  //       console.log(res.data.success);
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
+  // recoil
+  const isDark = useRecoilValue(themeAtom).isDark;
+  const [editionDetailStateVal, setEditionDetailStateVal] =
+    useRecoilState(editionDetailState);
+  const [artistStateVal, setArtistStateVal] = useRecoilState(artistState);
+  const profileStateVal = useRecoilValue(profileState);
 
+  // 현재 edition_id 잡아내기
+  const { edition_id } = useParams() as EditionParamTypes;
+
+  // useState
+  const [editionName, setEditionName] = useState("");
+  const [editionDescription, setEditionDescription] = useState("");
+
+  // Axios
   const getEditionDetail = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/edition/info", // 고쳐야 합니다
+      url: "http://j6a105.p.ssafy.io:8080/api/edition/info",
       params: {
         editionSeq: edition_id,
       },
     })
       .then(function (res) {
-        console.log(res);
+        // console.log(res);
         setEditionName(res.data.success.edition_name);
         setEditionDescription(res.data.success.edition_description);
         setEditionDetailStateVal({
@@ -61,23 +57,27 @@ export const EditionInfo = () => {
           edition_name: res.data.success.edition_name,
           edition_seq: res.data.success.edition_seq,
         });
+        setArtistStateVal({
+          ...artistStateVal,
+          artistUserSeq: res.data.success.artist_user_seq,
+          artistSeq: res.data.success.artist_seq,
+        });
       })
       .catch(function (err) {
         console.log(err);
       });
   };
-
   const getBadgeList = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/edition/nfts", // 고쳐야 합니다
+      url: "http://j6a105.p.ssafy.io:8080/api/edition/nfts",
       params: {
         editionSeq: edition_id,
         userSeq: profileStateVal.userSeq,
       },
     })
       .then(function (res) {
-        console.log(res);
+        // console.log(res);
         setEditionDetailStateVal({
           ...editionDetailStateVal,
           badge_list: res.data.success,
@@ -88,75 +88,15 @@ export const EditionInfo = () => {
       });
   };
 
+  // useEffect
   useEffect(() => {
-    // checkFollow();
     getEditionDetail();
     getBadgeList();
   }, []);
 
-  // 현재 edition_id 잡아내기
-  const { edition_id } = useParams() as EditionParamTypes;
-  const isDark = useRecoilValue(themeAtom).isDark;
-  const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
-  const [badgeDetailStateVal, setBadgeDetailStateVal] =
-    useRecoilState(badgeDetailState);
-  const [editionDetailStateVal, setEditionDetailStateVal] =
-    useRecoilState(editionDetailState);
-  const [editionName, setEditionName] = useState("");
-  const [editionDescription, setEditionDescription] = useState("");
-  const profileStateVal = useRecoilValue(profileState);
-
-  // const getArtistInfo = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/info", // 고쳐야 합니다
-  //     params: {
-  //       artistSeq: followArtist.artistId,
-  //     },
-  //   })
-  //     .then(function (res) {
-  //       checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
-
-  // axios
-  // const checkFollow = (userTo: string, userFrom: string | null | undefined) => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
-  //     params: {
-  //       // userTo: artistUserId,
-  //       // userFrom: profileStateVal.userSeq,
-  //       userTo,
-  //       userFrom,
-  //     },
-  //   })
-  //     .then(function (res) {
-  //       console.log(res);
-  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
-
-  // // useEffect
-  // useEffect(
-  //   () => checkFollow(followArtist.artistId, profileStateVal.userSeq),
-  //   []
-  // );
-
   return (
     <EditionInfomation>
-      {/* <p>{editionDetailStateVal.artist_seq}번째 에디션</p> */}
-      <ArtistHeader
-        artist_id={followArtist.artistId}
-        // isFollow={followArtist.followArtist}
-        artistUserId={followArtist.userId}
-      />
+      <ArtistHeader />
       <EditionInfoBox
         isDark={isDark}
         editionName={editionName}
@@ -169,8 +109,8 @@ export const EditionInfo = () => {
       </BadgesOnMarketText>
       <BadgesOnMarket>
         <Row justify="start">
-          {editionDetailStateVal.badge_list.map((i) => (
-            <BadgeItem isDark={isDark} badgeItem={i}></BadgeItem>
+          {editionDetailStateVal.badge_list.map((i, index) => (
+            <BadgeItem key={index} isDark={isDark} badgeItem={i}></BadgeItem>
           ))}
         </Row>
       </BadgesOnMarket>

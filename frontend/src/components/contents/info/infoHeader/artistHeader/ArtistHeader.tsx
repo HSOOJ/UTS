@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { artistState } from "../../../../../recoil/artist";
 import { artistDetailState } from "../../../../../recoil/artistDetail";
 import { profileState } from "../../../../../recoil/profile";
 import Badge from "../../../../containers/badge";
@@ -15,128 +16,154 @@ import {
   UserImg,
 } from "./ArtistHeader.styled";
 
-interface IArtistHeader extends ThemeType {
-  // isFollow: boolean;
-  artistUserId: string;
-  artist_id: string;
-  // getatuasr: ()=>void;
-}
+// interface IArtistHeader extends ThemeType {
+//   artistUserId: string | number;
+//   artist_id: string | number;
+// }
 
-export const ArtistHeader = ({
-  // isFollow,
-  artistUserId,
-  artist_id,
-}: // getatuasr
-IArtistHeader) => {
-  const [followArtist, setFollowArtist] = useRecoilState(artistDetailState);
+export const ArtistHeader = () => {
+  // export const ArtistHeader = ({ artistUserId, artist_id }: IArtistHeader) => {
+  // recoil
+  const [artistStateVal, setArtistStateVal] = useRecoilState(artistState);
   const profileStateVal = useRecoilValue(profileState);
+
+  // useState
   const [isFollow, setIsFollow] = useState(false);
-  let navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(followArtist.followArtist);
-  }, []);
-
-  // const checkFollow = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow", // 고쳐야 합니다
-  //     params: {
-  //       userTo: artistUserId,
-  //       userFrom: profileStateVal.userSeq,
-  //     },
-  //   })
-  //     .then(function (res) {
-  //       console.log(res);
-  //       setIsFollow(res.data.success);
-  //       setFollowArtist({ ...followArtist, followArtist: res.data.success });
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
-
-  const onClickFollow = () => {
+  // Axios
+  const onClickFollow = (
+    userTo: string,
+    userFrom: string | null | undefined
+  ) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow", // 고쳐야 합니다
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
       data: {
-        userTo: artistUserId,
-        userFrom: profileStateVal.userSeq,
+        // userTo: artistUserId,
+        // userFrom: profileStateVal.userSeq,
+        userTo,
+        userFrom,
       },
     })
       .then(function (res) {
-        console.log(res);
-        setFollowArtist({ ...followArtist, followArtist: true });
+        // console.log(res);
         message.success("팔로우 되었습니다.");
-        // setIsFollow(true);
+        setArtistStateVal({ ...artistStateVal, following: true });
       })
       .catch((res) => {
-        console.log(res);
-        // setIsFollow(false);
-        setFollowArtist({ ...followArtist, followArtist: false });
+        // console.log(res);
+        checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
       });
   };
-
-  const onClickUnfollow = () => {
+  const onClickUnfollow = (
+    userTo: string,
+    userFrom: string | null | undefined
+  ) => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow", // 고쳐야 합니다
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
       data: {
-        userTo: artistUserId,
-        userFrom: profileStateVal.userSeq,
+        // userTo: artistUserId,
+        // userFrom: profileStateVal.userSeq,
+        userTo,
+        userFrom,
       },
     })
       .then(function (res) {
-        setFollowArtist({ ...followArtist, followArtist: false });
-        // setIsFollow(false);
+        setArtistStateVal({ ...artistStateVal, following: false });
         message.error("팔로우가 취소되었습니다.");
       })
       .catch((res) => {
-        console.log(res);
-        // setIsFollow(true);
-        setFollowArtist({ ...followArtist, followArtist: true });
+        // console.log(res);
+        checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
       });
   };
-
   const onClickCheck = () => {
     message.info("UTS에서 인증하는 아티스트입니다.");
   };
-
-  const onClickReport = () => {
+  const onClickReport = (
+    userSeq: string | null | undefined,
+    artistSeq: string
+  ) => {
     axios({
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/report", // 고쳐야 합니다
       data: {
-        userSeq: profileStateVal.userSeq,
-        artistSeq: artist_id,
+        // userSeq: profileStateVal.userSeq,
+        // artistSeq: artist_id,
+        userSeq,
+        artistSeq,
       },
     }).then(function (res) {
-      setFollowArtist({ ...followArtist, followArtist: false });
       message.warning("해당 아티스트를 신고하였습니다.");
     });
   };
+  const checkFollow = (
+    userTo: string | number,
+    userFrom: string | null | undefined
+  ) => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow",
+      params: {
+        userTo,
+        userFrom,
+      },
+    })
+      .then(function (res) {
+        // console.log(res);
+        setArtistStateVal({ ...artistStateVal, following: res.data.success });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // useEffect
+  useEffect(() => {
+    checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
+  }, []);
 
   return (
     <ImgDiv>
       <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <BadgeList>
-        {followArtist.followArtist === true ? (
-          <div onClick={onClickUnfollow}>
-            <Badge type="like" liked={true}></Badge>
-          </div>
-        ) : (
-          <div onClick={onClickFollow}>
-            <Badge type="like"></Badge>
-          </div>
-        )}
+        {profileStateVal.userSeq ? (
+          <>
+            {artistStateVal.following === true ? (
+              <div
+                onClick={() =>
+                  onClickUnfollow(
+                    artistStateVal.artistUserSeq,
+                    profileStateVal.userSeq
+                  )
+                }
+              >
+                <Badge type="like" liked={true}></Badge>
+              </div>
+            ) : (
+              <div
+                onClick={() =>
+                  onClickFollow(
+                    artistStateVal.artistUserSeq,
+                    profileStateVal.userSeq
+                  )
+                }
+              >
+                <Badge type="like"></Badge>
+              </div>
+            )}
+          </>
+        ) : null}
         <div onClick={onClickCheck}>
           <Badge type="verified"></Badge>
         </div>
         <Popconfirm
           title="해당 아티스트를 신고하시겠습니까?"
-          onConfirm={onClickReport}
+          onConfirm={() =>
+            onClickReport(profileStateVal.userSeq, artistStateVal.artistSeq)
+          }
         >
           <div>
             <Badge type="report"></Badge>

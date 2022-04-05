@@ -1,5 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ThemeType } from "../../../../../global/theme";
@@ -40,9 +41,32 @@ interface IBadgeHeader extends ThemeType {
 }
 
 export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
+  // recoil
   const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
   const profileStateVal = useRecoilValue(profileState);
 
+  // useState
+  const [like, setLike] = useState(false);
+
+  // Axios
+  const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
+      params: {
+        // userSeq: profileStateVal.userSeq,
+        // nftSeq: badge_id,
+        userSeq,
+        nftSeq,
+      },
+    })
+      .then(function (res) {
+        setLike(res.data.success);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
   const onClickLike = () => {
     axios({
       method: "POST",
@@ -52,10 +76,10 @@ export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
         nftSeq: badge_id,
       },
     }).then(function (res) {
+      setLike(true);
       message.success("좋아요 되었습니다.");
     });
   };
-
   const onClickDislike = () => {
     axios({
       method: "DELETE",
@@ -65,24 +89,34 @@ export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
         nftSeq: badge_id,
       },
     }).then(function (res) {
+      setLike(false);
       message.error("좋아요가 취소되었습니다.");
     });
   };
+
+  // useEffect
+  useEffect(() => {
+    checkLike(profileStateVal.userSeq, badge_id);
+  }, []);
 
   return (
     <ImgDiv>
       <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
       <UserImg src="https://picsum.photos/250/250"></UserImg>
       <BadgeList>
-        {/* {isLike === true ? (
-          <div onClick={onClickDislike}>
-            <Badge type="like" liked={true}></Badge>
-          </div>
-        ) : (
-          <div onClick={onClickLike}>
-            <Badge type="like"></Badge>
-          </div>
-        )} */}
+        {profileStateVal.userSeq ? (
+          <>
+            {like === true ? (
+              <div onClick={onClickDislike}>
+                <Badge type="like" liked={true}></Badge>
+              </div>
+            ) : (
+              <div onClick={onClickLike}>
+                <Badge type="like"></Badge>
+              </div>
+            )}
+          </>
+        ) : null}
       </BadgeList>
     </ImgDiv>
   );
