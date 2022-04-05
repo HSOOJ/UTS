@@ -1,12 +1,8 @@
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 import { message, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ThemeType } from "../../../../../global/theme";
 import { artistState } from "../../../../../recoil/artist";
-import { artistDetailState } from "../../../../../recoil/artistDetail";
 import { profileState } from "../../../../../recoil/profile";
 import Badge from "../../../../containers/badge";
 import {
@@ -16,31 +12,65 @@ import {
   UserImg,
 } from "./ArtistHeader.styled";
 
-// interface IArtistHeader extends ThemeType {
-//   artistUserId: string | number;
-//   artist_id: string | number;
-// }
+interface PropsType {
+  artistId?: string;
+  editionId?: string;
+}
 
-export const ArtistHeader = () => {
-  // export const ArtistHeader = ({ artistUserId, artist_id }: IArtistHeader) => {
+export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   // recoil
   const [artistStateVal, setArtistStateVal] = useRecoilState(artistState);
   const profileStateVal = useRecoilValue(profileState);
 
   // useState
-  const [isFollow, setIsFollow] = useState(false);
+  const [userTo, setUserTo] = useState<string | undefined>();
+  const [artistTo, setArtistTo] = useState<string | undefined>();
 
   // Axios
+  const getArtistInfo = () => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/info",
+      params: {
+        artistSeq: artistId,
+      },
+    })
+      .then(function (res) {
+        // console.log(res);
+        checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
+        setUserTo(res.data.success.artist_user_seq);
+        setArtistTo(artistId);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+  const getEditionDetail = () => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/edition/info",
+      params: {
+        editionSeq: editionId,
+      },
+    })
+      .then(function (res) {
+        // console.log(res);
+        checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
+        setUserTo(res.data.success.artist_user_seq);
+        setArtistTo(res.data.success.artist_seq);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
   const onClickFollow = (
-    userTo: string,
+    userTo: string | undefined,
     userFrom: string | null | undefined
   ) => {
     axios({
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
       data: {
-        // userTo: artistUserId,
-        // userFrom: profileStateVal.userSeq,
         userTo,
         userFrom,
       },
@@ -52,19 +82,16 @@ export const ArtistHeader = () => {
       })
       .catch((res) => {
         // console.log(res);
-        checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
       });
   };
   const onClickUnfollow = (
-    userTo: string,
+    userTo: string | undefined,
     userFrom: string | null | undefined
   ) => {
     axios({
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
       data: {
-        // userTo: artistUserId,
-        // userFrom: profileStateVal.userSeq,
         userTo,
         userFrom,
       },
@@ -74,8 +101,7 @@ export const ArtistHeader = () => {
         message.error("팔로우가 취소되었습니다.");
       })
       .catch((res) => {
-        // console.log(res);
-        checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
+        console.log(res);
       });
   };
   const onClickCheck = () => {
@@ -83,14 +109,12 @@ export const ArtistHeader = () => {
   };
   const onClickReport = (
     userSeq: string | null | undefined,
-    artistSeq: string
+    artistSeq: string | undefined
   ) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/report", // 고쳐야 합니다
+      url: "http://j6a105.p.ssafy.io:8080/api/artist/report",
       data: {
-        // userSeq: profileStateVal.userSeq,
-        // artistSeq: artist_id,
         userSeq,
         artistSeq,
       },
@@ -121,7 +145,8 @@ export const ArtistHeader = () => {
 
   // useEffect
   useEffect(() => {
-    checkFollow(artistStateVal.artistUserSeq, profileStateVal.userSeq);
+    if (artistId !== undefined) getArtistInfo();
+    if (editionId !== undefined) getEditionDetail();
   }, []);
 
   return (
@@ -133,23 +158,13 @@ export const ArtistHeader = () => {
           <>
             {artistStateVal.following === true ? (
               <div
-                onClick={() =>
-                  onClickUnfollow(
-                    artistStateVal.artistUserSeq,
-                    profileStateVal.userSeq
-                  )
-                }
+                onClick={() => onClickUnfollow(userTo, profileStateVal.userSeq)}
               >
                 <Badge type="like" liked={true}></Badge>
               </div>
             ) : (
               <div
-                onClick={() =>
-                  onClickFollow(
-                    artistStateVal.artistUserSeq,
-                    profileStateVal.userSeq
-                  )
-                }
+                onClick={() => onClickFollow(userTo, profileStateVal.userSeq)}
               >
                 <Badge type="like"></Badge>
               </div>
@@ -161,9 +176,7 @@ export const ArtistHeader = () => {
         </div>
         <Popconfirm
           title="해당 아티스트를 신고하시겠습니까?"
-          onConfirm={() =>
-            onClickReport(profileStateVal.userSeq, artistStateVal.artistSeq)
-          }
+          onConfirm={() => onClickReport(profileStateVal.userSeq, artistTo)}
         >
           <div>
             <Badge type="report"></Badge>

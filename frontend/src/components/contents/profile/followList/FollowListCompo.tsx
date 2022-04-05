@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ interface PropsType {
   userNickname: string;
   userProfileImage: string;
   userSeq: string;
+  artistSeq: string;
 }
 
 export const FollowListCompo = ({
@@ -19,6 +20,7 @@ export const FollowListCompo = ({
   userNickname,
   userProfileImage,
   userSeq,
+  artistSeq,
 }: PropsType) => {
   // recoil
   const isDark = useRecoilValue(themeAtom).isDark;
@@ -78,29 +80,34 @@ export const FollowListCompo = ({
     setSelected(false);
   };
 
+  // useEffect
+  useEffect(() => {
+    following === "y" ? setSelected(true) : setSelected(false);
+  }, [following]);
+
   return (
     <>
       <Container>
         <Image
           src={userProfileImage}
           onClick={() => {
-            navigate(`/artist/${userSeq}`);
+            navigate(`/artist/${artistSeq}`);
           }}
         />
         <Text
           isDark={isDark}
           onClick={() => {
-            navigate(`/artist/${userSeq}`);
+            navigate(`/artist/${artistSeq}`);
           }}
         >
           {userNickname}
         </Text>
         {login ? (
           <ContainerRight>
-            {following === "y" && selected ? (
+            {selected ? (
               <Button
                 isDark={isDark}
-                isSelected={selected}
+                isSelected={true}
                 onClick={ButtonClickUnFollowing}
               >
                 팔로잉
@@ -108,7 +115,7 @@ export const FollowListCompo = ({
             ) : (
               <Button
                 isDark={isDark}
-                isSelected={selected}
+                isSelected={false}
                 onClick={ButtonClickFollowing}
               >
                 팔로잉
@@ -164,7 +171,7 @@ const Button = styled.button<{
   border-radius: 5px;
   color: ${({ isDark }) =>
     isDark
-      ? ({ isSelected }) => (isSelected ? "#fff" : "#3182f6")
+      ? ({ isSelected }) => (isSelected ? "#fff" : "white")
       : ({ isSelected }) => (isSelected ? "#fff" : "#3182f6")};
   background-color: ${({ isDark }) =>
     isDark
@@ -179,8 +186,8 @@ const Button = styled.button<{
   &:hover {
     color: ${({ isDark }) =>
       isDark
-        ? ({ isSelected }) => (isSelected ? "black" : "white")
-        : ({ isSelected }) => (isSelected ? "white" : "black")};
+        ? ({ isSelected }) => (isSelected ? "black" : "#3182f6")
+        : ({ isSelected }) => (isSelected ? "black" : "black")};
   }
   cursor: pointer;
 `;
