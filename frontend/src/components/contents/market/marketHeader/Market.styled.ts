@@ -45,6 +45,7 @@ export const LayOut = styled.div<ThemeType>`
     transform: translateY(0.5rem)
   }
 `;
+
 export const ImageLayOut = styled(motion.div)`
   display: flex;
   align-items: center;

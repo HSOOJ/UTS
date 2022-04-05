@@ -13,6 +13,8 @@ import {
   Wrapper,
   LayoutPaddingLeft,
   BadgeImageContainer,
+  MainCardDiv,
+  TextNeonBlue,
 } from "../Main.styled";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../recoil/theme";
@@ -84,9 +86,10 @@ export const TopSeller = () => {
   useEffect(GetTopSeller, []);
 
   return (
-    <>
-      <TextGradientBlue>Top </TextGradientBlue>
-      <TextGradientAside isDark={isDark}>Sellers</TextGradientAside>
+    <MainCardDiv>
+      <TextNeonBlue isDark={isDark}>Top Sellers</TextNeonBlue>
+      {/* <TextGradientBlue>Top </TextGradientBlue>
+      <TextGradientAside isDark={isDark}>Sellers</TextGradientAside> */}
       <Layout isDark={isDark}>
         <LayoutPaddingLeft>
           <Container>
@@ -102,9 +105,15 @@ export const TopSeller = () => {
                       >
                         <p>{a + 1}</p>
                         <ImageSeller src={datas[a].url} alt={datas[a].name} />
-                        <TextContent isDark={isDark}>
-                          {datas[a].name}
-                        </TextContent>
+                        {datas[a].name.length > 7 ? (
+                          <TextContent isDark={isDark}>
+                            {datas[a].name.substring(0, 6)}...
+                          </TextContent>
+                        ) : (
+                          <TextContent isDark={isDark}>
+                            {datas[a].name}
+                          </TextContent>
+                        )}
                       </BadgeImageContainer>
                       <BadgeImageContainer
                         onClick={() => {
@@ -116,9 +125,15 @@ export const TopSeller = () => {
                           src={datas[a + 1].url}
                           alt={datas[a + 1].name}
                         />
-                        <TextContent isDark={isDark}>
-                          {datas[a + 1].name}
-                        </TextContent>
+                        {datas[a + 1].name.length > 7 ? (
+                          <TextContent isDark={isDark}>
+                            {datas[a + 1].name.substring(0, 6)}...
+                          </TextContent>
+                        ) : (
+                          <TextContent isDark={isDark}>
+                            {datas[a + 1].name}
+                          </TextContent>
+                        )}
                       </BadgeImageContainer>
                     </Wrapper>
                   </div>
@@ -128,6 +143,6 @@ export const TopSeller = () => {
           </Container>
         </LayoutPaddingLeft>
       </Layout>
-    </>
+    </MainCardDiv>
   );
 };

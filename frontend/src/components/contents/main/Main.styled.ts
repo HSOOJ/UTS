@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 import { ThemeType } from "../../../global/theme";
+import Palette from "../../../foundation/color/Palette";
 
 export const MainDiv = styled.div`
   margin-top: 50px;
 `;
 
 export const Layout = styled.div<ThemeType>`
+  background-color: ${({ isDark }) =>
+    isDark ? Palette.Nero100 : Palette.BluOpacity100};
   width: 100%;
-  margin: 1.5em auto 1.5em;
+  margin-top: 20px;
+  /* margin: 1.5em auto 1.5em; */
   /* border: solid 0.3em;
   border-image: ${({ isDark }) =>
     isDark
@@ -16,7 +20,6 @@ export const Layout = styled.div<ThemeType>`
       : "linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa)"};
   border-image-slice: 1; */
   border-radius: 10px;
-  /* padding: 0 0 0 2%; */
 `;
 export const LayoutPaddingLeft = styled.div`
   /* padding: 0 0 0 5%; */
@@ -39,10 +42,10 @@ export const ImageContainer = styled.div`
   padding: 20px;
   position: relative;
   cursor: pointer;
-  text-align: center;
   transition: all 0.2s linear;
+
   &:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
   }
 `;
 export const ImageTop = styled.img`
@@ -60,12 +63,16 @@ export const ImageBadge = styled.img`
   height: 130px;
   border-radius: 10% / 50%;
   margin: 0 0 10px 0;
+  /* box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #0066ff,
+    0 0 0.8rem #0066ff, 0 0 2.8rem #0066ff, inset 0 0 1.3rem #0066ff; */
 `;
 export const ImageSeller = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 100%;
   margin: 0 0 10px 0;
+  /* box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #fff0b9,
+    0 0 0.8rem #fff0b9, 0 0 2.8rem #fff0b9, inset 0 0 1.3rem #fff0b9; */
 `;
 export const ImageBoarding = styled.img`
   width: 300px;
@@ -73,16 +80,16 @@ export const ImageBoarding = styled.img`
   border-radius: 10px 100px / 120px;
 `;
 export const TextGradientRed = styled.p`
-  font-size: 35px;
-  font-weight: bold;
+  font-size: 40px;
+  font-weight: 900;
   background: linear-gradient(to top, #f3ea62, #d32029);
   color: transparent;
   -webkit-background-clip: text;
   display: inline;
 `;
 export const TextGradientBlue = styled.p`
-  font-size: 35px;
-  font-weight: bold;
+  font-size: 40px;
+  font-weight: 900;
   background: linear-gradient(to top, #a8c1f8, #177ddc);
   color: transparent;
   -webkit-background-clip: text;
@@ -90,11 +97,12 @@ export const TextGradientBlue = styled.p`
 `;
 export const TextGradientAside = styled.p<ThemeType>`
   font-size: 30px;
+  font-weight: 700;
   display: inline;
   color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
 export const TextContent = styled.p<ThemeType>`
-  font-size: 20px;
+  font-size: 18px;
   display: inline;
   color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
@@ -139,9 +147,112 @@ export const BadgeImageContainer = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  text-align: center;
   transition: all 0.2s linear;
   &:hover {
     transform: scale(1.05);
+  }
+`;
+
+export const MainCardDiv = styled.div`
+  margin-top: 30px;
+`;
+
+export const TextNeonRed = styled.h1<ThemeType>`
+  width: 500px;
+  font-size: 40px;
+  font-weight: 300;
+  font-style: italic;
+  color: ${({ isDark }) => (isDark ? "white" : "grey")};
+  padding: 10px;
+  /* border: 2px solid #fff; */
+  border-radius: 20px;
+  text-transform: uppercase;
+  animation: flicker 1.5s infinite alternate;
+
+  h1::-moz-selection {
+    background-color: #08f;
+    color: #f40;
+  }
+
+  h1::selection {
+    background-color: #08f;
+    color: #f40;
+  }
+
+  h1:focus {
+    outline: none;
+  }
+  @keyframes flicker {
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+      text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff,
+        0 0 2rem #f40, 0 0 4rem #f40, 0 0 6rem #f40, 0 0 8rem #f40,
+        0 0 10rem #f40;
+
+      /* box-shadow: 0 0 0.5rem #fff, inset 0 0 0.5rem #fff, 0 0 2rem #08f,
+        inset 0 0 2rem #08f, 0 0 4rem #08f, inset 0 0 4rem #08f; */
+    }
+    20%,
+    24%,
+    55% {
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+`;
+
+export const TextNeonBlue = styled.h2<ThemeType>`
+  width: 500px;
+  font-size: 40px;
+  font-weight: 300;
+  font-style: italic;
+  color: ${({ isDark }) => (isDark ? "white" : "grey")};
+  padding: 10px;
+  /* border: 2px solid #fff; */
+  border-radius: 20px;
+  text-transform: uppercase;
+  animation: flickers 1.5s infinite alternate;
+
+  h2::-moz-selection {
+    background-color: #08f;
+    color: #f40;
+  }
+
+  h2::selection {
+    background-color: #08f;
+    color: #f40;
+  }
+
+  h2:focus {
+    outline: none;
+  }
+  @keyframes flickers {
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+      text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff,
+        0 0 2rem #0066ff, 0 0 4rem #0066ff, 0 0 6rem #0066ff, 0 0 8rem #0066ff,
+        0 0 10rem #0066ff;
+
+      /* box-shadow: 0 0 0.5rem #fff, inset 0 0 0.5rem #fff, 0 0 2rem #08f,
+        inset 0 0 2rem #08f, 0 0 4rem #08f, inset 0 0 4rem #08f; */
+    }
+    20%,
+    24%,
+    55% {
+      text-shadow: none;
+      box-shadow: none;
+    }
   }
 `;

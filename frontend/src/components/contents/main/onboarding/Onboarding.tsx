@@ -15,6 +15,9 @@ import {
   TextSubTop,
   LayoutPaddingLeft,
   LayoutPaddingLeft2,
+  MainCardDiv,
+  TextNeonRed,
+  TextNeonBlue,
 } from "../Main.styled";
 
 export const Onboarding = () => {
@@ -92,9 +95,10 @@ export const Onboarding = () => {
   useEffect(GetOnboadring, []);
 
   return (
-    <>
-      <TextGradientBlue>On </TextGradientBlue>
-      <TextGradientAside isDark={isDark}>Boarding</TextGradientAside>
+    <MainCardDiv>
+      <TextNeonBlue isDark={isDark}>On Boarding</TextNeonBlue>
+      {/* <TextGradientBlue>On </TextGradientBlue>
+      <TextGradientAside isDark={isDark}>Boarding</TextGradientAside> */}
       <Layout isDark={isDark}>
         <LayoutPaddingLeft2>
           <Container>
@@ -111,7 +115,11 @@ export const Onboarding = () => {
                         }}
                       />
                       <TextNameTop>{data.name}</TextNameTop>
-                      <TextSubTop>{data.desc}</TextSubTop>
+                      {data.desc.length >= 18 ? (
+                        <TextSubTop>{data.desc.substring(0, 18)}...</TextSubTop>
+                      ) : (
+                        <TextSubTop>{data.desc}</TextSubTop>
+                      )}
                     </ImageContainer>
                   </div>
                 );
@@ -120,6 +128,6 @@ export const Onboarding = () => {
           </Container>
         </LayoutPaddingLeft2>
       </Layout>
-    </>
+    </MainCardDiv>
   );
 };
