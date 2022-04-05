@@ -12,13 +12,6 @@ async function main() {
   await market.deployed();
 
   console.log("UTS Market deployed to:", market.address);
-
-  const Badge = await ethers.getContractFactory("Badge");
-  const badge = await Badge.deploy(market.address);
-
-  await market.deployed();
-
-  console.log("UTS Badge deployed to:", badge.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
