@@ -31,7 +31,7 @@ router.get("/info", async (req, res, next) => {
           edition_description: editionInfo.edition_description,
           artist_image: artistImage,
           artist_seq: editionInfo.artist_seq,
-          artist_user_seq: userSeq,
+          artist_user_seq: userSeq, // 유저 seq
         },
       });
     } else
