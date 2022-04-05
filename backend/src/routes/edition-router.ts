@@ -21,6 +21,8 @@ router.get("/info", async (req, res, next) => {
         JSON.parse(JSON.stringify(artistInfo))
       )[12];
 
+      const userSeq = Object.values(JSON.parse(JSON.stringify(artistInfo)))[2];
+
       return res.status(200).json({
         success: {
           edition_seq: editionInfo.edition_seq,
@@ -29,6 +31,7 @@ router.get("/info", async (req, res, next) => {
           edition_description: editionInfo.edition_description,
           artist_image: artistImage,
           artist_seq: editionInfo.artist_seq,
+          artist_user_seq: userSeq,
         },
       });
     } else
