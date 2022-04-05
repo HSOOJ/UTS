@@ -1,6 +1,6 @@
 import { Alert, Button } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../../recoil/profile";
 
@@ -24,11 +24,13 @@ export const ModifyModalNickname = () => {
         );
         SetWarning(false);
         SetSuccess(true);
+        setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: true });
       })
       .catch((res) => {
         console.log(res);
         SetSuccess(false);
         SetWarning(true);
+        setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: false });
       });
   };
 
@@ -44,14 +46,6 @@ export const ModifyModalNickname = () => {
   const clickModifyNicknameConfirm = () => {
     GetCheckNickname(profileStateVal.modifyNickname);
   };
-
-  // useEffect
-  useEffect(() => {
-    setProfileStateVal({
-      ...profileStateVal,
-      modifyNickname: profileStateVal.userNickname,
-    });
-  }, []);
 
   return (
     <>
