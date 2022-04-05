@@ -93,13 +93,36 @@ async function getReport() {
   const reportRepository = getConnection().getRepository(Report);
   const result = reportRepository
     .createQueryBuilder()
-    .leftJoinAndSelect(Artist, "artist", "artist.user_seq = report.artist_seq")
+    .leftJoinAndSelect(
+      Artist,
+      "artist",
+      "artist.artist_seq = report.artist_seq"
+    )
     .leftJoinAndSelect(User, "user", "artist.user_seq = user.user_seq")
     .select("user.user_seq as userSeq")
     .addSelect("report.artist_seq AS artistSeq")
     .addSelect("user.user_nickname AS userNickname")
     .addSelect("report.user_seq AS reporterSeq")
+    .orderBy("report.artist_seq")
     .getRawMany();
+  console.log(result);
   return result;
 }
-export default { searchUser, acceptArtist, unacceptArtist, getReport } as const;
+
+async function cancelReport(reportSeq: number) {
+  const reportRepository = getConnection().getRepository(Report);
+  const result = await reportRepository
+    .createQueryBuilder()
+    .softDelete()
+    .where({
+      report_seq: reportSeq,
+    })
+    .execute();
+}
+export default {
+  searchUser,
+  acceptArtist,
+  unacceptArtist,
+  getReport,
+  cancelReport,
+} as const;

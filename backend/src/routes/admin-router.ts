@@ -37,3 +37,13 @@ router.get("/report", async (req, res, next) => {
   return res.status(200).json({ success: result });
 });
 export default router;
+
+router.put("/report/cancel", async (req, res, next) => {
+  const reportSeq = await req.body.reportSeq;
+  try {
+    const result = await adminService.cancelReport(reportSeq);
+  } catch (error) {
+    return res.status(404).json({ fail: "" });
+  }
+  return res.status(200).json({ success: true });
+});
