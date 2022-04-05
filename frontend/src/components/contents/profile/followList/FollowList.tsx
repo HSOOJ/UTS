@@ -24,6 +24,7 @@ export const FollowList = () => {
       userNickname: "아티스트",
       userProfileImage: "https://picsum.photos/500/500",
       userSeq: "2",
+      artistSeq: "1",
     },
   ]);
   const [empty, setEmpty] = useState(true);
@@ -67,6 +68,7 @@ export const FollowList = () => {
             userNickname={data.userNickname}
             userProfileImage={data.userProfileImage}
             userSeq={data.userSeq}
+            artistSeq={data.artistSeq}
           />
         );
       })}
