@@ -3,11 +3,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
-  TextGradientRed,
   Image,
   ImageContainer,
   ImageTop,
-  TextGradientAside,
   Layout,
   StyledSlider,
   TextName,
@@ -15,6 +13,8 @@ import {
   TextSub,
   TextSubTop,
   Wrapper,
+  MainCardDiv,
+  TextNeonRed,
 } from "../Main.styled";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../recoil/theme";
@@ -98,9 +98,10 @@ export const HotArtist = () => {
   useEffect(GetHotArtist, []);
 
   return (
-    <>
-      <TextGradientRed>Hot </TextGradientRed>
-      <TextGradientAside isDark={isDark}>Artist</TextGradientAside>
+    <MainCardDiv>
+      <TextNeonRed isDark={isDark}>Hot Artist</TextNeonRed>
+      {/* <TextGradientRed>Hot </TextGradientRed>
+      <TextGradientAside isDark={isDark}>Artist</TextGradientAside> */}
       <Layout isDark={isDark}>
         <Wrapper>
           <ImageContainer>
@@ -112,7 +113,11 @@ export const HotArtist = () => {
               }}
             />
             <TextNameTop>{datas[0].name}</TextNameTop>
-            <TextSubTop>{datas[0].desc}</TextSubTop>
+            {datas[0].desc.length >= 10 ? (
+              <TextSubTop>{datas[0].desc.substring(0, 10)}...</TextSubTop>
+            ) : (
+              <TextSubTop>{datas[0].desc}</TextSubTop>
+            )}
           </ImageContainer>
         </Wrapper>
         <Container>
@@ -129,7 +134,11 @@ export const HotArtist = () => {
                       }}
                     />
                     <TextName>{datas[a].name}</TextName>
-                    <TextSub>{datas[a].desc}</TextSub>
+                    {datas[a].desc.length >= 10 ? (
+                      <TextSub>{datas[a].desc.substring(0, 10)}...</TextSub>
+                    ) : (
+                      <TextSub>{datas[a].desc}</TextSub>
+                    )}
                   </ImageContainer>
                   <ImageContainer>
                     <Image
@@ -140,7 +149,11 @@ export const HotArtist = () => {
                       }}
                     />
                     <TextName>{datas[a + 1].name}</TextName>
-                    <TextSub>{datas[a + 1].desc}</TextSub>
+                    {datas[a + 1].desc.length >= 10 ? (
+                      <TextSub>{datas[a + 1].desc.substring(0, 10)}...</TextSub>
+                    ) : (
+                      <TextSub>{datas[a + 1].desc}</TextSub>
+                    )}
                   </ImageContainer>
                 </div>
               );
@@ -148,6 +161,6 @@ export const HotArtist = () => {
           </StyledSlider>
         </Container>
       </Layout>
-    </>
+    </MainCardDiv>
   );
 };
