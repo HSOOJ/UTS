@@ -59,11 +59,6 @@ export const ArtistInfo = () => {
           nickname: res.data.success.user_user_nickname,
           wallet: res.data.success.user_user_wallet_address,
         });
-        setArtistStateVal({
-          ...artistStateVal,
-          artistSeq: artist_id,
-          artistUserSeq: res.data.success.artist_user_seq,
-        });
       })
       .catch(function (err) {
         console.log(err);
@@ -103,7 +98,7 @@ export const ArtistInfo = () => {
   return (
     <div>
       <ArtistInfomation>
-        <ArtistHeader />
+        <ArtistHeader artistId={artist_id} />
         <LetterBox size="h1" weight="extraBold">
           {datas.nickname}
         </LetterBox>

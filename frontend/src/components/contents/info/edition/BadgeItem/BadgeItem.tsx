@@ -31,7 +31,6 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
   const profileStateVal = useRecoilValue(profileState);
-  const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
 
   // useState
   const [like, setLike] = useState(false);
@@ -59,26 +58,33 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
         console.log(err);
       });
   };
-  const onClickLike = () => {
+  const onClickLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
       method: "POST",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
       data: {
-        userSeq: profileStateVal.userSeq,
-        nftSeq: badgeItem.nft_num,
+        // userSeq: profileStateVal.userSeq,
+        // nftSeq: badgeItem.nft_seq,
+        userSeq,
+        nftSeq,
       },
     }).then(function (res) {
       setLike(true);
       message.success("좋아요 되었습니다.");
     });
   };
-  const onClickDislike = () => {
+  const onClickDislike = (
+    userSeq: string | null | undefined,
+    nftSeq: string
+  ) => {
     axios({
       method: "DELETE",
       url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
       data: {
-        userSeq: profileStateVal.userSeq,
-        nftSeq: badgeItem.nft_num,
+        // userSeq: profileStateVal.userSeq,
+        // nftSeq: badgeItem.nft_seq,
+        userSeq,
+        nftSeq,
       },
     }).then(function (res) {
       setLike(false);
@@ -93,8 +99,8 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
 
   // useEffect
   useEffect(() => {
-    checkLike(profileStateVal.userSeq, badgeItem.nft_num);
-  }, []);
+    checkLike(profileStateVal.userSeq, badgeItem.nft_seq);
+  }, [badgeItem]);
 
   return (
     <div>
@@ -103,14 +109,14 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
           <BadgeImg
             src="https://picsum.photos/150/150"
             onClick={() => {
-              navigate(`/badge/${badgeItem.nft_num}`);
+              navigate(`/badge/${badgeItem.nft_seq}`);
             }}
           />
         </div>
         <BadgeInfo>
           <BadgeInfoLeft
             onClick={() => {
-              navigate(`/badge/${badgeItem.nft_num}`);
+              navigate(`/badge/${badgeItem.nft_seq}`);
             }}
           >
             <LetterBox size="h2" weight="extraBold">
@@ -144,11 +150,22 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
               {profileStateVal.userSeq ? (
                 <>
                   {like === true ? (
-                    <div onClick={onClickDislike}>
+                    <div
+                      onClick={() =>
+                        onClickDislike(
+                          profileStateVal.userSeq,
+                          badgeItem.nft_seq
+                        )
+                      }
+                    >
                       <Badge type="like" liked={true}></Badge>
                     </div>
                   ) : (
-                    <div onClick={onClickLike}>
+                    <div
+                      onClick={() =>
+                        onClickLike(profileStateVal.userSeq, badgeItem.nft_seq)
+                      }
+                    >
                       <Badge type="like"></Badge>
                     </div>
                   )}

@@ -96,7 +96,7 @@ export const EditionInfo = () => {
 
   return (
     <EditionInfomation>
-      <ArtistHeader />
+      <ArtistHeader editionId={edition_id} />
       <EditionInfoBox
         isDark={isDark}
         editionName={editionName}

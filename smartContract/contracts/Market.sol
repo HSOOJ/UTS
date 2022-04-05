@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.4;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract Market is ReentrancyGuard {
+contract Market is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _badgeIds;
     Counters.Counter private _badgesSold;
@@ -16,14 +15,8 @@ contract Market is ReentrancyGuard {
 
     address payable owner;
 
-    constructor() {
-        owner = payable(msg.sender);
-    }
-
     struct MarketBadge {
         uint256 badgeId;
-        address nftContract;
-        uint256 tokenId;
         address payable seller;
         address payable owner;
         uint256 price;
@@ -34,13 +27,15 @@ contract Market is ReentrancyGuard {
 
     event MarketBadgeCreated(
         uint256 indexed badgeId,
-        address indexed nftContract,
-        uint256 indexed tokenId,
         address seller,
         address owner,
         uint256 price,
         bool sold
     );
+
+    constructor() ERC721("SSAFY Token", "SSF") {
+        owner = payable(msg.sender);
+    }
 
     function calcFee(uint256 _num) public view returns (uint256) {
         uint256 onePercentofTokens = _num.mul(100).div(100 * 10**uint256(2));
@@ -50,11 +45,22 @@ contract Market is ReentrancyGuard {
         return twoPercentOfTokens + halfPercentOfTokens;
     }
 
-    function createMarketBadge(
-        address nftContract, // 디플로이할 컨트랙주소
-        uint256 tokenId,
-        uint256 price
-    ) public payable nonReentrant {
+    function createBadge(
+        string memory badgeURI,
+        uint256 price,
+        uint256 _amount
+    ) public payable {
+        for (uint256 i = 0; i < _amount; i++) {
+            _badgeIds.increment();
+            uint256 newBadgeId = _badgeIds.current();
+
+            _mint(msg.sender, newBadgeId);
+            _setTokenURI(newBadgeId, badgeURI);
+            createMarketBadge(newBadgeId, price);
+        }
+    }
+
+    function createMarketBadge(uint256 badgeId, uint256 price) private {
         uint256 listingPrice = this.calcFee(price);
         // prevent reEntry attack modifier
         require(price > 0, "Price must be at least 1 wei");
@@ -63,48 +69,59 @@ contract Market is ReentrancyGuard {
             "Price must be equal to listing price"
         );
 
-        _badgeIds.increment();
-        uint256 badgeId = _badgeIds.current();
-
         marketBadgeIdx[badgeId] = MarketBadge(
             badgeId,
-            nftContract,
-            tokenId,
             payable(msg.sender),
-            payable(address(0)),
+            payable(address(this)),
             price,
             false
         );
 
-        // 컨트랙의 소유권을 센더로부터 스마트 컨트랙에게 보냄
-        IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
-
+        _transfer(msg.sender, address(this), badgeId);
         emit MarketBadgeCreated(
             badgeId,
-            nftContract,
-            tokenId,
             msg.sender,
-            address(0),
+            address(this),
             price,
             false
         );
     }
 
-    function createMarketSale(
-        address nftContract, // 가격 정보가 컨트랙에 있기 때문에 포함할 필요가 없음
-        uint256 badgeId //
-    ) public payable nonReentrant {
+    function resellBadge(uint256 badgeId, uint256 price) public payable {
+        uint256 listingPrice = this.calcFee(price);
+        require(
+            marketBadgeIdx[badgeId].owner == msg.sender,
+            "Only item owner can perform this operation"
+        );
+        require(
+            msg.value == listingPrice,
+            "Price must be equal to listing price"
+        );
+        marketBadgeIdx[badgeId].sold = false;
+        marketBadgeIdx[badgeId].price = price;
+        marketBadgeIdx[badgeId].seller = payable(msg.sender);
+        marketBadgeIdx[badgeId].owner = payable(address(this));
+        _badgesSold.decrement();
+
+        _transfer(msg.sender, address(this), badgeId);
+    }
+
+    function createMarketSale(uint256 badgeId) public payable {
         uint256 price = marketBadgeIdx[badgeId].price; //가격 가져옴
         uint256 listingPrice = this.calcFee(price);
-        uint256 tokenId = marketBadgeIdx[badgeId].tokenId; // 토큰 아이디 가져옴
-        require(msg.value == price, "price should match listed price"); // 조건
 
-        marketBadgeIdx[badgeId].seller.transfer(msg.value); // 셀러(addr)는 요청받은 밸류를 보냄
-        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId); // 토큰의 오너쉽을 보냄. 실제 전송이 이뤄지는 부분
+        address seller = marketBadgeIdx[badgeId].seller;
+        require(
+            msg.value == price,
+            "Please submit the asking price in order to complete the purchase"
+        );
         marketBadgeIdx[badgeId].owner = payable(msg.sender);
         marketBadgeIdx[badgeId].sold = true;
+        marketBadgeIdx[badgeId].seller = payable(address(0));
         _badgesSold.increment();
+        _transfer(address(this), msg.sender, badgeId);
         payable(owner).transfer(listingPrice);
+        payable(seller).transfer(msg.value);
     }
 
     function fetchMarketBadges() public view returns (MarketBadge[] memory) {
@@ -114,12 +131,10 @@ contract Market is ReentrancyGuard {
 
         MarketBadge[] memory badges = new MarketBadge[](unsoldBadgeCount);
         for (uint256 i = 0; i < badgeCount; i++) {
-            // 뱃지 오너가 비어있는 어드레스인지 검사
-            if (marketBadgeIdx[i + 1].owner == address(0)) {
-                uint256 currentId = marketBadgeIdx[i + 1].badgeId;
+            if (marketBadgeIdx[i + 1].owner == address(this)) {
+                uint256 currentId = i + 1;
                 MarketBadge storage currentBadge = marketBadgeIdx[currentId];
                 badges[currentIndex] = currentBadge;
-
                 currentIndex += 1;
             }
         }
@@ -140,7 +155,7 @@ contract Market is ReentrancyGuard {
         MarketBadge[] memory badges = new MarketBadge[](badgeCount);
         for (uint256 i = 0; i < totalBadgeCount; i++) {
             if (marketBadgeIdx[i + 1].owner == msg.sender) {
-                uint256 currentId = marketBadgeIdx[i + 1].badgeId;
+                uint256 currentId = i + 1;
                 MarketBadge storage currentBadge = marketBadgeIdx[currentId];
                 badges[currentIndex] = currentBadge;
                 currentIndex += 1;
@@ -163,7 +178,7 @@ contract Market is ReentrancyGuard {
         MarketBadge[] memory badges = new MarketBadge[](badgeCount);
         for (uint256 i = 0; i < totalBadgeCount; i++) {
             if (marketBadgeIdx[i + 1].seller == msg.sender) {
-                uint256 currentId = marketBadgeIdx[i + 1].badgeId;
+                uint256 currentId = i + 1;
                 MarketBadge storage currentBadge = marketBadgeIdx[currentId];
                 badges[currentIndex] = currentBadge;
                 currentIndex += 1;
