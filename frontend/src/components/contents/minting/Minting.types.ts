@@ -4,6 +4,7 @@ export interface IMinting {
   userSeq: string;
   editionName: string;
   editionImage: File;
+  editionImageUrl?: string;
   editionDescription: string;
   editionRoyalty: number;
   editionTotal: number;

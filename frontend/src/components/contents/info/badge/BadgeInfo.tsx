@@ -25,32 +25,14 @@ const Layout = styled.div`
 `;
 
 export const BadgeInfo = () => {
+  // recoil
   const isDark = useRecoilValue(themeAtom).isDark;
-
-  const checkLike = () => {
-    axios({
-      method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
-      params: {
-        userSeq: profileStateVal.userSeq,
-        nftSeq: badge_id,
-      },
-    })
-      .then(function (res) {})
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    checkLike();
-  }, []);
-
-  // 현재 edition_id 잡아내기
-  const { badge_id } = useParams() as BadgeParamTypes;
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
   const profileStateVal = useRecoilValue(profileState);
+
+  // 현재 edition_id 잡아내기
+  const { badge_id } = useParams() as BadgeParamTypes;
 
   return (
     <Layout>

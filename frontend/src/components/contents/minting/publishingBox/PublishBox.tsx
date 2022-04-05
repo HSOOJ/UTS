@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useRecoilValue } from "recoil";
+import { onFileChange } from "../../../../hooks/minting";
 import { themeAtom } from "../../../../recoil/theme";
 import { SERVICE_FEE } from "../../../../types/IServiceFee";
 import ImageInput from "../../../containers/imageInput";
@@ -22,7 +23,8 @@ import { Royalty } from "./Royalty";
 
 export const PublishBox = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
-  const { register, control, formState, watch } = useFormContext<IMinting>();
+  const { register, control, formState, watch, setValue } =
+    useFormContext<IMinting>();
   const price = watch("salePrice");
   const edition = watch("editionTotal");
   const estimate = () => {
@@ -45,7 +47,13 @@ export const PublishBox = () => {
         }}
         render={({ field: { onChange } }) => (
           <ImageInput
-            onChange={onChange}
+            onChange={async (file) => {
+              console.log(file);
+              const url = await onFileChange(file);
+              url && setValue("editionImageUrl", url);
+              console.log("call from");
+              onChange(file);
+            }}
             title="뱃지 이미지 업로드"
             isDark={isDark}
             errMessage={formState.errors.editionImage?.message}
