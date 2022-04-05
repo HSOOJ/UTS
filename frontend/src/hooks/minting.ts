@@ -2,7 +2,7 @@ import { create } from "ipfs-http-client";
 import { IMinting } from "../components/contents/minting/Minting.types";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import { BADGE_ADDR, MARKET_ADDR, MARKET_ABI, BADGE_ABI } from "../config";
+import { MARKET_ADDR, MARKET_ABI } from "../config";
 
 const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -24,12 +24,10 @@ export const onFileChange = async (file: File) => {
 };
 
 // 메타데이터를 ipfs에 업로드
-export const createMarketBadge = async ({
+export const uploadToIPFS = async ({
   editionName,
   editionImageUrl,
   editionDescription,
-  editionTotal,
-  salePrice,
 }: IMinting) => {
   const data = JSON.stringify({
     editionName,
@@ -39,37 +37,27 @@ export const createMarketBadge = async ({
   console.log(data);
 
   try {
+    console.log("data:", data);
     const added = await ipfs.add(data);
     const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    createSale(url, editionTotal, salePrice);
+    return url;
   } catch (error) {
     alert(error);
   }
 };
 
-export const createSale = async (
-  url: string,
-  editionTotal: number,
-  salePrice: number
-) => {
+export const listBadgeForSale = async (props: IMinting) => {
+  const url = await uploadToIPFS(props);
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
   const provider = new ethers.providers.Web3Provider(connection);
   const signer = provider.getSigner();
-
-  const badge = new ethers.Contract(BADGE_ADDR, BADGE_ABI, signer);
-  const transAction = await badge.createToken(url, editionTotal);
+  const price = ethers.utils.parseUnits(props.salePrice + "", "ether");
+  const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
+  const listingPrice = "0";
+  const transAction = await market.createBadge(url, price, props.editionTotal, {
+    value: listingPrice,
+  });
   const tx = await transAction.wait();
   console.log(tx);
-
-  const event = tx.events[0];
-  // const value = event.args[2];
-  // const tokenId = value.toNumber();
-
-  const price = ethers.utils.parseUnits(salePrice + "", "ether");
-
-  const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
-  // const listingPrice = await market.calcFee(salePrice);
-  console.log(badge);
-  console.log(market);
 };
