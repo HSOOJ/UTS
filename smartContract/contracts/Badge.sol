@@ -15,13 +15,13 @@ contract Badge is ERC721URIStorage {
         contractAddress = utsMarketPlaceAddress;
     }
 
-    function createToken(string memory tokenURI) public returns (uint256) {
-        _badgeIDs.increment();
-        uint256 newBadgeId = _badgeIDs.current();
-
-        _mint(msg.sender, newBadgeId);
-        _setTokenURI(newBadgeId, tokenURI);
-        setApprovalForAll(contractAddress, true);
-        return newBadgeId;
+    function createToken(string memory tokenURI, uint256 _amount) public {
+        for (uint256 i = 0; i < _amount; i++) {
+            _badgeIDs.increment();
+            uint256 newBadgeId = _badgeIDs.current();
+            _mint(msg.sender, newBadgeId);
+            _setTokenURI(newBadgeId, tokenURI);
+            setApprovalForAll(contractAddress, true);
+        }
     }
 }
