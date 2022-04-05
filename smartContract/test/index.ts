@@ -16,14 +16,14 @@ describe("Market", function () {
     const auctionPrice = ethers.utils.parseUnits("100", "ether");
     const listingPrice = await market.calcFee(auctionPrice);
 
-    await badge.createToken("https://www.mytokenlocation.com");
-    await badge.createToken("https://www.mytokenlocation.com");
+    await badge.createToken("https://www.mytokenlocation.com", 5);
+    await badge.createToken("https://www.mytokenlocation2.com", 3);
 
     // 상품 생성 테스트
-    await market.createMarketBadge(badgeContractAddress, 1, auctionPrice, {
+    await market.createMarketBadge(badgeContractAddress, 7, auctionPrice, {
       value: listingPrice, // 리스팅비 낼 수 있는지 검증할 리스팅 비용도 함께 보냄
     });
-    await market.createMarketBadge(badgeContractAddress, 2, auctionPrice, {
+    await market.createMarketBadge(badgeContractAddress, 4, auctionPrice, {
       value: listingPrice,
     });
 
@@ -53,6 +53,7 @@ describe("Market", function () {
         console.log(item);
       })
     );
+
     // expect(await greeter.greet()).to.equal("Hello, world!");
 
     // const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
