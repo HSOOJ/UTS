@@ -1,0 +1,5 @@
+- [데일리 스크럼](https://www.notion.so/8923329174cd4fa78baa798c018705c8)
+- [요구사항 정의서](https://docs.google.com/spreadsheets/d/13XwaL0gwV3tMDqk-z3DK0b0z17yS_cYHmEfgT1YeYno/edit#gid=1507160105)
+- [와이어프레임](https://www.figma.com/file/bYt0iOMGFyigIpNPLbejn6/Weclusive?node-id=0%3A1)
+- [Convention](https://www.notion.so/d3e580f0be82416fb69d5d50dbb7f385)
+- [API Docs](https://www.notion.so/API-DOCS-d4ddf72884844dc6ab39da5a3eba8c52)
