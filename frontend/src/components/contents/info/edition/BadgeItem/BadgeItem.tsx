@@ -20,33 +20,45 @@ import {
   OwnerImg,
 } from "./BadgeItem.style";
 import { profileState } from "../../../../../recoil/profile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface IBadgeItem extends ThemeType {
   badgeItem: any;
 }
 
 export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
-  const checkLike = () => {
-    axios({
-      method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
-      params: {
-        userSeq: profileStateVal.userSeq,
-        nftSeq: badgeItem.nft_num,
-      },
-    })
-      .then(function (res) {})
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  let navigate = useNavigate();
+  // recoil
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
   const profileStateVal = useRecoilValue(profileState);
   const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
+
+  // useState
+  const [like, setLike] = useState(false);
+
+  // useNavigate
+  let navigate = useNavigate();
+
+  // Axios
+  const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
+    axios({
+      method: "GET",
+      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
+      params: {
+        // userSeq: profileStateVal.userSeq,
+        // nftSeq: badgeItem.nft_num,
+        userSeq,
+        nftSeq,
+      },
+    })
+      .then(function (res) {
+        // console.log(res)
+        setLike(res.data.success);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
   const onClickLike = () => {
     axios({
       method: "POST",
@@ -56,11 +68,10 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
         nftSeq: badgeItem.nft_num,
       },
     }).then(function (res) {
-      console.log(res);
+      setLike(true);
       message.success("좋아요 되었습니다.");
     });
   };
-
   const onClickDislike = () => {
     axios({
       method: "DELETE",
@@ -70,18 +81,19 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
         nftSeq: badgeItem.nft_num,
       },
     }).then(function (res) {
+      setLike(false);
       message.error("좋아요가 취소되었습니다.");
     });
   };
 
+  // function
   const onClickBuy = () => {
     setBadgeDetailStateVal({ ...badgeDetailStateVal, isOpenBuyModal: true });
   };
 
-  console.log();
-
+  // useEffect
   useEffect(() => {
-    checkLike();
+    checkLike(profileStateVal.userSeq, badgeItem.nft_num);
   }, []);
 
   return (
@@ -128,17 +140,21 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
                 Buy
               </Button>
             </BadgeSizeControl>
-            {/* <BadgeLikeButton>
-              {isLike === true ? (
-                <div onClick={onClickDislike}>
-                  <Badge type="like" liked={true}></Badge>
-                </div>
-              ) : (
-                <div onClick={onClickLike}>
-                  <Badge type="like"></Badge>
-                </div>
-              )}
-            </BadgeLikeButton> */}
+            <BadgeLikeButton>
+              {profileStateVal.userSeq ? (
+                <>
+                  {like === true ? (
+                    <div onClick={onClickDislike}>
+                      <Badge type="like" liked={true}></Badge>
+                    </div>
+                  ) : (
+                    <div onClick={onClickLike}>
+                      <Badge type="like"></Badge>
+                    </div>
+                  )}
+                </>
+              ) : null}
+            </BadgeLikeButton>
           </BadgeButtonDiv>
         </div>
       </BadgeDiv>

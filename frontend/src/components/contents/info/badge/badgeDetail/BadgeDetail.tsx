@@ -20,9 +20,9 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
 
   const copyCodeToClipboard = () => {
     const el = "주소주소주~~"; //고쳐야 합니다
-    console.log(navigator.clipboard);
+    // console.log(navigator.clipboard);
     navigator.clipboard.writeText(el).then(() => {
-      console.log(`${el} success`);
+      // console.log(`${el} success`);
       message.success("해당 뱃지의 url이 클립보드에 저장되었습니다.");
     });
   };
@@ -41,7 +41,7 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
     });
   };
 
-  console.log(userDetailStateVal.userWallet); // badgeDetailStateVal.userWallet이랑 같으면 어떻게 하고 아니면 어떻게 하게 해결 해야함
+  // console.log(userDetailStateVal.userWallet); // badgeDetailStateVal.userWallet이랑 같으면 어떻게 하고 아니면 어떻게 하게 해결 해야함
 
   return (
     <BadgeDetailDiv isDark={isDark}>
