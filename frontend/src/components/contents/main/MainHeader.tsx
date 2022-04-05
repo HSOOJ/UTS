@@ -21,9 +21,9 @@ export const MainHeader = () => {
         <Image height="300px" src="img/MainImg.png" />
       </ImageLayOut>
       <LetterBoxDiv>
-        <LetterBox size="h2" weight="bold" color="light">
+        <LetterBox size="h2" weight="bold">
           당신의
-          <LetterBox weight="extraBold" size="h2" color="light">
+          <LetterBox weight="extraBold" size="h2">
             {" "}
             아티스트와{" "}
           </LetterBox>{" "}

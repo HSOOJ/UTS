@@ -111,7 +111,7 @@ export const Onboarding = () => {
                         src={data.url}
                         alt={data.name}
                         onClick={() => {
-                          navigate(`/artist/${data.name}`);
+                          navigate(`/artist/${data.seq}`);
                         }}
                       />
                       <TextNameTop>{data.name}</TextNameTop>

@@ -39,7 +39,7 @@ export const Navbar = () => {
   return (
     <Nav>
       <Link to={"/"}>
-        <img src="img/3.png"></img>
+        <img src="img/logo.png"></img>
       </Link>
       <MainNav>
         <NavLink to={"/artist"}>
