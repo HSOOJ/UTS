@@ -1,4 +1,4 @@
-FROM node:16 as builder
+FROM node:16
 
 # root 에 app 폴더를 생성
 RUN mkdir /app
@@ -18,14 +18,3 @@ RUN npm i
 
 CMD ["npm", "start"]
 
-FROM nginx as build_
-
-COPY /nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
