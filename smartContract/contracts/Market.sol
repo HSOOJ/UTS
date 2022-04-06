@@ -56,12 +56,16 @@ contract Market is ERC721URIStorage {
 
             _mint(msg.sender, newBadgeId);
             _setTokenURI(newBadgeId, badgeURI);
-            createMarketBadge(newBadgeId, price);
+            createMarketBadge(newBadgeId, price, _amount);
         }
     }
 
-    function createMarketBadge(uint256 badgeId, uint256 price) private {
-        uint256 listingPrice = this.calcFee(price);
+    function createMarketBadge(
+        uint256 badgeId,
+        uint256 price,
+        uint256 amount
+    ) private {
+        uint256 listingPrice = this.calcFee(price * amount);
         // prevent reEntry attack modifier
         require(price > 0, "Price must be at least 1 wei");
         require(
