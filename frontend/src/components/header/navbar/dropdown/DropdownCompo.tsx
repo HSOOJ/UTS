@@ -42,10 +42,13 @@ export const DropdownCompo = () => {
     }
   };
   const AxiosSignup = (walletAddress: string) => {
-    axios
-      .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
-        body: { userWalletAddress: walletAddress },
-      })
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/user/join",
+      data: {
+        userWalletAddress: walletAddress,
+      },
+    })
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("userSeq", res.data.success.userSeq);
@@ -60,6 +63,7 @@ export const DropdownCompo = () => {
           userProfileImage: localStorage.getItem("userProfileImage"),
         });
         setUserStateVal({ ...userStateVal, login: true });
+        console.log(profileStateVal.userWallet);
       })
       .catch((res) => {
         console.log(res);
