@@ -1,11 +1,12 @@
 import { useRecoilState } from "recoil";
 import { profileState } from "../../../../recoil/profile";
 import ModifyModalNickname from "./modifyModalNickname";
-import { Button, Modal, Popconfirm } from "antd";
+import { Button, message, Modal, Popconfirm } from "antd";
 import { userState } from "../../../../recoil/user";
 import ModifyModalPic from "./modifyModalPic";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 
 export const ModifyModal = () => {
   // recoil
@@ -33,6 +34,7 @@ export const ModifyModal = () => {
         setProfileStateVal({
           ...profileStateVal,
           modalVisible: false,
+          userRole: 0,
         });
         naviagate("/");
       })
@@ -77,15 +79,41 @@ export const ModifyModal = () => {
     setProfileStateVal({ ...profileStateVal, modalVisible: false });
   };
   const modifyFunc = () => {
-    if (profileStateVal.userNickname !== profileStateVal.modifyNickname) {
-      PutNickname(userSeq, profileStateVal.modifyNickname);
+    if (profileStateVal.modifyNicknameCheck) {
+      if (profileStateVal.userNickname !== profileStateVal.modifyNickname) {
+        PutNickname(userSeq, profileStateVal.modifyNickname);
+        setProfileStateVal({
+          ...profileStateVal,
+          userNickname: profileStateVal.modifyNickname,
+        });
+      }
+      if (
+        profileStateVal.userProfileImage !==
+        profileStateVal.modifyUserProfileImage
+      ) {
+        PutImage(userSeq, profileStateVal.modifyUserProfileImage);
+        setProfileStateVal({
+          ...profileStateVal,
+          userProfileImage: profileStateVal.modifyUserProfileImage,
+        });
+      }
+      setProfileStateVal({
+        ...profileStateVal,
+        modalLoading: false,
+        modalVisible: false,
+      });
+    } else {
+      message.error("닉네임 중복확인을 해주세요!");
+      setProfileStateVal({
+        ...profileStateVal,
+        modalLoading: false,
+        modalVisible: true,
+      });
     }
-    if (
-      profileStateVal.userProfileImage !==
-      profileStateVal.modifyUserProfileImage
-    ) {
-      PutImage(userSeq, profileStateVal.modifyUserProfileImage);
-    }
+    // console.log("profileStateVal.userProfileImage");
+    // console.log(profileStateVal.userProfileImage);
+    // console.log("profileStateVal.modifyUserProfileImage");
+    // console.log(profileStateVal.modifyUserProfileImage);
   };
 
   // click button _ modify
@@ -99,15 +127,17 @@ export const ModifyModal = () => {
     });
     setTimeout(() => {
       modifyFunc();
-      setProfileStateVal({
-        ...profileStateVal,
-        modalLoading: false,
-        modalVisible: false,
-        userNickname: profileStateVal.modifyNickname,
-        userProfileImage: profileStateVal.modifyUserProfileImage,
-      });
     }, 1500);
   };
+
+  // useEffect
+  useEffect(() => {
+    if (profileStateVal.userNickname === profileStateVal.modifyNickname) {
+      setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: true });
+    } else {
+      setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: false });
+    }
+  }, [profileStateVal.modifyNickname]);
 
   return (
     <>

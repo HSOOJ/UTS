@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { profileState } from "../../../recoil/profile";
 import LetterBox from "../../containers/letterBox/LetterBox";
 import DropdownCompo from "./dropdown";
 import ThemeToggle from "./themeToggle";
@@ -31,15 +33,32 @@ const NavItem = styled(LetterBox)`
 
 export const Navbar = () => {
   // recoil
+  const { userRole } = useRecoilValue(profileState);
 
   // state
   const [isArtist, setIsArtist] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // useEffect
+  useEffect(() => {
+    if (userRole === 0) {
+      setIsArtist(false);
+      setIsAdmin(false);
+    }
+    if (userRole === 1) {
+      setIsArtist(true);
+      setIsAdmin(false);
+    }
+    if (userRole === 2) {
+      setIsArtist(false);
+      setIsAdmin(true);
+    }
+  }, [userRole]);
+
   return (
     <Nav>
       <Link to={"/"}>
-        <img src="img/logo.png"></img>
+        <img src="img/Logo.png"></img>
       </Link>
       <MainNav>
         <NavLink to={"/artist"}>

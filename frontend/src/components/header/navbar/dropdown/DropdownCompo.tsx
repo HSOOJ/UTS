@@ -42,12 +42,15 @@ export const DropdownCompo = () => {
     }
   };
   const AxiosSignup = (walletAddress: string) => {
-    axios
-      .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
-        body: { userWalletAddress: walletAddress },
-      })
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/user/join",
+      data: {
+        userWalletAddress: walletAddress,
+      },
+    })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         localStorage.setItem("userSeq", res.data.success.userSeq);
         localStorage.setItem(
           "userProfileImage",
@@ -55,9 +58,11 @@ export const DropdownCompo = () => {
         );
         setProfileStateVal({
           ...profileStateVal,
+          userRole: res.data.success.userRole,
           userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
           userSeq: localStorage.getItem("userSeq"),
           userProfileImage: localStorage.getItem("userProfileImage"),
+          modifyUserProfileImage: localStorage.getItem("userProfileImage"),
         });
         setUserStateVal({ ...userStateVal, login: true });
       })
@@ -87,6 +92,7 @@ export const DropdownCompo = () => {
     setUserStateVal({ ...userStateVal, login: false });
     setProfileStateVal({
       ...profileStateVal,
+      userRole: 0,
       clickProfile: !profileStateVal.clickProfile,
       userWallet: "",
       userSeq: "",

@@ -5,6 +5,8 @@ import { Params, useParams } from "react-router-dom";
 import { Empty } from "antd";
 import { useRecoilValue } from "recoil";
 import { profileState } from "../../../../recoil/profile";
+import { ButtonLoad } from "../nftBadgeList/NftBadgeList.style";
+import { themeAtom } from "../../../../../src/recoil/theme";
 
 interface ProfileParamTypes extends Params {
   userSeq: string;
@@ -12,6 +14,7 @@ interface ProfileParamTypes extends Params {
 
 export const FollowList = () => {
   // recoil
+  const isDark = useRecoilValue(themeAtom).isDark;
   const { clickProfile } = useRecoilValue(profileState);
 
   // useParams
@@ -27,6 +30,8 @@ export const FollowList = () => {
       artistSeq: "1",
     },
   ]);
+  const [load1, setLoad1] = useState(false);
+  const [load2, setLoad2] = useState(false);
   const [empty, setEmpty] = useState(true);
 
   // Axios
@@ -39,7 +44,7 @@ export const FollowList = () => {
         params: { myUserSeq, profileUserSeq },
       })
       .then((res) => {
-        console.log(res.data.success);
+        // console.log(res.data.success);
         setDatas(res.data.success);
         setEmpty(false);
       })
@@ -59,8 +64,82 @@ export const FollowList = () => {
 
   return (
     <>
-      {empty ? <Empty /> : null}
-      {datas.map((data, index) => {
+      {empty ? (
+        <Empty />
+      ) : (
+        <>
+          {load1 || load2 ? (
+            <>
+              {load2 ? (
+                <>
+                  {datas.map((data, index) => {
+                    return (
+                      <FollowListCompo
+                        key={index}
+                        following={data.following}
+                        userNickname={data.userNickname}
+                        userProfileImage={data.userProfileImage}
+                        userSeq={data.userSeq}
+                        artistSeq={data.artistSeq}
+                      />
+                    );
+                  })}
+                  <ButtonLoad
+                    isDark={isDark}
+                    onClick={() => {
+                      setLoad1(false);
+                      setLoad2(false);
+                    }}
+                  >
+                    Close...
+                  </ButtonLoad>
+                </>
+              ) : (
+                <>
+                  {datas.map((data, index) => {
+                    if (index < 10) {
+                      return (
+                        <FollowListCompo
+                          key={index}
+                          following={data.following}
+                          userNickname={data.userNickname}
+                          userProfileImage={data.userProfileImage}
+                          userSeq={data.userSeq}
+                          artistSeq={data.artistSeq}
+                        />
+                      );
+                    }
+                  })}
+                  <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
+                    Load More...
+                  </ButtonLoad>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              {datas.map((data, index) => {
+                if (index < 5) {
+                  return (
+                    <FollowListCompo
+                      key={index}
+                      following={data.following}
+                      userNickname={data.userNickname}
+                      userProfileImage={data.userProfileImage}
+                      userSeq={data.userSeq}
+                      artistSeq={data.artistSeq}
+                    />
+                  );
+                }
+              })}
+              <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
+                Load More...
+              </ButtonLoad>
+            </>
+          )}
+        </>
+      )}
+      {/* {datas.map((data, index) => {
         return (
           <FollowListCompo
             key={index}
@@ -71,7 +150,7 @@ export const FollowList = () => {
             artistSeq={data.artistSeq}
           />
         );
-      })}
+      })} */}
     </>
   );
 };

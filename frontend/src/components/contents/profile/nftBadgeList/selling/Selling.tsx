@@ -60,50 +60,36 @@ export const Selling = () => {
         <Empty />
       ) : (
         <>
-          {datas.map((data, index) => {
-            if (index < 5) {
-              return (
-                <NftBadgeListCompo
-                  key={index}
-                  artistNickname={data.artistNickname}
-                  editionImage={data.editionImage}
-                  editionName={data.editionName}
-                  nftNum={data.nftNum}
-                  nftSeq={data.nftSeq}
-                />
-              );
-            }
-          })}
-          {load1 ? null : (
-            <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
-              Load More...
-            </ButtonLoad>
-          )}
-          {load1 ? (
+          {load1 || load2 ? (
             <>
-              {datas.map((data, index) => {
-                if (index <= 5 && index < 10) {
-                  return (
-                    <NftBadgeListCompo
-                      key={index}
-                      artistNickname={data.artistNickname}
-                      editionImage={data.editionImage}
-                      editionName={data.editionName}
-                      nftNum={data.nftNum}
-                      nftSeq={data.nftSeq}
-                    />
-                  );
-                }
-              })}
-              {load2 ? null : (
-                <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
-                  Load More...
-                </ButtonLoad>
-              )}
               {load2 ? (
                 <>
                   {datas.map((data, index) => {
-                    if (index <= 10) {
+                    return (
+                      <NftBadgeListCompo
+                        key={index}
+                        artistNickname={data.artistNickname}
+                        editionImage={data.editionImage}
+                        editionName={data.editionName}
+                        nftNum={data.nftNum}
+                        nftSeq={data.nftSeq}
+                      />
+                    );
+                  })}
+                  <ButtonLoad
+                    isDark={isDark}
+                    onClick={() => {
+                      setLoad1(false);
+                      setLoad2(false);
+                    }}
+                  >
+                    Close...
+                  </ButtonLoad>
+                </>
+              ) : (
+                <>
+                  {datas.map((data, index) => {
+                    if (index < 10) {
                       return (
                         <NftBadgeListCompo
                           key={index}
@@ -116,21 +102,33 @@ export const Selling = () => {
                       );
                     }
                   })}
+                  <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
+                    Load More...
+                  </ButtonLoad>
                 </>
-              ) : null}
+              )}
             </>
-          ) : null}
-          {load1 && load2 ? (
-            <ButtonLoad
-              isDark={isDark}
-              onClick={() => {
-                setLoad1(false);
-                setLoad2(false);
-              }}
-            >
-              Close...
-            </ButtonLoad>
-          ) : null}
+          ) : (
+            <>
+              {datas.map((data, index) => {
+                if (index < 5) {
+                  return (
+                    <NftBadgeListCompo
+                      key={index}
+                      artistNickname={data.artistNickname}
+                      editionImage={data.editionImage}
+                      editionName={data.editionName}
+                      nftNum={data.nftNum}
+                      nftSeq={data.nftSeq}
+                    />
+                  );
+                }
+              })}
+              <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
+                Load More...
+              </ButtonLoad>
+            </>
+          )}
         </>
       )}
     </>
