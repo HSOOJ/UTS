@@ -12,8 +12,8 @@ export interface IMinting {
 }
 
 export interface IMintingBE extends IMinting {
-  nftId: string;
-  nftTransactionId: string;
+  nftId?: string;
+  nftTransactionId?: string;
 }
 
 export interface IMintingErrors {
