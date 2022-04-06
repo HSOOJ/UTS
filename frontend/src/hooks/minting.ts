@@ -7,6 +7,7 @@ import Web3Modal from "web3modal";
 import { BigNumber, ethers } from "ethers";
 import { MARKET_ADDR, MARKET_ABI } from "../config";
 import axios from "axios";
+import { IBadge } from "../types/IBadge";
 
 const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -102,12 +103,26 @@ export const loadBadges = async () => {
   const provider = new ethers.providers.JsonRpcProvider(
     "https://ropsten.infura.io/v3/851bad79e47b4833a7c082d66c2bc4ab"
   );
-  console.log(provider);
   const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, provider);
-  console.log(market);
-
   const data = await market.fetchMarketBadges();
-  console.log(data);
+  const badges = await Promise.all(
+    data.map(async (badge: IBadge) => {
+      const tokenUri = await market.tokenURI(badge.badgeId);
+      const meta = await axios.get(tokenUri);
+      const price = ethers.utils.formatUnits(badge.price + "", "ether");
+      return {
+        price,
+        tokenId: badge.badgeId.toNumber(),
+        seller: badge.seller,
+        owner: badge.owner,
+        image: meta.data.image,
+        name: meta.data.name,
+        description: meta.data.description,
+      };
+    })
+  );
+  console.log(badges);
+  return badges;
 };
 
 export const listBadgeToBackEnd = async ({
@@ -158,7 +173,7 @@ export const buyBadge = async () => {
   //   value: price,
   // });
   // await transaction.wait();
-  // loadNFTs();
+  loadBadges();
 };
 
 export const resellBadge = async (id: number, price: number) => {
