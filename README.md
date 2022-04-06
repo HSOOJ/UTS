@@ -21,8 +21,8 @@
   - [2️⃣ 프로젝트](#2️⃣-프로젝트)
   - [3️⃣ 기술 스택](#3️⃣-기술-스택)
   - [4️⃣ 프로젝트 구조](#4️⃣-프로젝트-구조)
-  - [ 프로젝트 산출물](-프로젝트-산출물)
-  - [5️⃣ 프로젝트 제출물](#5-프로젝트-제출물)
+  - [5️⃣ 프로젝트 산출물](#5️⃣-프로젝트-산출물)
+  - [6️⃣ 프로젝트 제출물](#6️⃣-프로젝트-제출물)
 - [프로젝트 영상](#프로젝트-영상)
   <br/>
 
@@ -34,7 +34,7 @@
 
 깊은 바닷속 처럼 무한한 세상이 펼처질 NFT 거래소
 
-<img src ="/uploads/74b03848861f31c07eb417ce0f52ce6a/그림3.png" alt="팀 이름" width="60%">
+<img src ="/uploads/0eceae46dfba384899e8df0ad614b313/uts.png" alt="팀 소개" width="60%">
 
 ### - 팀원 소개
 
@@ -147,21 +147,21 @@ uts-fronted
 	│                └── footer
 	│                       └── Footer.tsx
 	└── pages
-				├── header
-				│      └── Header.tsx
-				├── contents
-				│      ├── Main.tsx
-				│      ├── User.tsx
-				│      ├── About.tsx
-				│      ├── Profile.tsx
-				│      ├── Artist.tsx
-				│      ├── ArtistDetail.tsx
-				│      ├── Badge.tsx
-				│      ├── BadgeDetail.tsx
-				│      ├── Edition.tsx
-				│      ├── Minting.tsx
-				│      └── Admin.tsx
-				└── footer
+    	├── header
+    	│      └── Header.tsx
+    	├── contents
+    	│      ├── Main.tsx
+    	│      ├── User.tsx
+    	│      ├── About.tsx
+    	│      ├── Profile.tsx
+    	│      ├── Artist.tsx
+    	│      ├── ArtistDetail.tsx
+    	│      ├── Badge.tsx
+    	│      ├── BadgeDetail.tsx
+    	│      ├── Edition.tsx
+    	│      ├── Minting.tsx
+    	│      └── Admin.tsx
+    	└── footer
 ```
 
 **BackEnd**
