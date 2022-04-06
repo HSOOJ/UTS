@@ -4,7 +4,7 @@ import {
   IMintingBE,
 } from "../components/contents/minting/Minting.types";
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { MARKET_ADDR, MARKET_ABI } from "../config";
 import axios from "axios";
 
@@ -40,7 +40,6 @@ export const uploadToIPFS = async ({
   });
 
   try {
-    console.log("data:", data);
     const added = await ipfs.add(data);
     const url = `https://ipfs.infura.io/ipfs/${added.path}`;
     return url;
@@ -65,12 +64,38 @@ export const listBadgeForSale = async (props: IMinting) => {
   const transAction = await market.createBadge(url, price, props.editionTotal, {
     value: listingPrice,
   });
+
   const tx = await transAction.wait();
-  console.log(tx);
-  const beProps: IMintingBE = props;
-  // beProps.nftId =
-  // listBadgeToBackEnd(beProps);
-  loadBadges();
+  const events = tx.events;
+  const badgeIds: number[] = events
+    .filter((event: { event: string }) => event.event === "MarketBadgeCreated")
+    .map((event: { args: { badgeId: BigNumber } }) =>
+      event.args.badgeId.toNumber()
+    );
+
+  const beProps = ({
+    editionName,
+    editionImageUrl,
+    editionDescription,
+    editionRoyalty,
+    editionTotal,
+    salePrice,
+  }: IMinting) => ({
+    editionName,
+    editionImage: editionImageUrl,
+    editionDescription,
+    editionRoyalty,
+    editionTotal,
+    salePrice,
+  });
+
+  const data: IMintingBE = {
+    userSeq: localStorage.getItem("userSeq") as string,
+    ...beProps(props),
+    nftId: badgeIds[0].toString(),
+    nftTransactionId: events[0].transactionHash,
+  };
+  listBadgeToBackEnd(data);
 };
 
 export const loadBadges = async () => {
@@ -85,12 +110,34 @@ export const loadBadges = async () => {
   console.log(data);
 };
 
-export const listBadgeToBackEnd = (props: IMintingBE) => {
-  const data = JSON.stringify(props);
-  axios
-    .post("http://j6a105.p.ssafy.io:8080/api/nft/minting", data)
-    .then(() => {
-      console.log(`SUCCESS sending\n${data}`);
+export const listBadgeToBackEnd = async ({
+  userSeq,
+  editionName,
+  editionImage,
+  editionDescription,
+  editionRoyalty,
+  editionTotal,
+  salePrice,
+  nftId,
+  nftTransactionId,
+}: IMintingBE) => {
+  axios({
+    method: "POST",
+    url: "http://j6a105.p.ssafy.io:8080/api/nft/minting",
+    data: {
+      userSeq,
+      editionName,
+      editionImage,
+      editionDescription,
+      editionRoyalty,
+      editionTotal,
+      salePrice,
+      nftId,
+      nftTransactionId,
+    },
+  })
+    .then((res) => {
+      console.log(res);
     })
     .catch((res) => {
       console.log(res);
