@@ -99,7 +99,8 @@ async function getReport() {
       "artist.artist_seq = report.artist_seq"
     )
     .leftJoinAndSelect(User, "user", "artist.user_seq = user.user_seq")
-    .select("user.user_seq as userSeq")
+    .select("report.report_seq AS reportSeq")
+    .addSelect("user.user_seq as userSeq")
     .addSelect("report.artist_seq AS artistSeq")
     .addSelect("user.user_nickname AS userNickname")
     .addSelect("report.user_seq AS reporterSeq")
