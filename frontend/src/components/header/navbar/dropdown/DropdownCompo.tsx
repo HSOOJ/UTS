@@ -120,9 +120,6 @@ export const DropdownCompo = () => {
     </Menu>
   );
 
-  // useEffect
-  useEffect(() => {}, []);
-
   return (
     <>
       <Dropdown overlay={menu}>
