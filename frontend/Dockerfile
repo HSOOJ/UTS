@@ -16,5 +16,5 @@ COPY . /app
 COPY package.json /app/package.json
 RUN npm i
 
-CMD ["PORT=80", "npm", "start"]
+CMD ["npm", "start"]
 
