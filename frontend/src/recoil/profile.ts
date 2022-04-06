@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 
 interface profileType {
+  userRole: number;
   userNickname: string;
   modifyNickname: string;
   modifyNicknameCheck: boolean;
@@ -25,13 +26,14 @@ interface profileType {
 export const profileState = atom<profileType>({
   key: "profileState",
   default: {
+    userRole: 0,
     userNickname: "",
     modifyNickname: "",
     modifyNicknameCheck: false,
     userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
     userSeq: localStorage.getItem("userSeq"),
     userProfileImage: localStorage.getItem("userProfileImage"),
-    modifyUserProfileImage: "",
+    modifyUserProfileImage: localStorage.getItem("userProfileImage"),
     clickProfile: false,
     modalLoading: false,
     modalVisible: false,
