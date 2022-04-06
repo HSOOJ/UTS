@@ -1,5 +1,15 @@
-- [데일리 스크럼](https://www.notion.so/8923329174cd4fa78baa798c018705c8)
-- [요구사항 정의서](https://docs.google.com/spreadsheets/d/13XwaL0gwV3tMDqk-z3DK0b0z17yS_cYHmEfgT1YeYno/edit#gid=1507160105)
-- [와이어프레임](https://www.figma.com/file/bYt0iOMGFyigIpNPLbejn6/Weclusive?node-id=0%3A1)
-- [Convention](https://www.notion.so/d3e580f0be82416fb69d5d50dbb7f385)
-- [API Docs](https://www.notion.so/API-DOCS-d4ddf72884844dc6ab39da5a3eba8c52)
+# Notion
+<img src ="/uploads/b751a9f0eb328764b7c0d83e626dec8b/notion.png
+" alt="notion" width="80%"/>
+
+---
+## 데일리 스크럼
+<img src ="/uploads/0625387043fa6db4c78e157cfd5a6481/스크럼.png
+" alt="scrum" width="80%"/>
+
+## Swagger
+<img src ="/uploads/8d9ba30cb7cb378497828d93e1d39db4/swagger.png
+" alt="scrum" width="80%"/>
+## Convention
+<img src ="/uploads/0625387043fa6db4c78e157cfd5a6481/스크럼.png
+" alt="scrum" width="80%"/>

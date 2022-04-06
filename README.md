@@ -1,9 +1,9 @@
 # UTS
 
-아티스트와 팬의 만남의 장 , `UTS`
 <br/>
 
-<div align="center"><img src="/uploads/2cec13046a67b1fecde9b5117929fc49/logo.png" alt="logo" width="40%"/></div><br>
+<div align="center"><img src="/uploads/2cec13046a67b1fecde9b5117929fc49/logo.png" alt="logo" width="50%"/></div><br>
+<div align="center">아티스트와 팬의 만남의 장, <b>UTS</b></div>
 <br/>
 
 ---
