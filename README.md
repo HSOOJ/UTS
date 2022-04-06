@@ -32,9 +32,9 @@
 
 ### - 팀 이름
 
-깊은 바닷속 처럼 무한한 세상이 펼처질 NFT 거래소
-
 <img src ="/uploads/0eceae46dfba384899e8df0ad614b313/uts.png" alt="팀 소개" width="60%">
+깊은 바닷속처럼 무한한 세상이 펼쳐질 NFT 거래소
+
 
 ### - 팀원 소개
 
