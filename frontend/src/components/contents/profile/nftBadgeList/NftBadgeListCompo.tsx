@@ -35,7 +35,7 @@ export const NftBadgeListCompo = ({
 
   return (
     <>
-      <Container onClick={() => navigate(`/edition/${nftSeq}`)}>
+      <Container onClick={() => navigate(`/badge/${nftSeq}`)}>
         <Image src={editionImage} />
         <ContainerText>
           <TextEditionName isDark={isDark}>

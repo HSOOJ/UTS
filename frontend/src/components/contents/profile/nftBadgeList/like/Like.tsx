@@ -71,52 +71,37 @@ export const Like = () => {
         <Empty />
       ) : (
         <>
-          {datas.map((data, index) => {
-            if (index < 5) {
-              return (
-                <NftBadgeListCompo
-                  key={index}
-                  artistNickname={data.artistNickname}
-                  editionImage={data.editionImage}
-                  editionName={data.editionName}
-                  nftNum={data.nftNum}
-                  nftSeq={data.nftSeq}
-                  likes={data.likes}
-                />
-              );
-            }
-          })}
-          {load1 ? null : (
-            <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
-              Load More...
-            </ButtonLoad>
-          )}
-          {load1 ? (
+          {load1 || load2 ? (
             <>
-              {datas.map((data, index) => {
-                if (index <= 5 && index < 10) {
-                  return (
-                    <NftBadgeListCompo
-                      key={index}
-                      artistNickname={data.artistNickname}
-                      editionImage={data.editionImage}
-                      editionName={data.editionName}
-                      nftNum={data.nftNum}
-                      nftSeq={data.nftSeq}
-                      likes={data.likes}
-                    />
-                  );
-                }
-              })}
-              {load2 ? null : (
-                <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
-                  Load More...
-                </ButtonLoad>
-              )}
               {load2 ? (
                 <>
                   {datas.map((data, index) => {
-                    if (index <= 10) {
+                    return (
+                      <NftBadgeListCompo
+                        key={index}
+                        artistNickname={data.artistNickname}
+                        editionImage={data.editionImage}
+                        editionName={data.editionName}
+                        nftNum={data.nftNum}
+                        nftSeq={data.nftSeq}
+                        likes={data.likes}
+                      />
+                    );
+                  })}
+                  <ButtonLoad
+                    isDark={isDark}
+                    onClick={() => {
+                      setLoad1(false);
+                      setLoad2(false);
+                    }}
+                  >
+                    Close...
+                  </ButtonLoad>
+                </>
+              ) : (
+                <>
+                  {datas.map((data, index) => {
+                    if (index < 10) {
                       return (
                         <NftBadgeListCompo
                           key={index}
@@ -130,21 +115,34 @@ export const Like = () => {
                       );
                     }
                   })}
+                  <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
+                    Load More...
+                  </ButtonLoad>
                 </>
-              ) : null}
+              )}
             </>
-          ) : null}
-          {load1 && load2 ? (
-            <ButtonLoad
-              isDark={isDark}
-              onClick={() => {
-                setLoad1(false);
-                setLoad2(false);
-              }}
-            >
-              Close...
-            </ButtonLoad>
-          ) : null}
+          ) : (
+            <>
+              {datas.map((data, index) => {
+                if (index < 5) {
+                  return (
+                    <NftBadgeListCompo
+                      key={index}
+                      artistNickname={data.artistNickname}
+                      editionImage={data.editionImage}
+                      editionName={data.editionName}
+                      nftNum={data.nftNum}
+                      nftSeq={data.nftSeq}
+                      likes={data.likes}
+                    />
+                  );
+                }
+              })}
+              <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
+                Load More...
+              </ButtonLoad>
+            </>
+          )}
         </>
       )}
     </>

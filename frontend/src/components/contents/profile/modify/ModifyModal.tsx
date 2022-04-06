@@ -34,6 +34,7 @@ export const ModifyModal = () => {
         setProfileStateVal({
           ...profileStateVal,
           modalVisible: false,
+          userRole: 0,
         });
         naviagate("/");
       })
@@ -81,19 +82,25 @@ export const ModifyModal = () => {
     if (profileStateVal.modifyNicknameCheck) {
       if (profileStateVal.userNickname !== profileStateVal.modifyNickname) {
         PutNickname(userSeq, profileStateVal.modifyNickname);
+        setProfileStateVal({
+          ...profileStateVal,
+          userNickname: profileStateVal.modifyNickname,
+        });
       }
       if (
         profileStateVal.userProfileImage !==
         profileStateVal.modifyUserProfileImage
       ) {
         PutImage(userSeq, profileStateVal.modifyUserProfileImage);
+        setProfileStateVal({
+          ...profileStateVal,
+          userProfileImage: profileStateVal.modifyUserProfileImage,
+        });
       }
       setProfileStateVal({
         ...profileStateVal,
         modalLoading: false,
         modalVisible: false,
-        userNickname: profileStateVal.modifyNickname,
-        userProfileImage: profileStateVal.modifyUserProfileImage,
       });
     } else {
       message.error("닉네임 중복확인을 해주세요!");
@@ -103,10 +110,10 @@ export const ModifyModal = () => {
         modalVisible: true,
       });
     }
-    console.log("profileStateVal.userProfileImage");
-    console.log(profileStateVal.userProfileImage);
-    console.log("profileStateVal.modifyUserProfileImage");
-    console.log(profileStateVal.modifyUserProfileImage);
+    // console.log("profileStateVal.userProfileImage");
+    // console.log(profileStateVal.userProfileImage);
+    // console.log("profileStateVal.modifyUserProfileImage");
+    // console.log(profileStateVal.modifyUserProfileImage);
   };
 
   // click button _ modify
@@ -124,13 +131,6 @@ export const ModifyModal = () => {
   };
 
   // useEffect
-  useEffect(() => {
-    setProfileStateVal({
-      ...profileStateVal,
-      modifyNickname: profileStateVal.userNickname,
-      modifyUserProfileImage: profileStateVal.userProfileImage,
-    });
-  }, []);
   useEffect(() => {
     if (profileStateVal.userNickname === profileStateVal.modifyNickname) {
       setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: true });

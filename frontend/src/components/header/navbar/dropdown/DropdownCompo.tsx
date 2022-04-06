@@ -50,7 +50,7 @@ export const DropdownCompo = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         localStorage.setItem("userSeq", res.data.success.userSeq);
         localStorage.setItem(
           "userProfileImage",
@@ -58,12 +58,13 @@ export const DropdownCompo = () => {
         );
         setProfileStateVal({
           ...profileStateVal,
+          userRole: res.data.success.userRole,
           userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
           userSeq: localStorage.getItem("userSeq"),
           userProfileImage: localStorage.getItem("userProfileImage"),
+          modifyUserProfileImage: localStorage.getItem("userProfileImage"),
         });
         setUserStateVal({ ...userStateVal, login: true });
-        console.log(profileStateVal.userWallet);
       })
       .catch((res) => {
         console.log(res);
@@ -91,6 +92,7 @@ export const DropdownCompo = () => {
     setUserStateVal({ ...userStateVal, login: false });
     setProfileStateVal({
       ...profileStateVal,
+      userRole: 0,
       clickProfile: !profileStateVal.clickProfile,
       userWallet: "",
       userSeq: "",
