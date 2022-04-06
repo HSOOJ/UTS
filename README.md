@@ -109,86 +109,86 @@
 ```
 uts-fronted
 └── src
-			├── components
-			│      ├── header
-			│      │      └── navbar
-			│      │             ├── index.tsx
-			│      │             ├── style.ts
-			│      │             └── Navbar.tsx
-			│      |── contents
-			│      │      ├── main
-			│      │      │      ├── hotArtist
-			│      │      │      ├── hotBadge
-			│      │      │      ├── topSeller
-			│      │      │      └── onboarding
-			│      │      ├── user
-			│      │      │      ├── login
-			│      │      │      ├── signUp
-			│      │      │      ├── findId
-			│      │      │      └── findPw
-			│      │      ├── about
-			│      │      │      └── about
-			│      │      ├── profile
-			│      │      │      └── profile
-			│      │      ├── artist
-			│      │      │      └── artist
-			│      │      ├── badge
-			│      │      │      └── badge
-			│      │      ├── artistDetail
-			│      │      |      └── artistDetail
-			│      │      ├── badgeDetail
-			│      │      |      └── badgeDetail
-			│      │      ├── edition
-			│      │      |      └── edition
-			│      │      ├── minting
-			│      │      └── admin
-			│      └── footer
-			│                └── footer
-			│                       └── Footer.tsx
-			└── pages
-						├── header
-						│      └── Header.tsx
-						├── contents
-						│      ├── Main.tsx
-						│      ├── User.tsx
-						│      ├── About.tsx
-						│      ├── Profile.tsx
-						│      ├── Artist.tsx
-						│      ├── ArtistDetail.tsx
-						│      ├── Badge.tsx
-						│      ├── BadgeDetail.tsx
-						│      ├── Edition.tsx
-						│      ├── Minting.tsx
-						│      └── Admin.tsx
-						└── footer
+	├── components
+	│      ├── header
+	│      │      └── navbar
+	│      │             ├── index.tsx
+	│      │             ├── style.ts
+	│      │             └── Navbar.tsx
+	│      |── contents
+	│      │      ├── main
+	│      │      │      ├── hotArtist
+	│      │      │      ├── hotBadge
+	│      │      │      ├── topSeller
+	│      │      │      └── onboarding
+	│      │      ├── user
+	│      │      │      ├── login
+	│      │      │      ├── signUp
+	│      │      │      ├── findId
+	│      │      │      └── findPw
+	│      │      ├── about
+	│      │      │      └── about
+	│      │      ├── profile
+	│      │      │      └── profile
+	│      │      ├── artist
+	│      │      │      └── artist
+	│      │      ├── badge
+	│      │      │      └── badge
+	│      │      ├── artistDetail
+	│      │      |      └── artistDetail
+	│      │      ├── badgeDetail
+	│      │      |      └── badgeDetail
+	│      │      ├── edition
+	│      │      |      └── edition
+	│      │      ├── minting
+	│      │      └── admin
+	│      └── footer
+	│                └── footer
+	│                       └── Footer.tsx
+	└── pages
+				├── header
+				│      └── Header.tsx
+				├── contents
+				│      ├── Main.tsx
+				│      ├── User.tsx
+				│      ├── About.tsx
+				│      ├── Profile.tsx
+				│      ├── Artist.tsx
+				│      ├── ArtistDetail.tsx
+				│      ├── Badge.tsx
+				│      ├── BadgeDetail.tsx
+				│      ├── Edition.tsx
+				│      ├── Minting.tsx
+				│      └── Admin.tsx
+				└── footer
 ```
 
 **BackEnd**
 ```
 uts-backend
 ├── src
-│			├── config
-│		  ├── models
-│			├── pre-start
-│			│      └── env
-│			│            ├── development.env
-│			│            ├── production.env
-│			│            └── test.env
-│     │
-│			├── public
-│			│      ├── scripts
-│			│      └── stylesheets
-│     │
-│			├── repos
-│			├── routes
-│			│      └── api.ts
-│     │
-│			├── services
-│			├── shared
-│			├── views
-│			│
-│			├── index.ts
-│			└── server.ts
+│	├── config
+│	├── models
+│	├── pre-start
+│	│      └── env
+│	│            ├── development.env
+│	│            ├── production.env
+│	│            └── test.env
+│       │
+│	├── public
+│	│      ├── scripts
+│	│      └── stylesheets
+│       │
+│	├── repos
+│	├── routes
+│	│      └── api.ts
+│       │
+│	├── services
+│	├── shared
+│	├── views
+│	│
+│	├── index.ts
+│	└── server.ts
 │
 ├── package.json
 └── tsconfig.json
