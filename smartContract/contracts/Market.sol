@@ -49,15 +49,18 @@ contract Market is ERC721URIStorage {
         string memory badgeURI,
         uint256 price,
         uint256 _amount
-    ) public payable {
+    ) public payable returns (uint256[] memory) {
+        uint256[] memory newBadgeIdList = new uint256[](_amount);
         for (uint256 i = 0; i < _amount; i++) {
             _badgeIds.increment();
             uint256 newBadgeId = _badgeIds.current();
+            newBadgeIdList[i] = newBadgeId;
 
             _mint(msg.sender, newBadgeId);
             _setTokenURI(newBadgeId, badgeURI);
             createMarketBadge(newBadgeId, price, _amount);
         }
+        return newBadgeIdList;
     }
 
     function createMarketBadge(

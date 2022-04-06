@@ -1,4 +1,4 @@
-export const MARKET_ADDR = "0x22b566c6288c14B5370fc15F1828c6399286Ad53";
+export const MARKET_ADDR = "0xf4Caa946EC52F7d0506ADE29CfF050E6a46bc28C";
 
 export const MARKET_ABI = [
   {
@@ -193,7 +193,13 @@ export const MARKET_ABI = [
       },
     ],
     name: "createBadge",
-    outputs: [],
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
     stateMutability: "payable",
     type: "function",
   },
