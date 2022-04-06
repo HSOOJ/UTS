@@ -22,7 +22,7 @@ router.post("/minting", async (req, res, next) => {
     Number(editionRoyalty),
     Number(editionTotal),
     Number(salePrice),
-    String(nftId),
+    Number(nftId),
     String(nftTransactionId)
   );
 
