@@ -9,13 +9,28 @@ import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
 import { SellBadgeModal } from "../sellBadgeModal/SellBadgeModal";
 import { BadgeDetailDiv, ButtonDiv } from "./BadgeDetail.styled";
+import { ethers } from "ethers";
+import { marketContract } from "../../../../../config";
 
 interface IBadgeDetail extends ThemeType {}
 
 export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
-
+  // 정현 추가
+  const tokenId = 1;
+  const getInfo = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Prompt user for account connections
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+    const balance = await provider.getBalance(signer.getAddress());
+    console.log("here", balance);
+    const response = await marketContract.tokenURI(1);
+    console.log("response", response);
+  };
+  getInfo();
+  // 여기까지
   const userDetailStateVal = useRecoilValue(profileState);
 
   const copyCodeToClipboard = () => {
