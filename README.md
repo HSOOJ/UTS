@@ -67,15 +67,15 @@
 
   ```
   - 적당한 가수 Kelly
-      - 대형 플랫폼에서 높은 수수료로 인해 실수익이 적은 아티스트
-      - 본인의 팬에게 직접적인 혜택을 주고 싶은 아티스트
+    - 대형 플랫폼에서 높은 수수료로 인해 실수익이 적은 아티스트
+    - 본인의 팬에게 직접적인 혜택을 주고 싶은 아티스트
 
   - Kelly의 열성 팬 Amy
       - 꾸준한 수익 창출을 지원하여 Kelly의 음악을 오래 듣고 싶은 팬
       - 팬 증명 뱃지를 통해 직접적인 혜택을 받고 싶은 팬
 
   - 환경과 K-pop에 관심 많은 Amanda
-    - 인기 많은 KPOP 가수의 팬싸인회에 가기 위해 음원 CD를 수백장씩 구매하면서도 자원 낭비에 걱정이 많은 환경을 생각하는 팬
+    - 인기 많은 KPOP 가수의 팬싸인회에 가기 위해 음원 CD를 수백장씩 구매하면서도 자원 낭비 걱정이 많은 환경을 생각하는 팬
   ```
 
 ### 2️⃣ 프로젝트
@@ -103,24 +103,109 @@
 - `DevOps` : GitLab, Jenkins, Docker, JIRA, AWS EC2
 - `UI` : Ant Design, Story Book, Framer
 
-### 4️⃣ 프로젝트 산출물
+### 4️⃣ 프로젝트 구조
+**FrontEnd**
 
-  <img src ="/uploads/cd9a142dad02a88ac1ec7ce115a0430f/notion.png" alt="notion" width="60%"/>
+```
+uts-fronted
+└── src
+			├── components
+			│      ├── header
+			│      │      └── navbar
+			│      │             ├── index.tsx
+			│      │             ├── style.ts
+			│      │             └── Navbar.tsx
+			│      |── contents
+			│      │      ├── main
+			│      │      │      ├── hotArtist
+			│      │      │      ├── hotBadge
+			│      │      │      ├── topSeller
+			│      │      │      └── onboarding
+			│      │      ├── user
+			│      │      │      ├── login
+			│      │      │      ├── signUp
+			│      │      │      ├── findId
+			│      │      │      └── findPw
+			│      │      ├── about
+			│      │      │      └── about
+			│      │      ├── profile
+			│      │      │      └── profile
+			│      │      ├── artist
+			│      │      │      └── artist
+			│      │      ├── badge
+			│      │      │      └── badge
+			│      │      ├── artistDetail
+			│      │      |      └── artistDetail
+			│      │      ├── badgeDetail
+			│      │      |      └── badgeDetail
+			│      │      ├── edition
+			│      │      |      └── edition
+			│      │      ├── minting
+			│      │      └── admin
+			│      └── footer
+			│                └── footer
+			│                       └── Footer.tsx
+			└── pages
+						├── header
+						│      └── Header.tsx
+						├── contents
+						│      ├── Main.tsx
+						│      ├── User.tsx
+						│      ├── About.tsx
+						│      ├── Profile.tsx
+						│      ├── Artist.tsx
+						│      ├── ArtistDetail.tsx
+						│      ├── Badge.tsx
+						│      ├── BadgeDetail.tsx
+						│      ├── Edition.tsx
+						│      ├── Minting.tsx
+						│      └── Admin.tsx
+						└── footer
+```
 
-  <!-- <br> -->
+**BackEnd**
+```
+uts-backend
+├── src
+│			├── config
+│		  ├── models
+│			├── pre-start
+│			│      └── env
+│			│            ├── development.env
+│			│            ├── production.env
+│			│            └── test.env
+│     │
+│			├── public
+│			│      ├── scripts
+│			│      └── stylesheets
+│     │
+│			├── repos
+│			├── routes
+│			│      └── api.ts
+│     │
+│			├── services
+│			├── shared
+│			├── views
+│			│
+│			├── index.ts
+│			└── server.ts
+│
+├── package.json
+└── tsconfig.json
+```
 
-- [Notion](https://www.notion.so/A105-Notion-2ddf37c99896457c813a274658bb892b)
-
-- [Swagger](./docs/swagger.md)
+### 5️⃣ 프로젝트 산출물
+- [기획](./docs/기획.md)
+- [Notion](./docs/notion.md)
 - [Jira](./docs/jira.md)
 - [ERD](./docs/erd.md)
 
-### 5️⃣ 프로젝트 제출물
+### 6️⃣ 프로젝트 제출물
 
-- [외부서비스](./exec/베리어프리_외부서비스.pdf)
-- [시연시나리오](./exec/베리어프리_시연시나리오.pdf)
-- [빌드배포](./exec/베리어프리_빌드_배포_정리.pdf)
+- [외부서비스](./exec/)
+- [시연시나리오](./exec/)
+- [빌드배포](./exec/)
 
 ## **프로젝트 영상**
 
-[![유튜브](/uploads/8cba2c0c79b4bbb3c72061c33a0712d3/we.png)](https://youtu.be/sYk2pQ_QgOQ)
+[![유튜브]()]()
