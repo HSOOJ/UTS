@@ -173,7 +173,7 @@ export const resellBadge = async (id: number, price: number) => {
   let listingPrice = await market.calcFee(price);
 
   listingPrice = listingPrice.toString();
-  let transaction = await contract.resellToken(id, priceFormatted, {
+  let transaction = await market.resellToken(id, priceFormatted, {
     value: listingPrice,
   });
   await transaction.wait();
