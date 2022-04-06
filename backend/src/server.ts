@@ -39,9 +39,11 @@ app.use(cookieParser());
 
 // CORS
 const allowedOrigins = [
-  "http://j6a105.p.ssafy.io",
+  "http://j6a105.p.ssafy.io:3000",
+  "http://localhost:3000",
   "http://localhost:80",
   "http://j6a105.p.ssafy.io:80",
+  "http://j6a105.p.ssafy.io",
 ];
 const options: cors.CorsOptions = {
   allowedHeaders: [
