@@ -90,7 +90,7 @@ async function editionMinting(
   editionRoyalty: number,
   editionTotal: number,
   salePrice: number,
-  nftId: string,
+  nftId: number,
   nftTransactionId: string
 ) {
   const connection = getConnection();
@@ -105,24 +105,12 @@ async function editionMinting(
   const nftRepository = connection.getRepository(Nft);
   const userRepository = connection.getRepository(User);
   const saleRepository = connection.getRepository(Sale);
-  // const nftsortingRepository = connection.getRepository(NftSorting);
-
-  const editionNameCheck = await editionRepository.findOne({
-    where: {
-      edition_name: editionName,
-    },
-  });
 
   const artistUser = await userRepository.findOne({
     where: {
       user_seq: userSeq,
     },
   });
-  if (editionNameCheck) {
-    console.log(editionNameCheck);
-    console.log("same");
-    return 0;
-  }
 
   await editionRepository.insert({
     edition_name: editionName,
@@ -133,7 +121,6 @@ async function editionMinting(
     artist_seq: artist?.artist_seq,
   });
   const artistSequence = artist?.artist_seq;
-  const artistTransactionId = artistUser?.user_wallet_address;
 
   if (artistSequence) {
     const editionSeq = await editionRepository.findOne({
@@ -151,7 +138,7 @@ async function editionMinting(
         nft_num: idx,
         reg_dt: nowDate,
         mod_dt: nowDate,
-        nft_id: nftId,
+        nft_id: nftId + (idx - 1),
         nft_transaction_id: nftTransactionId,
         nft_transaction_count: 1,
         nft_volume: 0,
@@ -169,7 +156,6 @@ async function editionMinting(
         mod_dt: nowDate,
       });
     }
-
     return 1;
   } else {
     return 0;
