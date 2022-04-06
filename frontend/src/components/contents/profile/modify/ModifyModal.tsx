@@ -76,7 +76,12 @@ export const ModifyModal = () => {
 
   // function
   const handleCancel = () => {
-    setProfileStateVal({ ...profileStateVal, modalVisible: false });
+    setProfileStateVal({
+      ...profileStateVal,
+      modalVisible: false,
+      modifyNickname: profileStateVal.userNickname,
+      modifyUserProfileImage: profileStateVal.userProfileImage,
+    });
   };
   const modifyFunc = () => {
     if (profileStateVal.modifyNicknameCheck) {
@@ -138,6 +143,9 @@ export const ModifyModal = () => {
       setProfileStateVal({ ...profileStateVal, modifyNicknameCheck: false });
     }
   }, [profileStateVal.modifyNickname]);
+  useEffect(() => {
+    console.log(profileStateVal);
+  }, [profileStateVal.userProfileImage]);
 
   return (
     <>

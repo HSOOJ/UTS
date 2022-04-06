@@ -13,6 +13,7 @@ import Palette from "./foundation/color/Palette";
 import { useEffect } from "react";
 import { userState } from "./recoil/user";
 import { profileState } from "./recoil/profile";
+import axios from "axios";
 
 const UtsContainer = styled.div<ThemeType>`
   color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
@@ -24,14 +25,40 @@ function App() {
   // recoil
   const theme = useRecoilValue(themeAtom);
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
-  const { userSeq } = useRecoilValue(profileState);
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+
+  // Axios
+  const CheckRole = (walletAddress: string | undefined) => {
+    axios({
+      method: "POST",
+      url: "http://j6a105.p.ssafy.io:8080/api/user/join",
+      data: {
+        userWalletAddress: walletAddress,
+      },
+    })
+      .then((res) => {
+        // console.log(res.data);
+        setProfileStateVal({
+          ...profileStateVal,
+          userRole: res.data.success.userRole,
+        });
+      })
+      .catch((res) => {
+        console.log(res);
+        console.log("!isLogin");
+      });
+  };
 
   // useEffect
   useEffect(() => {
-    if (userSeq === undefined || userSeq === null) {
+    if (
+      profileStateVal.userSeq === undefined ||
+      profileStateVal.userSeq === null
+    ) {
       setUserStateVal({ ...userStateVal, login: false });
     } else {
       setUserStateVal({ ...userStateVal, login: true });
+      CheckRole(localStorage.getItem("userAccount")?.replace(/\"/gi, ""));
     }
   }, []);
 

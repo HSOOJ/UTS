@@ -33,7 +33,7 @@ export const profileState = atom<profileType>({
     userWallet: localStorage.getItem("userAccount")?.replace(/\"/gi, ""),
     userSeq: localStorage.getItem("userSeq"),
     userProfileImage: localStorage.getItem("userProfileImage"),
-    modifyUserProfileImage: localStorage.getItem("userProfileImage"),
+    modifyUserProfileImage: "",
     clickProfile: false,
     modalLoading: false,
     modalVisible: false,
