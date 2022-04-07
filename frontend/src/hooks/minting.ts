@@ -1,4 +1,5 @@
 import { create } from "ipfs-http-client";
+
 import {
   IMinting,
   IMintingBE,
@@ -17,8 +18,9 @@ const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
 // 이미지가 변경되면 ipfs에 업로드
 export const onFileChange = async (file: File) => {
+  const newFile = new File([file], file.name, { type: file.type });
   try {
-    const added = await ipfs.add(file, {
+    const added = await ipfs.add(newFile, {
       progress: (prog) => console.log(`received: ${prog}`),
     });
     const url = `https://ipfs.infura.io/ipfs/${added.path}`;
@@ -97,6 +99,15 @@ export const listBadgeForSale = async (props: IMinting) => {
     nftTransactionId: events[0].transactionHash,
   };
   listBadgeToBackEnd(data);
+};
+
+export const loadBadgeURI = async (badgeId: number) => {
+  const provider = new ethers.providers.JsonRpcProvider(
+    "https://ropsten.infura.io/v3/851bad79e47b4833a7c082d66c2bc4ab"
+  );
+  const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, provider);
+  const data = await market.tokenURI(badgeId);
+  console.log(data);
 };
 
 export const loadBadges = async () => {
@@ -186,7 +197,7 @@ export const resellBadge = async (id: number, price: number) => {
   let listingPrice = await market.calcFee(price);
 
   listingPrice = listingPrice.toString();
-  let transaction = await market.resellToken(id, priceFormatted, {
+  let transaction = await market.resellBadge(id, priceFormatted, {
     value: listingPrice,
   });
   await transaction.wait();
