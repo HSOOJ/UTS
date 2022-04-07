@@ -1,5 +1,7 @@
 import { Request, Response, Router } from "express";
 import nftService from "@services/nft-service";
+import { Nft } from "@models/nft-model";
+import { getConnection } from "typeorm";
 
 const router = Router();
 
