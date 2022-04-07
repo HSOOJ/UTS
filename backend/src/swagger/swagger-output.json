@@ -56,6 +56,23 @@
         }
       }
     },
+    "/user/info/address": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userWalletAddress",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/user/join": {
       "post": {
         "description": "",
@@ -730,6 +747,23 @@
         }
       }
     },
+    "/nft/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "nftSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/main/nfts/popular": {
       "get": {
         "description": "",
@@ -821,6 +855,17 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/edition/seq": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

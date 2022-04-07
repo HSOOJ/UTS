@@ -21,12 +21,7 @@ export const BadgeItem = (api: IBadgeItem) => {
           price={api.nftPrice}
           name={api.editionName}
         />
-        <Bottom
-          isDark={isDark}
-          price={api.nftPrice}
-          liked={api.liked}
-          badgeId={api.nftSeq}
-        />
+        <Bottom isDark={isDark} price={api.nftPrice} badgeId={api.nftSeq} />
       </LayOut>
     </Card>
     // <Card isDark={isDark}>
