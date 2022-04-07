@@ -15,6 +15,12 @@ interface IArtistItemData {
   user_user_volume: number;
   artist_max: number;
   artist_txs: number;
+  newest_edition_image: string;
+  newest_edition_name: string;
+  latest_volume: number;
+  bestSeller_edition_image: string;
+  bestSeller_edition_name: string;
+  volume: number;
   bestSellers: ArtistItemBadgeType;
   newestDrops: ArtistItemBadgeType;
   // id: string;
