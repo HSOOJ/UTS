@@ -31,11 +31,20 @@ export const ArtistItem = (api: IArtistItem) => {
             Highest={api.artist_max}
             isDark={isDark}
           />
-          {/* <Token
-            newestDrops={api.newestDrops}
-            bestSellers={api.bestSellers}
+          <Token
+            // newestDrops={api.newestDrops}
+            newestDrops={{
+              tokenSrc: api.newest_edition_image,
+              tokenName: api.newest_edition_name,
+              price: api.latest_volume,
+            }}
+            bestSellers={{
+              tokenSrc: api.bestSeller_edition_image,
+              tokenName: api.bestSeller_edition_name,
+              price: api.volume,
+            }}
             isDark={isDark}
-          /> */}
+          />
         </LayOut>
       </Card>
     </Link>
