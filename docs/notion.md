@@ -8,7 +8,7 @@
 " alt="scrum" width="50%"/></div>
 
 ### Swagger
-<div align="center"><img src ="/uploads/8d9ba30cb7cb378497828d93e1d39db4/swagger.png
+<div align="center"><img src ="/uploads/4a260aeaef086dd20ed6e07b7f95c2f9/swagger.png
 " alt="scrum" width="50%"/></div>
 
 ### Git Convention, branch
