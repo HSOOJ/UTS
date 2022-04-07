@@ -42,7 +42,7 @@
 | ------ | ---- | -------------------- | -------------------------------- |
 | 연진우 | 팀장 | Frontend, BlockChain | React, EC2 서버 통신             |
 | 남정현 | 팀원 | Backend, BlockChain  | DB 설계, 배포, 스마트 컨트랙트   |
-| 백승윤 | 팀원 | Frontend, BlockChain | Story book 제작, 스마트 컨트랙트 |
+| 백승윤 | 팀원 | Frontend, BlockChain | React, Story book 제작, 스마트 컨트랙트 |
 | 오재우 | 팀원 | Backend, BlockChain  | DB 설계, 프로젝트 구조 설계      |
 | 정현정 | 팀원 | Frontend, BlockChain | React, EC2 서버 통신             |
 | 황수진 | 팀원 | Backend, BlockChain  | DB 설계, CI/CD 및 인프라 구축    |
