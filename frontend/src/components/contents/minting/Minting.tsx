@@ -25,7 +25,7 @@ const Minting = ({ handleSubmit, children }: IMint) => {
     console.log("transmitting to blockchain network...", data);
     // blockChain api 들어가야 함
     listBadgeForSale(data).then(() => {
-      navigate("/");
+      // navigate("/");
     });
   };
 

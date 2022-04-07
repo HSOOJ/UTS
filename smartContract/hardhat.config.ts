@@ -4,14 +4,16 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
+const fs = require("fs");
+const pvKey = fs.readFileSync(".secret").toString().trim();
 
 dotenv.config();
-
+const Görli_URL =
+  "https://goerli.infura.io/v3/ec7c811a20a64a52b385a3003b40621b";
 const INFURA_URL =
   "https://ropsten.infura.io/v3/851bad79e47b4833a7c082d66c2bc4ab";
-
-const PRIVATE_KEY =
-  "c22ea12670836e66132bfbfe685cd123eb8f553266e429dd4111b6b9b7094049";
+const MUMBAI_URL =
+  "https://polygon-mumbai.infura.io/v3/ec7c811a20a64a52b385a3003b40621b";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -30,7 +32,15 @@ const config: HardhatUserConfig = {
     },
     ropsten: {
       url: INFURA_URL,
-      accounts: [`0x${PRIVATE_KEY}`],
+      accounts: [`0x${pvKey}`],
+    },
+    goerli: {
+      url: Görli_URL,
+      accounts: [`0x${pvKey}`],
+    },
+    mumbai: {
+      url: MUMBAI_URL,
+      accounts: [`0x${pvKey}`],
     },
     // ssafy: {
     //   url: "http://20.196.209.2:8545",

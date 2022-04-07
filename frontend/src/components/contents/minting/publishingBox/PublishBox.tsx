@@ -1,4 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
+import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { onFileChange } from "../../../../hooks/minting";
 import { themeAtom } from "../../../../recoil/theme";
@@ -23,6 +24,8 @@ import { Royalty } from "./Royalty";
 
 export const PublishBox = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
+  const { isLoading } = useQuery("minting");
+
   const { register, control, formState, watch, setValue } =
     useFormContext<IMinting>();
   const price = watch("salePrice");
@@ -48,10 +51,9 @@ export const PublishBox = () => {
         render={({ field: { onChange } }) => (
           <ImageInput
             onChange={async (file) => {
-              console.log(file);
               const url = await onFileChange(file);
+              console.log(file.lastmodified);
               url && setValue("editionImageUrl", url);
-              console.log("call from");
               onChange(file);
             }}
             title="뱃지 이미지 업로드"

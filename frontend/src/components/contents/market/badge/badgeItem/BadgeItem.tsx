@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../../recoil/theme";
 import Card from "../../../../containers/card";
@@ -13,22 +12,22 @@ export const BadgeItem = (api: IBadgeItem) => {
 
   return (
     <Card isDark={isDark}>
-      <Link to={api.nftSeq}>
-        <LayOut>
-          <Header
-            artistSrc={api.nftAuthorImage}
-            badgeImgSrc={api.editionImage}
-          />
-          <Content
-            owner={{ ownerId: api.nftOwnerSeq, profileSrc: api.nftOwnerImage }}
-            isDark={isDark}
-            edition={{ number: api.nftNum, totalNumber: api.total }}
-            price={api.nftPrice}
-            name={api.editionName}
-          />
-          <Bottom isDark={isDark} price={api.nftPrice} liked={api.liked} />
-        </LayOut>
-      </Link>
+      <LayOut>
+        <Header artistSrc={api.nftAuthorImage} badgeImgSrc={api.editionImage} />
+        <Content
+          owner={{ ownerId: api.nftOwnerSeq, profileSrc: api.nftOwnerImage }}
+          isDark={isDark}
+          edition={{ number: api.nftNum, totalNumber: api.total }}
+          price={api.nftPrice}
+          name={api.editionName}
+        />
+        <Bottom
+          isDark={isDark}
+          price={api.nftPrice}
+          liked={api.liked}
+          badgeId={api.nftSeq}
+        />
+      </LayOut>
     </Card>
     // <Card isDark={isDark}>
     //   <Link to={api.id}>
