@@ -264,7 +264,6 @@ async function joinCodeCategory(category: number, sortby: number) {
         .where(`code.code = "${categoryCode}"`);
       return "artist.code_seq in " + subQuery.getQuery();
     })
-    .withDeleted()
     .leftJoinAndSelect(Nft, "nft", "nft.nft_author_seq = artist.artist_seq")
     .leftJoinAndSelect(Sale, "sale", "sale.nft_seq = nft.nft_seq");
 
