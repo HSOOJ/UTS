@@ -45,9 +45,7 @@ export const ImageInput = ({
       onDrop={async (acceptedFiles) => {
         const file = acceptedFiles[0];
         const src = await readFile(file);
-
         setImgSrc(src);
-        console.log(src);
         onChange(file);
       }}
     >
