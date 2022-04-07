@@ -136,7 +136,7 @@ export const BadgeInfo = () => {
         nftSeq={Number(badge_id)}
         tokenInfo={tokenInfo}
       ></BadgeInfoPrice>
-      <BadgeDetail isDark={isDark}></BadgeDetail>
+      <BadgeDetail isDark={isDark} badge_id={Number(badge_id)}></BadgeDetail>
     </Layout>
   );
 };

@@ -13,16 +13,18 @@ import { ethers } from "ethers";
 import { marketContract } from "../../../../../config";
 import axios from "axios";
 
-interface IBadgeDetail extends ThemeType {}
+interface IBadgeDetail extends ThemeType {
+  badge_id: number
+}
 
-export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
+export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
   // 정현 추가
 
   // 여기까지 정현 추가
   const userDetailStateVal = useRecoilValue(profileState);
-
+  const [nftPrice, setNftPrice] = useState(0);
   const copyCodeToClipboard = () => {
     const el = "주소주소주~~"; //고쳐야 합니다
     // console.log(navigator.clipboard);
@@ -32,10 +34,20 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
     });
   };
 
+  const getNftInfo = async () => {
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+    }).then((res) => {
+      setNftPrice(res.data.success.salePrice.sale_price)
+    })
+  }
+
   const onClickBuy = () => {
     setBadgeDetailStateVal({
       ...badgeDetailStateVal,
       isOpenBuyModal: true,
+      badgeId: badge_id
     });
   };
 
@@ -46,6 +58,9 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
     });
   };
 
+  useEffect(() => {
+    getNftInfo()
+  }, [])
   // console.log(userDetailStateVal.userWallet); // badgeDetailStateVal.userWallet이랑 같으면 어떻게 하고 아니면 어떻게 하게 해결 해야함
 
   return (
@@ -60,7 +75,7 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
       </div>
       <ButtonDiv>
         <Button styleVariant="primary" onClick={onClickBuy}>
-          Buy 1000 SSF
+          Buy this Badge ({nftPrice} ETH)
         </Button>
         <Button styleVariant="primary" onClick={copyCodeToClipboard}>
           Share with Friends
