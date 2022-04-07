@@ -9,13 +9,62 @@ import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
 import { SellBadgeModal } from "../sellBadgeModal/SellBadgeModal";
 import { BadgeDetailDiv, ButtonDiv } from "./BadgeDetail.styled";
+import { ethers } from "ethers";
+import { marketContract } from "../../../../../config";
+import axios from "axios";
 
 interface IBadgeDetail extends ThemeType {}
 
 export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
+  // 정현 추가
+  useEffect(() => {
+    getInfo();
+  }, []);
+  const tokenId = 31;
+  const [editionName, setEditName] = useState("");
+  const getInfo = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Prompt user for account connections
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+    const balance = await provider.getBalance(signer.getAddress());
+    // console.log("here", balance);
+    const tokenURI: string = await marketContract.tokenURI(tokenId);
+    // const owner = await console.log("response", tokenURI);
+    setBadgeDetailStateVal({
+      ...badgeDetailStateVal,
+      tokenURIState: tokenURI,
+      tokenURIKeyState: tokenURI.slice(28),
+    });
+    // console.log("tokenURI", JSON.parse(badgeDetailStateVal.tokenURIState));
+    //ipfs.infura.io:5001/api/v0/block/get?arg=QmdGHu78WjvvHFgGsoFTSwUGGRTwHPJ6iHRL3Gvk4YQVrm
 
+    // console.log(badgeDetailStateVal.tokenURIKeyState);
+    await axios({
+      method: "post",
+      url: "https://ipfs.infura.io:5001/api/v0/block/get?arg=QmdGHu78WjvvHFgGsoFTSwUGGRTwHPJ6iHRL3Gvk4YQVrm",
+    })
+      .then((res) => {
+        // console.log(JSON.parse(res.data.slice(8, -3)));
+        setEditName(JSON.parse(res.data.slice(8, -3)).editionName);
+        setBadgeDetailStateVal({
+          ...badgeDetailStateVal,
+          getURIState: res.data.slice(8, -3),
+        });
+        // console.log(
+        //   "getURISTATE",
+        //   JSON.parse(badgeDetailStateVal.getURIState).editionName
+        // );
+        // console.log("usestateat", editionName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 여기까지 정현 추가
   const userDetailStateVal = useRecoilValue(profileState);
 
   const copyCodeToClipboard = () => {
