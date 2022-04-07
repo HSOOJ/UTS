@@ -8,6 +8,7 @@ import { Artist } from "@models/Artist";
 import marketService from "@services/market-service";
 import userService from "@services/user-service";
 import editionService from "@services/edition-service";
+import nftService from "@services/nft-service";
 // import { ParamMissingError } from "@shared/errors";
 
 // Constants
@@ -61,6 +62,8 @@ async function nfts(sortby: number, category: number) {
       const editionInfo = await editionService.getEditionInfo(
         cur.nft_edition_seq
       );
+      const count = await nftService.totalNFTforEdition(cur.nft_edition_seq);
+      const total = Object.values(JSON.parse(JSON.stringify(count)))[0];
       const artistImg = await userService.getAllUserProfileImage(
         cur.nft_nft_author_seq
       );
@@ -79,6 +82,7 @@ async function nfts(sortby: number, category: number) {
         nftOwnerSeq: cur.nft_nft_owner_seq, // 소유자 시퀀스
         heart: cur.count, // 좋아요 개수
         nftRegDt: cur.sale_reg_dt,
+        total: total,
       });
     }
   }
