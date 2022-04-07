@@ -34,8 +34,7 @@ export const Badge = () => {
   // useState
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [load1, setLoad1] = useState(false);
-  const [load2, setLoad2] = useState(false);
+  const [idxLoad, setIdxLoad] = useState(24);
 
   // Axios
   const GetNftsMarket = () =>
@@ -67,57 +66,28 @@ export const Badge = () => {
         </>
       ) : (
         <>
-          {load1 || load2 ? (
-            <>
-              {load2 ? (
-                <>
-                  {datas.map((data, index) => {
-                    return <BadgeItem key={index} {...data} />;
-                  })}
-                  <ButtonLoad
-                    isDark={isDark}
-                    onClick={() => {
-                      setLoad1(false);
-                      setLoad2(false);
-                    }}
-                  >
-                    Close...
-                  </ButtonLoad>
-                </>
-              ) : (
-                <>
-                  {datas.map((data, index) => {
-                    if (index < 60) {
-                      return <BadgeItem key={index} {...data} />;
-                    }
-                  })}
-                  <ButtonLoad
-                    isDark={isDark}
-                    onClick={() => {
-                      setLoad2(true);
-                    }}
-                  >
-                    Load More...
-                  </ButtonLoad>
-                </>
-              )}
-            </>
+          {datas.map((data, index) => {
+            if (index <= idxLoad) {
+              return <BadgeItem key={index} {...data} />;
+            }
+          })}
+          {idxLoad >= datas.length ? (
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => {
+                setIdxLoad(24);
+                window.scrollTo(0, 0);
+              }}
+            >
+              End
+            </ButtonLoad>
           ) : (
-            <>
-              {datas.map((data, index) => {
-                if (index < 30) {
-                  return <BadgeItem key={index} {...data} />;
-                }
-              })}
-              <ButtonLoad
-                isDark={isDark}
-                onClick={() => {
-                  setLoad1(true);
-                }}
-              >
-                Load More...
-              </ButtonLoad>
-            </>
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => setIdxLoad(idxLoad + 24)}
+            >
+              Load More...
+            </ButtonLoad>
           )}
         </>
       )}

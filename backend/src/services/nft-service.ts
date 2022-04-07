@@ -22,6 +22,26 @@ function returnNft(nftSeq: number) {
   });
 }
 
+async function getEditionInfo(nftSeq: number, editionSeq: number) {
+  const editionRepository = getConnection().getRepository(Edition);
+  // const result = editionRepository.findOne({
+  //   where: {
+  //     edition_seq: editionSeq,
+  //   },
+  // });
+  const result = editionRepository
+    .createQueryBuilder()
+    .where({ edition_seq: editionSeq })
+    .leftJoinAndSelect(
+      Artist,
+      "artist",
+      "artist.artist_seq = edition.artist_seq"
+    )
+    .leftJoinAndSelect(User, "user", "user.user_seq = artist.user_seq")
+    .getRawMany();
+  return result;
+}
+
 // nft 소유자 변경
 async function updateOwner(ownerSeq: number, nftSeq: number) {
   console.log("PROCEEDING update nft owner...");
@@ -328,4 +348,5 @@ export default {
   returnHeartNft,
   returnNFTOwner,
   totalNFTforEdition,
+  getEditionInfo,
 } as const;

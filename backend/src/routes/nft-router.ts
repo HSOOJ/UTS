@@ -1,5 +1,8 @@
 import { Request, Response, Router } from "express";
 import nftService from "@services/nft-service";
+import { Nft } from "@models/nft-model";
+import { getConnection } from "typeorm";
+import heartService from "@services/heart-service";
 
 const router = Router();
 
@@ -32,4 +35,21 @@ router.post("/minting", async (req, res, next) => {
     return res.status(404).json({ fail: "" });
   }
 });
+
+router.get("/info", async (req, res, next) => {
+  const nftSeq = Number(req.query.nftSeq);
+  const nftRepository = getConnection().getRepository(Nft);
+  const nftinfo = await nftRepository.findOne({
+    where: {
+      nft_seq: nftSeq,
+    },
+  });
+  const hearts = await heartService.countHeart(nftSeq);
+  const editioninfo = await nftService.getEditionInfo(
+    nftSeq,
+    Number(nftinfo?.edition_seq)
+  );
+  return res.status(200).json({ success: { editioninfo, nftinfo, hearts } });
+});
+
 export default router;

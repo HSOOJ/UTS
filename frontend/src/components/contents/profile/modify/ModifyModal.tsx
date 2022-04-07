@@ -101,6 +101,11 @@ export const ModifyModal = () => {
           ...profileStateVal,
           userProfileImage: profileStateVal.modifyUserProfileImage,
         });
+        if (profileStateVal.modifyUserProfileImage)
+          localStorage.setItem(
+            "userProfileImage",
+            profileStateVal.modifyUserProfileImage
+          );
       }
       setProfileStateVal({
         ...profileStateVal,
