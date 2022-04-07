@@ -28,6 +28,16 @@ export const Bottom = ({ badgeId, isDark, price }: IBottom) => {
   const [like, setLike] = useState(false);
 
   // Axios
+  const [nftSeq, setNftSeq] = useState(0)
+  const getNftInfo = async () => {
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badgeId}`
+    }).then((res) => {
+      setNftSeq(res.data.success.nftinfo.nft_seq)
+    })
+  }
+
   const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
       method: "GET",
@@ -85,7 +95,9 @@ export const Bottom = ({ badgeId, isDark, price }: IBottom) => {
   useEffect(() => {
     checkLike(localStorage.getItem("userSeq"), badgeId);
   }, [badgeId]);
-
+  useEffect(() => {
+    getNftInfo()
+  })
   return (
     <BottomLayOut>
       <Link to={badgeId}>
@@ -94,7 +106,8 @@ export const Bottom = ({ badgeId, isDark, price }: IBottom) => {
         </Button>
       </Link>
       <BottomBottomLayOut>
-        <Button onClick={() => buyBadge(badgeId, price)} styleVariant="primary">
+        {/* badgeId자리에는 토큰 아이디, nftSeq자리가 우리가 알고 있는 badgeId 즉 이상하다.*/}
+        <Button onClick={() => buyBadge(badgeId, price, nftSeq)} styleVariant="primary">
           <LetterBox weight="extraBold">Buy @ {price} ETH</LetterBox>
         </Button>
         {login ? (

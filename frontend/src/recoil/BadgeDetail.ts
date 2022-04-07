@@ -9,6 +9,9 @@ interface badgeDetailTypes {
   getURIState: string;
   tokenDescription: string;
   editionImage: string;
+  badgeId: number;
+  badgeImg: string;
+  nftId: number;
 }
 
 export const badgeDetailState = atom<badgeDetailTypes>({
@@ -22,5 +25,9 @@ export const badgeDetailState = atom<badgeDetailTypes>({
     getURIState: "",
     tokenDescription: "",
     editionImage: "",
+    badgeId: 0 ,
+    badgeImg: "",
+    nftId: 0,
+
   },
 });
