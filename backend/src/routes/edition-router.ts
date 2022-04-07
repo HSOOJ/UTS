@@ -79,4 +79,9 @@ router.get("/nfts", async (req, res, next) => {
   if (result.length > 0) return res.status(200).json({ success: result });
   return res.status(404).json({ fail: "에디션 정보가 유효 하지 않음" });
 });
+
+router.get("/seq", async (req, res, next) => {
+  const editionSeq = await editionService.getMaxEditionSeq();
+  return res.status(200).json({ success: editionSeq });
+});
 export default router;

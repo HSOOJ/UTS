@@ -22,7 +22,16 @@ async function returnEditionImage(editionSeq: number) {
   return img;
 }
 
+async function getMaxEditionSeq() {
+  const editionRepository = getConnection().getRepository(Edition);
+  const latestEditionSeq = editionRepository
+    .createQueryBuilder()
+    .select("MAX(edition.edition_seq)", "max");
+  return await latestEditionSeq.getRawOne();
+}
+
 export default {
   getEditionInfo,
   returnEditionImage,
+  getMaxEditionSeq,
 } as const;
