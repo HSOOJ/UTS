@@ -23,6 +23,7 @@ interface IArtistItemData {
   volume: number;
   bestSellers: ArtistItemBadgeType;
   newestDrops: ArtistItemBadgeType;
+  artist_user_seq: string;
   // id: string;
   // backgroundSrc: string;
   // profileSrc: string;
