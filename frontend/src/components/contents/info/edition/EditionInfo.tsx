@@ -35,6 +35,7 @@ export const EditionInfo = () => {
   // useState
   const [editionName, setEditionName] = useState("");
   const [editionDescription, setEditionDescription] = useState("");
+  const [editionImage, setEditionImage] = useState("");
 
   // Axios
   const getEditionDetail = () => {
@@ -49,6 +50,7 @@ export const EditionInfo = () => {
         // console.log(res);
         setEditionName(res.data.success.edition_name);
         setEditionDescription(res.data.success.edition_description);
+        setEditionImage(res.data.success.edition_image);
         setEditionDetailStateVal({
           ...editionDetailStateVal,
           artist_seq: res.data.success.artist_seq,
@@ -101,6 +103,7 @@ export const EditionInfo = () => {
         isDark={isDark}
         editionName={editionName}
         editionDescription={editionDescription}
+        editionImage={editionImage}
       ></EditionInfoBox>
       <BadgesOnMarketText>
         <LetterBox size="h1" weight="extraBold">
