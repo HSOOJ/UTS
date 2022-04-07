@@ -654,6 +654,7 @@ export const MARKET_ABI = [
 ];
 
 export const myprovider = new ethers.providers.Web3Provider(window.ethereum);
+// export const myprovider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/ec7c811a20a64a52b385a3003b40621b", "polygon")
 
 const signer = myprovider.getSigner();
 export const marketContract = new ethers.Contract(

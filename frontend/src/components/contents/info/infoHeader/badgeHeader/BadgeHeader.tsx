@@ -38,12 +38,15 @@ const BadgeList = styled.div`
 
 interface IBadgeHeader extends ThemeType {
   badge_id: string;
+  tokenInfo: any;
 }
 
-export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
+export const BadgeHeader = ({ badge_id, tokenInfo }: IBadgeHeader) => {
   // recoil
   const [likeBadge, setLikeBadge] = useRecoilState(badgeDetailState);
   const profileStateVal = useRecoilValue(profileState);
+  // console.log(tokenInfo.editioninfo[0].Edition_artist_seq)
+  const [headerImage, setHeaderImage] = useState("");
 
   // useState
   const [like, setLike] = useState(false);
@@ -93,16 +96,40 @@ export const BadgeHeader = ({ badge_id }: IBadgeHeader) => {
       message.error("좋아요가 취소되었습니다.");
     });
   };
-
+  const getNftInfo = async () => {
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+    }).then((res) => {
+      setHeaderImage(res.data.success.editioninfo[0].Edition_edition_image)
+      console.log("imageurl", res.data.success.editioninfo[0].Edition_edition_image)
+    })
+  }
   // useEffect
   useEffect(() => {
     checkLike(profileStateVal.userSeq, badge_id);
+    // setHeaderImage(tokenInfo.editioninfo[0].Edition_edition_image);
+    getNftInfo()
   }, []);
+  
 
   return (
     <ImgDiv>
-      <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
-      <UserImg src="https://picsum.photos/250/250"></UserImg>
+      <>
+      {headerImage ? (
+        <>
+          <UserBackgroundImg src={headerImage}></UserBackgroundImg>
+          <UserImg width="200px" height="200px" src={headerImage}></UserImg>
+        </>
+        ) : (
+          <>
+        <UserBackgroundImg src=""></UserBackgroundImg>
+        <UserImg src=""></UserImg>  
+          </>
+      )
+      
+    }
+      </>
       <BadgeList>
         {profileStateVal.userSeq ? (
           <>

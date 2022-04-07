@@ -51,12 +51,12 @@ export const BadgeDetail = ({ isDark }: IBadgeDetail) => {
   return (
     <BadgeDetailDiv isDark={isDark}>
       <div>
-        <LetterBox size="h1" weight="extraBold">
+        {/* <LetterBox size="h1" weight="extraBold">
           history
         </LetterBox>
         <LetterBox>역사 1</LetterBox>
         <LetterBox>역사 2</LetterBox>
-        <LetterBox>역사 3</LetterBox>
+        <LetterBox>역사 3</LetterBox> */}
       </div>
       <ButtonDiv>
         <Button styleVariant="primary" onClick={onClickBuy}>

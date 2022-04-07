@@ -27,7 +27,7 @@ const Layout = styled.div`
 `;
 
 const Boxout = styled.div`
-  width: 470px;
+  width: 500px;
   overflow: scroll;
   word-break: break-all;
 `;
@@ -50,27 +50,21 @@ export const BadgeInfo = () => {
   const [myTokenCreator, setMyTokenCreator] = useState("");
   const [myTokenPrice, setMyTokenPrice] = useState(0);
   const [tokenInfo, setTokenInfo] = useState({});
-
   const [tokenId, setTokenId] = useState(0);
 
   const getInfo = async () => {
-    setEditName("");
-    setMyTokenURI("");
-    setMyTokenDescpt("");
-    setMyTokenCreator("");
-
     // 블록체인과 연결
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // Prompt user for account connections
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
     const balance = await provider.getBalance(signer.getAddress());
-
+    
     // tokenURI 받아오기
     const tokenURI = await marketContract.tokenURI(tokenId);
     setMyTokenURI(tokenURI.slice(28));
-    console.log("tokenURI", myTokenURI);
   };
+
   const getNftInfo = async () => {
     await axios({
       method: "get",
@@ -78,9 +72,11 @@ export const BadgeInfo = () => {
     }).then((res) => {
       setTokenInfo(res.data.success)
       setTokenId(res.data.success.nftinfo.nft_id)
-      console.log(res.data.success)
+      setEditName(res.data.success.editioninfo[0].Edition_edition_name)
+      setMyTokenDescpt(res.data.success.editioninfo[0].Edition_edition_description)
     })
   }
+
   const getTokenURI = async () => {
     await axios({
       method: "post",
@@ -88,7 +84,8 @@ export const BadgeInfo = () => {
     })
       .then((res) => {
         const tokenInfo = JSON.parse(res.data.slice(8, -3));
-        setEditName(JSON.parse(res.data.slice(8, -3)).editionName);
+        // setEditName(JSON.parse(res.data.slice(8, -3)).editionName);
+        setEditName(tokenInfo.editionName);
         setMyTokenDescpt(tokenInfo.editionDescription);
       })
       .catch((err) => {
@@ -97,27 +94,28 @@ export const BadgeInfo = () => {
   };
 
   const getTokenPrice = async () => {
-    setMyTokenPrice(0);
     const price = await marketContract.getBadgePrice(tokenId);
-    console.log("price", parseInt(price._hex));
     setMyTokenPrice(parseInt(price._hex));
   };
 
   useEffect(() => {
     getInfo();
-    getTokenURI();
-    getTokenPrice();
-    getNftInfo()
+    getNftInfo();
+    // 블록체인에서 읽어오는 방법
+    // getTokenURI();
+    // getTokenPrice();
   }, []);
 
   useEffect(() => {
-    getTokenURI();
+    getNftInfo();
+    // getTokenURI();
+    // getTokenPrice();
   }, [myTokenURI, tokenId]);
   // 정현 여기까지
 
   return (
     <Layout>
-      <BadgeHeader badge_id={badge_id}></BadgeHeader>
+      <BadgeHeader badge_id={badge_id} tokenInfo={tokenInfo}></BadgeHeader>
       <LetterBox weight="extraBold" size="h1">
         {editionName}
       </LetterBox>
@@ -136,6 +134,7 @@ export const BadgeInfo = () => {
         price={myTokenPrice}
         tokenId={tokenId}
         nftSeq={Number(badge_id)}
+        tokenInfo={tokenInfo}
       ></BadgeInfoPrice>
       <BadgeDetail isDark={isDark}></BadgeDetail>
     </Layout>
