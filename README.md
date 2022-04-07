@@ -21,8 +21,8 @@
   - [2️⃣ 프로젝트](#2️⃣-프로젝트)
   - [3️⃣ 기술 스택](#3️⃣-기술-스택)
   - [4️⃣ 프로젝트 구조](#4️⃣-프로젝트-구조)
-  - [ 프로젝트 산출물](-프로젝트-산출물)
-  - [5️⃣ 프로젝트 제출물](#5-프로젝트-제출물)
+  - [5️⃣ 프로젝트 산출물](#5️⃣-프로젝트-산출물)
+  - [6️⃣ 프로젝트 제출물](#6️⃣-프로젝트-제출물)
 - [프로젝트 영상](#프로젝트-영상)
   <br/>
 
@@ -32,9 +32,9 @@
 
 ### - 팀 이름
 
-깊은 바닷속 처럼 무한한 세상이 펼처질 NFT 거래소
+<img src ="/uploads/0eceae46dfba384899e8df0ad614b313/uts.png" alt="팀 소개" width="60%">
 
-<img src ="/uploads/74b03848861f31c07eb417ce0f52ce6a/그림3.png" alt="팀 이름" width="60%">
+깊은 바닷속처럼 무한한 세상이 펼쳐질 NFT 거래소
 
 ### - 팀원 소개
 
@@ -83,7 +83,7 @@
 
 #### 아티스트 분류
 
-<img src ="/uploads/74b03848861f31c07eb417ce0f52ce6a/그림3.png" alt="팀 소개" width="80%"/>
+<img src ="/uploads/06cae7ec8e27c2de51d84ee9fbb9b432/artist.png" alt="artist" width="80%"/>
 <br>
 
 #### 팬 증명 뱃지 혜택
@@ -105,6 +105,7 @@
 - `UI` : Ant Design, Story Book, Framer
 
 ### 4️⃣ 프로젝트 구조
+
 **FrontEnd**
 
 ```
@@ -147,24 +148,25 @@ uts-fronted
 	│                └── footer
 	│                       └── Footer.tsx
 	└── pages
-				├── header
-				│      └── Header.tsx
-				├── contents
-				│      ├── Main.tsx
-				│      ├── User.tsx
-				│      ├── About.tsx
-				│      ├── Profile.tsx
-				│      ├── Artist.tsx
-				│      ├── ArtistDetail.tsx
-				│      ├── Badge.tsx
-				│      ├── BadgeDetail.tsx
-				│      ├── Edition.tsx
-				│      ├── Minting.tsx
-				│      └── Admin.tsx
-				└── footer
+        	├── header
+        	│      └── Header.tsx
+        	├── contents
+        	│      ├── Main.tsx
+        	│      ├── User.tsx
+        	│      ├── About.tsx
+        	│      ├── Profile.tsx
+        	│      ├── Artist.tsx
+        	│      ├── ArtistDetail.tsx
+        	│      ├── Badge.tsx
+        	│      ├── BadgeDetail.tsx
+        	│      ├── Edition.tsx
+        	│      ├── Minting.tsx
+        	│      └── Admin.tsx
+        	└── footer
 ```
 
 **BackEnd**
+
 ```
 uts-backend
 ├── src
@@ -181,10 +183,44 @@ uts-backend
 │	│      └── stylesheets
 │       │
 │	├── repos
+|       |     	├── artist-repo.ts
+|       |     	├── common_code-repo.ts
+|       |     	├── edition-repo.ts
+|       |     	├── follow-repo.ts
+|       |     	├── heart-repo.ts
+|       |     	├── nft-repo.ts
+|       |     	├── nft-sorting-repo.ts
+|       |     	├── report-repo.ts
+|       |     	├── sale-repo.ts
+|       |     	└── user-repo.ts
+│       │
 │	├── routes
-│	│      └── api.ts
+│	│      ├── admin.ts
+│	│      ├── api.ts
+│	│      ├── artist-router.ts
+│	│      ├── edition-router.ts
+│	│      ├── follow-router.ts
+│	│      ├── heart-router.ts
+│	│      ├── main-router.ts
+│	│      ├── market-router.ts
+│	│      ├── nft-router.ts
+│	│      ├── sale-router.ts
+│	│      ├── search-router.ts
+│	│      └── user-router.ts
 │       │
 │	├── services
+│	│      ├── admin-service.ts
+│	│      ├── artist-service.ts
+│	│      ├── edition-service.ts
+│	│      ├── follow-service.ts
+│	│      ├── heart-service.ts
+│	│      ├── main-service.ts
+│	│      ├── market-service.ts
+│	│      ├── nft-service.ts
+│	│      ├── sale-service.ts
+│	│      ├── search-service.ts
+│	│      └── user-service.ts
+│       │
 │	├── shared
 │	├── views
 │	│
@@ -196,6 +232,7 @@ uts-backend
 ```
 
 ### 5️⃣ 프로젝트 산출물
+
 - [기획](./docs/기획.md)
 - [Notion](./docs/notion.md)
 - [Jira](./docs/jira.md)
@@ -209,4 +246,4 @@ uts-backend
 
 ## **프로젝트 영상**
 
-[![유튜브]()]()
+[![유튜브 링크]()]()
