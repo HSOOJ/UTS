@@ -43,14 +43,7 @@ export const BadgeInfoPerson = ({
   const [creatorImage, setCreatorImage] = useState("");
   const [ownerName, setOwnerName] = useState("");
   const [ownerImage, setOwnerImage] = useState("");
-  useEffect(() => {
-    getInfo();
-    getTokenInfo();
-    getUserInfo();
-  }, []);
-  useEffect(() => {
-    getTokenInfo();
-  }, [tokenId, tokenURI]);
+  
 
   const getInfo = async () => {
     setMyTokenCreator("");
@@ -66,10 +59,10 @@ export const BadgeInfoPerson = ({
   const getTokenInfo = async () => {
     setMyTokenCreator("");
     const creator = await marketContract.getBadgeSeller(tokenId);
-    const owner = await marketContract.ownerOf(tokenId);
+    // const owner = await marketContract.ownerOf(tokenId);
+    console.log("creator", creator)
     setMyTokenCreator(creator);
-    setMyTokenOwner(owner);
-    // 지갑주소확인하기 모달에서 확인용
+    // setMyTokenOwner(owner);
   };
 
   const getUserInfo = async () => {
@@ -84,12 +77,15 @@ export const BadgeInfoPerson = ({
       .then((res) => {
         setCreatorName(res.data.success.user_nickname);
         setCreatorImage(res.data.success.user_profile_image);
+        console.log("userinfo", res.data.success);
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log("userinfo", userinfo);
     // owner주소로 정보 받아오기
+  };
+
+  const getUserName = async () => {
     await axios({
       method: "get",
       url: "http://j6a105.p.ssafy.io:8080/api/user/info/address",
@@ -104,7 +100,19 @@ export const BadgeInfoPerson = ({
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
+  // 백엔드에서 불러오기
+  const getNftInfo = async () => {
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+    }).then((res) => {
+      setCreatorImage(res.data.success.editioninfo[0].user_user_profile_image)
+      setCreatorName(res.data.success.editioninfo[0].user_user_nickname)
+      setMyTokenCreator(res.data.success.editioninfo[0].user_user_wallet_address)
+    })
+  }
+
   // 정현 여기까지
   const showModal = () => {
     setBadgeDetailStateVal({
@@ -136,6 +144,20 @@ export const BadgeInfoPerson = ({
     });
   };
 
+  useEffect(() => {
+    getInfo();
+    getNftInfo();
+    
+    // getTokenInfo();
+    // getUserInfo();
+  }, []);
+  // useEffect(() => {
+  //   getNftInfo();
+  //   getTokenInfo();
+  //   getUserInfo();
+  //   getUserName();
+  // }, [tokenId, tokenURI]);
+
   return (
     <BadgeInfoPersonDiv isDark={isDark}>
       <div>
@@ -144,25 +166,25 @@ export const BadgeInfoPerson = ({
             <LetterBox size="h3" weight="bold" color="shade">
               Creator
             </LetterBox>
-            <BadgeImg width="100px"
+            <BadgeImg width="80px" height="80px"
               src={creatorImage}
               onClick={() => {
-                navigate(`/artist/${tokenInfo.nftinfo.nft_author_seq}`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.editioninfo[0].artist_artist_seq}`); // 고쳐야 합니다
               }}
             />
           </BadgeLeft>
           <BadgeRight>
             <div
               onClick={() => {
-                navigate(`/artist/${tokenInfo.nftinfo.nft_author_seq}`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.editioninfo[0].artist_artist_seq}`); // 고쳐야 합니다
               }}
             >
               <LetterBox size="h3" weight="extraBold">
-                creatorName = {creatorName}
+                {creatorName}
               </LetterBox>
             </div>
             <Button styleVariant="primary" onClick={showModal}>
-              지갑 주소 확인하기 : {myTokenCreator}
+              지갑 주소 확인하기
             </Button>
             <WalletAddressModal
               isDark={isDark}
@@ -172,14 +194,14 @@ export const BadgeInfoPerson = ({
         </BadgeCenter>
       </div>
       <div>
-        <BadgeCenter>
+        {/* <BadgeCenter>
           <BadgeLeft>
             <LetterBox size="h3" weight="bold" color="shade">
               Owner
             </LetterBox>
-            <BadgeImg width="100px"
+            <BadgeImg width="80px"
               onClick={() => {
-                navigate(`/artist/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
+                navigate(`/profile/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
               }}
               src={ownerImage}
             />
@@ -187,22 +209,22 @@ export const BadgeInfoPerson = ({
           <BadgeRight>
             <div
               onClick={() => {
-                navigate(`/artist/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
+                navigate(`/profile/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
               }}
             >
               <LetterBox size="h3" weight="extraBold">
-                owner name = {ownerName}
+                {ownerName}
               </LetterBox>
             </div>
             <Button styleVariant="primary" onClick={showModal}>
-              지갑 주소 확인하기 : {myTokenOwner}
+              지갑 주소 확인하기
             </Button>
             <WalletAddressModal
               isDark={isDark}
               address={myTokenCreator}
             ></WalletAddressModal>
           </BadgeRight>
-        </BadgeCenter>
+        </BadgeCenter> */}
       </div>
     </BadgeInfoPersonDiv>
   );
