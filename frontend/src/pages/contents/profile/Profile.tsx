@@ -40,11 +40,12 @@ export const Profile = () => {
 
 // styled component
 const Layout = styled.div`
-  width: 100%;
+  /* width: 100%;
   margin: 1.5em auto 1.5em;
   border: solid 0.3em;
   border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
   border-image-slice: 1;
   border-radius: 20px;
-  padding: 0 0 0 2%;
+  padding: 0 0 0 2%; */
+  padding-top: 50px;
 `;
