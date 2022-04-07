@@ -1,5 +1,6 @@
 import { useRecoilState } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { buyBadge } from "../../../../../hooks/buy";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import Button from "../../../../containers/button";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
@@ -37,15 +38,22 @@ export const BuyBadgeModal = ({ isDark }: IBuyBadgeModal) => {
             Price
           </LetterBox>
           <LetterBox size="h2" weight="extraBold">
-            1000 SSF
+            {} MATIC
           </LetterBox>
           <UnderLine isDark={isDark}></UnderLine>
           <LetterBoxRight>
             <LetterBox size="body2">
-              서비스 수수료 3.0%<br></br>거래가 성사되면 10SSF가 지불됩니다.
+              서비스 수수료 2.5%<br></br>거래가 성사되면 {}MATIC이 지불됩니다.
             </LetterBox>
           </LetterBoxRight>
-          <Button styleVariant="primary">Buy</Button>
+          <Button
+            onClick={() => {
+              buyBadge("뱃지 아이디를 입력", 123);
+            }}
+            styleVariant="primary"
+          >
+            Buy
+          </Button>
           <Button styleVariant="secondary" onClick={onClickCancel}>
             Cancel
           </Button>
