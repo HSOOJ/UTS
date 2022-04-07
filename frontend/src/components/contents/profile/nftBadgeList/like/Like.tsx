@@ -41,9 +41,8 @@ export const Like = () => {
       likes: "",
     },
   ]);
-  const [load1, setLoad1] = useState(false);
-  const [load2, setLoad2] = useState(false);
   const [empty, setEmpty] = useState(true);
+  const [idxLoad, setIdxLoad] = useState(4);
 
   // Axios
   const AxiosUserLike = (seq: string | null) => {
@@ -71,77 +70,35 @@ export const Like = () => {
         <Empty />
       ) : (
         <>
-          {load1 || load2 ? (
-            <>
-              {load2 ? (
-                <>
-                  {datas.map((data, index) => {
-                    return (
-                      <NftBadgeListCompo
-                        key={index}
-                        artistNickname={data.artistNickname}
-                        editionImage={data.editionImage}
-                        editionName={data.editionName}
-                        nftNum={data.nftNum}
-                        nftSeq={data.nftSeq}
-                        likes={data.likes}
-                      />
-                    );
-                  })}
-                  <ButtonLoad
-                    isDark={isDark}
-                    onClick={() => {
-                      setLoad1(false);
-                      setLoad2(false);
-                    }}
-                  >
-                    Close...
-                  </ButtonLoad>
-                </>
-              ) : (
-                <>
-                  {datas.map((data, index) => {
-                    if (index < 10) {
-                      return (
-                        <NftBadgeListCompo
-                          key={index}
-                          artistNickname={data.artistNickname}
-                          editionImage={data.editionImage}
-                          editionName={data.editionName}
-                          nftNum={data.nftNum}
-                          nftSeq={data.nftSeq}
-                          likes={data.likes}
-                        />
-                      );
-                    }
-                  })}
-                  <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
-                    Load More...
-                  </ButtonLoad>
-                </>
-              )}
-            </>
+          {datas.map((data, index) => {
+            if (index <= idxLoad) {
+              return (
+                <NftBadgeListCompo
+                  key={index}
+                  artistNickname={data.artistNickname}
+                  editionImage={data.editionImage}
+                  editionName={data.editionName}
+                  nftNum={data.nftNum}
+                  nftSeq={data.nftSeq}
+                  likes={data.likes}
+                />
+              );
+            }
+          })}
+          {idxLoad >= datas.length ? (
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => {
+                setIdxLoad(4);
+                window.scrollTo(0, 0);
+              }}
+            >
+              End
+            </ButtonLoad>
           ) : (
-            <>
-              {datas.map((data, index) => {
-                if (index < 5) {
-                  return (
-                    <NftBadgeListCompo
-                      key={index}
-                      artistNickname={data.artistNickname}
-                      editionImage={data.editionImage}
-                      editionName={data.editionName}
-                      nftNum={data.nftNum}
-                      nftSeq={data.nftSeq}
-                      likes={data.likes}
-                    />
-                  );
-                }
-              })}
-              <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
-                Load More...
-              </ButtonLoad>
-            </>
+            <ButtonLoad isDark={isDark} onClick={() => setIdxLoad(idxLoad + 4)}>
+              Load More...
+            </ButtonLoad>
           )}
         </>
       )}

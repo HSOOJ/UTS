@@ -1,7 +1,10 @@
 import { Spin } from "antd";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { themeAtom } from "../../../../recoil/theme";
+import { ButtonLoad } from "../../profile/nftBadgeList/NftBadgeList.style";
 import { GridLayOut } from "./Artist.styled";
 import ArtistItem from "./artistItem";
 import { IArtistItem } from "./artistItem/ArtistItem.types";
@@ -306,9 +309,13 @@ import { IArtistItem } from "./artistItem/ArtistItem.types";
 // ];
 
 export const Artist = () => {
+  // recoil
+  const isDark = useRecoilValue(themeAtom).isDark;
+
   // useState
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [idxLoad, setIdxLoad] = useState(24);
 
   // Axios
   const GetArtistMarket = () =>
@@ -341,10 +348,29 @@ export const Artist = () => {
         </SpinContainer>
       ) : (
         <>
-          {" "}
           {datas.map((data, index) => {
-            return <ArtistItem key={index} {...data} />;
+            if (index <= idxLoad) {
+              return <ArtistItem key={index} {...data} />;
+            }
           })}
+          {idxLoad >= datas.length ? (
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => {
+                setIdxLoad(24);
+                window.scrollTo(0, 0);
+              }}
+            >
+              End
+            </ButtonLoad>
+          ) : (
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => setIdxLoad(idxLoad + 24)}
+            >
+              Load More...
+            </ButtonLoad>
+          )}
         </>
       )}
     </GridLayOut>
