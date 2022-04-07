@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { profileState } from "../../../../recoil/profile";
 import { ethers } from "ethers";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 declare let window: any;
@@ -15,6 +15,11 @@ export const DropdownCompo = () => {
   // recoil
   const [userStateVal, setUserStateVal] = useRecoilState(userState);
   const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+
+  // useState
+  const [imgSrc, setImgSrc] = useState<string | null | undefined>(
+    localStorage.getItem("userProfileImage")
+  );
 
   // let
   let userSeq = localStorage.getItem("userSeq");
@@ -120,6 +125,12 @@ export const DropdownCompo = () => {
     </Menu>
   );
 
+  // useEffect
+  useEffect(
+    () => setImgSrc(profileStateVal.userProfileImage),
+    [profileStateVal.userProfileImage]
+  );
+
   return (
     <>
       <Dropdown overlay={menu}>
@@ -128,13 +139,7 @@ export const DropdownCompo = () => {
           //   style={{ backgroundColor: "#87d068" }}
           //   icon={<UserOutlined />}
           // />
-          <Image
-            src={
-              profileStateVal.userProfileImage
-                ? profileStateVal.userProfileImage
-                : undefined
-            }
-          />
+          <Image src={imgSrc ? imgSrc : undefined} />
         ) : (
           <Avatar icon={<UserOutlined />} />
         )}

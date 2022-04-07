@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
+import { editionDetailState } from "../../../../../recoil/EditionDetail";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   EditionContent,
@@ -11,16 +14,18 @@ import {
 interface EditionInfoBox extends ThemeType {
   editionName: string;
   editionDescription: string;
+  editionImage: string;
 }
 
 export const EditionInfoBox = ({
   isDark,
   editionName,
   editionDescription,
+  editionImage,
 }: EditionInfoBox) => {
   return (
     <EditionInfoBoxDiv isDark={isDark}>
-      <EditionImg src="https://picsum.photos/150/150" />
+      <EditionImg src={editionImage} />
       <EditionDetail>
         <EditionTitle>
           <LetterBox size="h2" weight="bold">

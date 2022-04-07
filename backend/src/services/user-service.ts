@@ -69,7 +69,7 @@ async function createUser(userWalletAddress: string) {
     user_wallet_address: userWalletAddress,
     user_nickname: "user" + (latestUserSeq["max"] + 1),
     user_profile_image:
-      "https://cdn.pixabay.com/photo/2022/03/18/19/09/blue-throat-7077261_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/08/24/07/40/abstract-2675672_960_720.png",
     user_volume: 0,
     reg_dt: nowDate,
     mod_dt: nowDate,

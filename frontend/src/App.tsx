@@ -19,6 +19,7 @@ const UtsContainer = styled.div<ThemeType>`
   color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
   background-color: ${(props) =>
     props.isDark ? Palette.Nero300 : Palette.grigio200};
+  min-height: 100vh;
 `;
 
 function App() {
@@ -42,10 +43,12 @@ function App() {
           ...profileStateVal,
           userRole: res.data.success.userRole,
         });
+        setUserStateVal({ ...userStateVal, login: true });
       })
       .catch((res) => {
         console.log(res);
         console.log("!isLogin");
+        setUserStateVal({ ...userStateVal, login: false });
       });
   };
 
@@ -57,7 +60,6 @@ function App() {
     ) {
       setUserStateVal({ ...userStateVal, login: false });
     } else {
-      setUserStateVal({ ...userStateVal, login: true });
       CheckRole(localStorage.getItem("userAccount")?.replace(/\"/gi, ""));
     }
   }, []);

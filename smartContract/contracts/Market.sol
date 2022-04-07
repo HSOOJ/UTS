@@ -122,6 +122,7 @@ contract Market is ERC721URIStorage {
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
         );
+        console.log("price is", price, "msg value is", msg.value);
         marketBadgeIdx[badgeId].owner = payable(msg.sender);
         marketBadgeIdx[badgeId].sold = true;
         marketBadgeIdx[badgeId].seller = payable(address(0));
@@ -192,5 +193,20 @@ contract Market is ERC721URIStorage {
             }
         }
         return badges;
+    }
+
+    function getBadgeSeller(uint256 badgeId) public view returns (address) {
+        return marketBadgeIdx[badgeId].seller;
+    }
+
+    function getBadgeOwner(uint256 badgeId) public view returns (address) {
+        return marketBadgeIdx[badgeId].owner;
+    }
+
+    function getBadgePrice(uint256 badgeId) public view returns (uint256){
+        return marketBadgeIdx[badgeId].price;
+    }
+    function getBadgeSold(uint256 badgeId) public view returns (bool) {
+        return marketBadgeIdx[badgeId].sold;
     }
 }

@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
-export const MARKET_ADDR = "0xe5f502101E0feBd7820E3BE785230633A284424a";
+// GÖRLI
+export const MARKET_ADDR = "0xBA61A20e3004a9F0cA985722B74a8838c92822BD";
 
 export const MARKET_ABI = [
   {

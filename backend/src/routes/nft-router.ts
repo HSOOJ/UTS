@@ -3,6 +3,7 @@ import nftService from "@services/nft-service";
 import { Nft } from "@models/nft-model";
 import { getConnection } from "typeorm";
 import saleService from "@services/sale-service";
+import heartService from "@services/heart-service";
 
 const router = Router();
 
@@ -44,13 +45,16 @@ router.get("/info", async (req, res, next) => {
       nft_seq: nftSeq,
     },
   });
+  const hearts = await heartService.countHeart(nftSeq);
   const editioninfo = await nftService.getEditionInfo(
     nftSeq,
     Number(nftinfo?.edition_seq)
   );
 
   const salePrice = await saleService.getSalePrice(nftSeq);
-  return res.status(200).json({ success: { editioninfo, nftinfo, salePrice } });
+  return res
+    .status(200)
+    .json({ success: { editioninfo, nftinfo, hearts, salePrice } });
 });
 
 export default router;
