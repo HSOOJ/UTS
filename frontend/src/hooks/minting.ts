@@ -160,3 +160,21 @@ export const buyBadge = async () => {
   // await transaction.wait();
   // loadNFTs();
 };
+
+export const resellBadge = async (id: number, price: number) => {
+  if (!price) return;
+  const web3Modal = new Web3Modal();
+  const connection = await web3Modal.connect();
+  const provider = new ethers.providers.Web3Provider(connection);
+  const signer = provider.getSigner();
+
+  const priceFormatted = ethers.utils.parseUnits(price + "", "ether");
+  let market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
+  let listingPrice = await market.calcFee(price);
+
+  listingPrice = listingPrice.toString();
+  let transaction = await market.resellToken(id, priceFormatted, {
+    value: listingPrice,
+  });
+  await transaction.wait();
+};
