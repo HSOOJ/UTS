@@ -22,7 +22,6 @@ function returnNft(nftSeq: number) {
   });
 }
 
-
 async function getEditionInfo(nftSeq: number, editionSeq: number) {
   const editionRepository = getConnection().getRepository(Edition);
   const result = editionRepository.findOne({

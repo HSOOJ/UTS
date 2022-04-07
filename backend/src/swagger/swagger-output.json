@@ -56,6 +56,23 @@
         }
       }
     },
+    "/user/info/address": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userWalletAddress",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/user/join": {
       "post": {
         "description": "",
@@ -726,6 +743,23 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nft/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "nftSeq",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

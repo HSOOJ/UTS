@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import nftService from "@services/nft-service";
 import { Nft } from "@models/nft-model";
 import { getConnection } from "typeorm";
+import saleService from "@services/sale-service";
 
 const router = Router();
 
@@ -47,8 +48,9 @@ router.get("/info", async (req, res, next) => {
     nftSeq,
     Number(nftinfo?.edition_seq)
   );
-  return res.status(200).json({ success: { editioninfo, nftinfo } });
-});
 
+  const salePrice = await saleService.getSalePrice(nftSeq);
+  return res.status(200).json({ success: { editioninfo, nftinfo, salePrice } });
+});
 
 export default router;
