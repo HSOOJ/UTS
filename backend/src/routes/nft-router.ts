@@ -32,4 +32,21 @@ router.post("/minting", async (req, res, next) => {
     return res.status(404).json({ fail: "" });
   }
 });
+
+router.get("/info", async (req, res, next) => {
+  const nftSeq = Number(req.query.nftSeq);
+  const nftRepository = getConnection().getRepository(Nft);
+  const nftinfo = await nftRepository.findOne({
+    where: {
+      nft_seq: nftSeq,
+    },
+  });
+  const editioninfo = await nftService.getEditionInfo(
+    nftSeq,
+    Number(nftinfo?.edition_seq)
+  );
+  return res.status(200).json({ success: { editioninfo, nftinfo } });
+});
+
+
 export default router;
