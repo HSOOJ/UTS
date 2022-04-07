@@ -52,6 +52,13 @@ router.get("/check/nickname", async (req: Request, res: Response) => {
   }
 });
 
+// userAddress로 정보 가져 오기
+router.get("/info/address", async (req, res, next) => {
+  const userWalletAddress = String(req.query.userWalletAddress);
+  const result = await userService.checkUser(userWalletAddress);
+  return res.status(200).json({ success: result });
+});
+
 // 로그인 및 회원가입
 router.post("/join", async (req, res, next) => {
   const userWalletAddress = req.body.userWalletAddress;

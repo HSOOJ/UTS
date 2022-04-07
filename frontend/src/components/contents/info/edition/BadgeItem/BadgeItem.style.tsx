@@ -4,6 +4,8 @@ import { ThemeType } from "../../../../../global/theme";
 
 export const BadgeImg = styled.img`
   border-radius: 50%;
+  width: 120px;
+  height: 120px;
 `;
 
 export const OwnerImg = styled.img`
@@ -12,6 +14,8 @@ export const OwnerImg = styled.img`
   &:hover {
     transform: scale(1.05);
   }
+  width: 55px;
+  height: 55px;
 `;
 
 export const BadgeInfo = styled.div`

@@ -18,6 +18,8 @@ export const EditionItemImg = styled.img`
   border-radius: 50%;
   float: left;
   margin-right: 30px;
+  width: 55px;
+  height: 55px;
 `;
 
 export const EditionItemDetail = styled.div`

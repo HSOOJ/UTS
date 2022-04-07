@@ -37,4 +37,6 @@ export const BadgeCenter = styled.div`
   align-items: flex-end;
   gap: 10px;
   width: 250px;
+  overflow: scroll;
+  word-break: break-all;
 `;

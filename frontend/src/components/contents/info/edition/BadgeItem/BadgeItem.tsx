@@ -107,7 +107,7 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
       <BadgeDiv isDark={isDark}>
         <div>
           <BadgeImg
-            src="https://picsum.photos/150/150"
+            src={badgeItem.edition_image}
             onClick={() => {
               navigate(`/badge/${badgeItem.nft_seq}`);
             }}
@@ -131,7 +131,7 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
           <BadgeInfoRight>
             <LetterBox color="shade">Owner</LetterBox>
             <OwnerImg
-              src="https://picsum.photos/50/50"
+              src={badgeItem.nft_owner_image}
               onClick={() => {
                 navigate(`/artist/${badgeItem.nft_owner_seq}`);
               }}

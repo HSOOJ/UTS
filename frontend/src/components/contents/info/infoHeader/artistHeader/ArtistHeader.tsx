@@ -1,6 +1,7 @@
 import { message, Popconfirm } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { artistState } from "../../../../../recoil/artist";
 import { profileState } from "../../../../../recoil/profile";
@@ -22,9 +23,13 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   const [artistStateVal, setArtistStateVal] = useRecoilState(artistState);
   const profileStateVal = useRecoilValue(profileState);
 
+  // useNavigate
+  let navigate = useNavigate();
+
   // useState
   const [userTo, setUserTo] = useState<string | undefined>();
   const [artistTo, setArtistTo] = useState<string | undefined>();
+  const [userImage, setUserImage] = useState("");
 
   // Axios
   const getArtistInfo = () => {
@@ -40,6 +45,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
         checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
         setUserTo(res.data.success.artist_user_seq);
         setArtistTo(artistId);
+        setUserImage(res.data.success.user_user_profile_image);
       })
       .catch(function (err) {
         console.log(err);
@@ -58,6 +64,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
         checkFollow(res.data.success.artist_user_seq, profileStateVal.userSeq);
         setUserTo(res.data.success.artist_user_seq);
         setArtistTo(res.data.success.artist_seq);
+        setUserImage(res.data.success.artist_image);
       })
       .catch(function (err) {
         console.log(err);
@@ -143,6 +150,12 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
       });
   };
 
+  // function
+  const onClickImg = () => {
+    if (artistId !== undefined) navigate(`/artist/${artistId}`);
+    if (editionId !== undefined) navigate(`/artist/${artistTo}`);
+  };
+
   // useEffect
   useEffect(() => {
     if (artistId !== undefined) getArtistInfo();
@@ -151,8 +164,11 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
 
   return (
     <ImgDiv>
-      <UserBackgroundImg src="https://picsum.photos/250/250"></UserBackgroundImg>
-      <UserImg src="https://picsum.photos/250/250"></UserImg>
+      <UserBackgroundImg
+        src={userImage}
+        onClick={onClickImg}
+      ></UserBackgroundImg>
+      <UserImg src={userImage} onClick={onClickImg}></UserImg>
       <BadgeList>
         {profileStateVal.userSeq ? (
           <>

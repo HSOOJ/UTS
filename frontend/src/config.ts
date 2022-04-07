@@ -361,6 +361,82 @@ export const MARKET_ABI = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeOwner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgePrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeSeller",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeSold",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "owner",
         type: "address",

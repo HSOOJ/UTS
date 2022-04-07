@@ -17,6 +17,8 @@ export const EditionImg = styled.img`
   border-radius: 50%;
   float: left;
   left: 0%;
+  width: 200px;
+  height: 200px;
 `;
 
 export const EditionDetail = styled.div`
