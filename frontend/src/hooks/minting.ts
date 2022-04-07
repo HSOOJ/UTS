@@ -53,22 +53,31 @@ export const uploadToIPFS = async ({
 
 export const listBadgeForSale = async (props: IMinting) => {
   const url = await uploadToIPFS(props);
+  console.log(1);
   const web3Modal = new Web3Modal();
+  console.log(2);
   const connection = await web3Modal.connect();
+  console.log(3);
   const provider = new ethers.providers.Web3Provider(connection);
+  console.log(4);
   const signer = provider.getSigner();
+  console.log(5);
   const price = ethers.utils.parseUnits(props.salePrice + "", "ether");
   const total = ethers.utils.parseUnits(
     (props.salePrice * props.editionTotal).toString(),
     "ether"
   );
+  console.log(6);
   const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
+  console.log(7);
   const listingPrice = market.calcFee(total);
+  console.log(8);
   const transAction = await market.createBadge(url, price, props.editionTotal, {
     value: listingPrice,
   });
 
   const tx = await transAction.wait();
+  console.log("tx arrived!");
   const events = tx.events;
   const badgeIds: number[] = events
     .filter((event: { event: string }) => event.event === "MarketBadgeCreated")

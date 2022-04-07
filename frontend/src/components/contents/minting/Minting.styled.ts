@@ -9,7 +9,7 @@ export const bgColor = {
   dark2: Palette.Grigio500,
 };
 
-const borderColor = {
+export const borderColor = {
   light: Palette.Blu100,
   dark: Palette.Grigio500,
 };

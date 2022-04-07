@@ -19,6 +19,7 @@ const UtsContainer = styled.div<ThemeType>`
   color: ${(props) => (props.isDark ? Palette.Grigio200 : Palette.Nero300)};
   background-color: ${(props) =>
     props.isDark ? Palette.Nero300 : Palette.grigio200};
+  min-height: 100vh;
 `;
 
 function App() {
