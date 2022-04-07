@@ -30,11 +30,11 @@ export const Artist = () => {
     <ArtistPageLayOut>
       <ArtistMarketHeader />
       <MarketPlaceLayOut>
-        {/* <Controller
+        <Controller
           header="Explore Artists"
           isDark={isDark}
           menuList={artistMenuList}
-        /> */}
+        />
         <ArtistList />
       </MarketPlaceLayOut>
     </ArtistPageLayOut>

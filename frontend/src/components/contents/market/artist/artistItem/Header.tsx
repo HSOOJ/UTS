@@ -13,14 +13,14 @@ export const Header = (api: IHeader) => {
   return (
     <BackgroundImage src={api.backgroundSrc}>
       <ProfileImage src={api.profileSrc} isDark={api.isDark} />
-      <BadgeLayOut>
+      {/* <BadgeLayOut>
         <Badge
           key={api + ""}
           type="like"
           isDark={api.isDark}
           borderColor={api.isDark ? borderColor["dark"] : borderColor["light"]}
         />
-      </BadgeLayOut>
+      </BadgeLayOut> */}
     </BackgroundImage>
   );
 };

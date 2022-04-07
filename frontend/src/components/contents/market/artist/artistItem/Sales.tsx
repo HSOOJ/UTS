@@ -13,7 +13,7 @@ export const Sales = ({ isDark, ...api }: ISales) => {
   return (
     <SalesLayOut>
       {Object.entries(api).map(([key, val]) => (
-        <SalesItemBox isDark={isDark}>
+        <SalesItemBox key={key} isDark={isDark}>
           <LetterBox weight="bold" color="shade">
             {key}
           </LetterBox>

@@ -23,9 +23,9 @@ export const Bottom = ({ isDark, price, liked }: IBottom) => {
         <Button styleVariant="primary">
           <LetterBox weight="extraBold">Buy @ {price} ETH</LetterBox>
         </Button>
-        <BadgeImageLayOut>
+        {/* <BadgeImageLayOut>
           <Badge type="like" isDark={isDark} liked={liked} />
-        </BadgeImageLayOut>
+        </BadgeImageLayOut> */}
       </BottomBottomLayOut>
     </BottomLayOut>
   );

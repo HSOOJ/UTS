@@ -1,5 +1,7 @@
+import { Spin } from "antd";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import { GridLayOut } from "./Artist.styled";
 import ArtistItem from "./artistItem";
 import { IArtistItem } from "./artistItem/ArtistItem.types";
@@ -306,6 +308,7 @@ import { IArtistItem } from "./artistItem/ArtistItem.types";
 export const Artist = () => {
   // useState
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Axios
   const GetArtistMarket = () =>
@@ -319,6 +322,7 @@ export const Artist = () => {
     }).then((res) => {
       // console.log(res);
       setDatas(res.data.success);
+      setLoading(false);
     });
 
   // useEffect
@@ -331,11 +335,32 @@ export const Artist = () => {
       {/* {APIs.map((api, idx) => (
         <ArtistItem key={api.id} {...api} />
       ))} */}
-      {datas.map((data, index) => {
-        return <ArtistItem key={index} {...data} />;
-      })}
+      {loading ? (
+        <SpinContainer>
+          <Spin tip="Loading..." />
+        </SpinContainer>
+      ) : (
+        <>
+          {" "}
+          {datas.map((data, index) => {
+            return <ArtistItem key={index} {...data} />;
+          })}
+        </>
+      )}
     </GridLayOut>
   );
 };
 
 export default Artist;
+
+// styled component
+const SpinContainer = styled.div`
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  width: 1200px;
+  height: 1200px;
+`;
