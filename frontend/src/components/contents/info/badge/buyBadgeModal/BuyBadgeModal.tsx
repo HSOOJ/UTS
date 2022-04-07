@@ -41,6 +41,7 @@ export const BuyBadgeModal = ({ isDark }: IBuyBadgeModal) => {
       setNftPrice(res.data.success.salePrice.sale_price)
       setNftId(res.data.success.nftinfo.nft_id)
       setNftImage(res.data.success.editioninfo[0].Edition_edition_image)
+
       setNftSeq(res.data.success.nftinfo.nft_seq)
     })
   }
@@ -49,6 +50,7 @@ export const BuyBadgeModal = ({ isDark }: IBuyBadgeModal) => {
     getNftInfo()
   }, [])
 
+  
   useEffect(() => {
     getNftInfo()
   }, [badgeDetailStateVal.badgeId])
