@@ -5,7 +5,7 @@ import FollowList from "./followList";
 import ModifyModal from "./modify";
 import NftBadgeList from "./nftBadgeList";
 import TradeList from "./tradeList";
-import { Popover, Button, Modal, Popconfirm, Alert } from "antd";
+import { Popover, Modal, Popconfirm, Alert } from "antd";
 import { userState } from "../../../recoil/user";
 import { Params, useParams } from "react-router-dom";
 import axios from "axios";
@@ -18,9 +18,11 @@ import {
   ImageContainer,
   ProfileContainerInfo,
   ProfileContainerModify,
+  ProfileDetail,
   TextMain,
 } from "./Profile.style";
 import { themeAtom } from "../../../recoil/theme";
+import Button from "../../containers/button";
 
 interface ProfileParamTypes extends Params {
   userSeq: string;
@@ -112,7 +114,7 @@ export const ProfileCompo = () => {
 
   return (
     <>
-      <Container>
+      <Container isDark={isDark}>
         <ProfileContainerModify>
           <ImageContainer>
             <Image
@@ -128,7 +130,18 @@ export const ProfileCompo = () => {
         <ProfileContainerModify>
           {modifyBool ? (
             <>
-              <ButtonModify isDark={isDark} onClick={clickAddr}>
+              <ButtonModify>
+                <Button styleVariant="primary" onClick={clickAddr}>
+                  내 지갑 주소 보기
+                </Button>
+                <Button styleVariant="primary" onClick={clickRegist}>
+                  아티스트 등록하기
+                </Button>
+                <Button styleVariant="primary" onClick={showModal}>
+                  수정
+                </Button>
+              </ButtonModify>
+              {/* <ButtonModify isDark={isDark} onClick={clickAddr}>
                 내 지갑 주소 보기
               </ButtonModify>
               <ButtonModify isDark={isDark} onClick={clickRegist}>
@@ -136,48 +149,50 @@ export const ProfileCompo = () => {
               </ButtonModify>
               <ButtonModify isDark={isDark} onClick={showModal}>
                 수정
-              </ButtonModify>
+              </ButtonModify> */}
               {profileStateVal.modalVisible ? <ModifyModal /> : null}
             </>
           ) : null}
         </ProfileContainerModify>
-        {showAddr ? (
-          <Alert
-            message={profileStateVal.userWallet}
-            type="info"
-            showIcon
-            closable
-            onClose={() => {
-              SetShowAddr(false);
-            }}
-          />
-        ) : null}
-        <ProfileContainerInfo>
-          <ButtonSelect
-            isDark={isDark}
-            isSelected={profileStateVal.nftBadgeList}
-            onClick={clickNftBadgeList}
-          >
-            NFT 뱃지
-          </ButtonSelect>
-          <ButtonSelect
-            isDark={isDark}
-            isSelected={profileStateVal.tradeList}
-            onClick={clickTradeList}
-          >
-            거래 내역
-          </ButtonSelect>
-          <ButtonSelect
-            isDark={isDark}
-            isSelected={profileStateVal.followList}
-            onClick={clickfollowList}
-          >
-            팔로잉
-          </ButtonSelect>
-        </ProfileContainerInfo>
-        {profileStateVal.nftBadgeList ? <NftBadgeList /> : null}
-        {profileStateVal.tradeList ? <TradeList /> : null}
-        {profileStateVal.followList ? <FollowList /> : null}
+        <ProfileDetail isDark={isDark}>
+          {showAddr ? (
+            <Alert
+              message={profileStateVal.userWallet}
+              type="info"
+              showIcon
+              closable
+              onClose={() => {
+                SetShowAddr(false);
+              }}
+            />
+          ) : null}
+          <ProfileContainerInfo>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.nftBadgeList}
+              onClick={clickNftBadgeList}
+            >
+              NFT 뱃지
+            </ButtonSelect>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.tradeList}
+              onClick={clickTradeList}
+            >
+              거래 내역
+            </ButtonSelect>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.followList}
+              onClick={clickfollowList}
+            >
+              팔로잉
+            </ButtonSelect>
+          </ProfileContainerInfo>
+          {profileStateVal.nftBadgeList ? <NftBadgeList /> : null}
+          {profileStateVal.tradeList ? <TradeList /> : null}
+          {profileStateVal.followList ? <FollowList /> : null}
+        </ProfileDetail>
       </Container>
     </>
   );
