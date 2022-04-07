@@ -30,9 +30,8 @@ export const FollowList = () => {
       artistSeq: "1",
     },
   ]);
-  const [load1, setLoad1] = useState(false);
-  const [load2, setLoad2] = useState(false);
   const [empty, setEmpty] = useState(true);
+  const [idxLoad, setIdxLoad] = useState(4);
 
   // Axios
   const GetFollowList = (
@@ -68,89 +67,37 @@ export const FollowList = () => {
         <Empty />
       ) : (
         <>
-          {load1 || load2 ? (
-            <>
-              {load2 ? (
-                <>
-                  {datas.map((data, index) => {
-                    return (
-                      <FollowListCompo
-                        key={index}
-                        following={data.following}
-                        userNickname={data.userNickname}
-                        userProfileImage={data.userProfileImage}
-                        userSeq={data.userSeq}
-                        artistSeq={data.artistSeq}
-                      />
-                    );
-                  })}
-                  <ButtonLoad
-                    isDark={isDark}
-                    onClick={() => {
-                      setLoad1(false);
-                      setLoad2(false);
-                    }}
-                  >
-                    Close...
-                  </ButtonLoad>
-                </>
-              ) : (
-                <>
-                  {datas.map((data, index) => {
-                    if (index < 10) {
-                      return (
-                        <FollowListCompo
-                          key={index}
-                          following={data.following}
-                          userNickname={data.userNickname}
-                          userProfileImage={data.userProfileImage}
-                          userSeq={data.userSeq}
-                          artistSeq={data.artistSeq}
-                        />
-                      );
-                    }
-                  })}
-                  <ButtonLoad isDark={isDark} onClick={() => setLoad2(true)}>
-                    Load More...
-                  </ButtonLoad>
-                </>
-              )}
-            </>
+          {datas.map((data, index) => {
+            if (index <= idxLoad) {
+              return (
+                <FollowListCompo
+                  key={index}
+                  following={data.following}
+                  userNickname={data.userNickname}
+                  userProfileImage={data.userProfileImage}
+                  userSeq={data.userSeq}
+                  artistSeq={data.artistSeq}
+                />
+              );
+            }
+          })}
+          {idxLoad >= datas.length ? (
+            <ButtonLoad
+              isDark={isDark}
+              onClick={() => {
+                setIdxLoad(4);
+                window.scrollTo(0, 0);
+              }}
+            >
+              End
+            </ButtonLoad>
           ) : (
-            <>
-              {datas.map((data, index) => {
-                if (index < 5) {
-                  return (
-                    <FollowListCompo
-                      key={index}
-                      following={data.following}
-                      userNickname={data.userNickname}
-                      userProfileImage={data.userProfileImage}
-                      userSeq={data.userSeq}
-                      artistSeq={data.artistSeq}
-                    />
-                  );
-                }
-              })}
-              <ButtonLoad isDark={isDark} onClick={() => setLoad1(true)}>
-                Load More...
-              </ButtonLoad>
-            </>
+            <ButtonLoad isDark={isDark} onClick={() => setIdxLoad(idxLoad + 4)}>
+              Load More...
+            </ButtonLoad>
           )}
         </>
       )}
-      {/* {datas.map((data, index) => {
-        return (
-          <FollowListCompo
-            key={index}
-            following={data.following}
-            userNickname={data.userNickname}
-            userProfileImage={data.userProfileImage}
-            userSeq={data.userSeq}
-            artistSeq={data.artistSeq}
-          />
-        );
-      })} */}
     </>
   );
 };
