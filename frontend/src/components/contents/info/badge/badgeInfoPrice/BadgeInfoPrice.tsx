@@ -11,9 +11,11 @@ import {
   ListPriceDiv,
 } from "./BadgeInfoPrice.styled";
 
-interface IBadgeInfoPrice extends ThemeType {}
+interface IBadgeInfoPrice extends ThemeType {
+  price: number;
+}
 
-export const BadgeInfoPrice = ({ isDark }: IBadgeInfoPrice) => {
+export const BadgeInfoPrice = ({ isDark, price }: IBadgeInfoPrice) => {
   let navigate = useNavigate();
   return (
     <BadgeInfoPriceDiv isDark={isDark}>
@@ -22,7 +24,7 @@ export const BadgeInfoPrice = ({ isDark }: IBadgeInfoPrice) => {
           Listed Price
         </LetterBox>
         <LetterBox size="h2" weight="extraBold">
-          1 ETH
+          {price} ETH
         </LetterBox>
       </ListPriceDiv>
       <CollectionDiv>

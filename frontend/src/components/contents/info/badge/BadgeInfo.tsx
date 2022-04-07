@@ -47,21 +47,28 @@ export const BadgeInfo = () => {
   const [editionName, setEditName] = useState("");
   const [myTokenURI, setMyTokenURI] = useState("");
   const [myTokenDescpt, setMyTokenDescpt] = useState("");
+  const [myTokenCreator, setMyTokenCreator] = useState("");
+  const [myTokenPrice, setMyTokenPrice] = useState(0);
+  const tokenId = 3;
 
   useEffect(() => {
     getInfo();
+    getTokenURI();
+    getTokenPrice();
   }, []);
+
   useEffect(() => {
     getTokenURI();
+    // getTokenPrice();
   }, [myTokenURI]);
 
   // ❤ tokenId를 선택해서 보도록 여기 수정!
-  const tokenId = 38;
 
   const getInfo = async () => {
     setEditName("");
     setMyTokenURI("");
     setMyTokenDescpt("");
+    setMyTokenCreator("");
     // 블록체인과 연결
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // Prompt user for account connections
@@ -74,6 +81,7 @@ export const BadgeInfo = () => {
     setMyTokenURI(tokenURI.slice(28));
     console.log("tokenURI", myTokenURI);
   };
+
   const getTokenURI = async () => {
     await axios({
       method: "post",
@@ -89,6 +97,12 @@ export const BadgeInfo = () => {
       });
   };
 
+  const getTokenPrice = async () => {
+    setMyTokenPrice(0);
+    const price = await marketContract.getBadgePrice(tokenId);
+    console.log("price", parseInt(price._hex));
+    setMyTokenPrice(parseInt(price._hex));
+  };
   // 정현 여기까지
 
   return (
@@ -100,8 +114,13 @@ export const BadgeInfo = () => {
       <Boxout>
         <LetterBox size="h2">{myTokenDescpt}</LetterBox>
       </Boxout>
-      <BadgeInfoPerson isDark={isDark} badge_id={badge_id}></BadgeInfoPerson>
-      <BadgeInfoPrice isDark={isDark}></BadgeInfoPrice>
+      <BadgeInfoPerson
+        isDark={isDark}
+        badge_id={badge_id}
+        tokenId={tokenId}
+        tokenURI={myTokenURI}
+      ></BadgeInfoPerson>
+      <BadgeInfoPrice isDark={isDark} price={myTokenPrice}></BadgeInfoPrice>
       <BadgeDetail isDark={isDark}></BadgeDetail>
     </Layout>
   );

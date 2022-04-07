@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-export const MARKET_ADDR = "0xf4Caa946EC52F7d0506ADE29CfF050E6a46bc28C";
+export const MARKET_ADDR = "0xe5f502101E0feBd7820E3BE785230633A284424a";
 
 export const MARKET_ABI = [
   {
@@ -352,6 +352,82 @@ export const MARKET_ABI = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeOwner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgePrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeSeller",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "badgeId",
+        type: "uint256",
+      },
+    ],
+    name: "getBadgeSold",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",
