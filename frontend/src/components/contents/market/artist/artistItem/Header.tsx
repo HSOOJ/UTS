@@ -1,6 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ThemeType } from "../../../../../global/theme";
 import { artistState } from "../../../../../recoil/artist";
@@ -13,6 +14,7 @@ interface IHeader extends ThemeType {
   backgroundSrc: string;
   profileSrc: string;
   userSeq: string;
+  artistSeq: string;
 }
 
 export const Header = (api: IHeader) => {
@@ -21,6 +23,9 @@ export const Header = (api: IHeader) => {
 
   // useState
   const [following, setFollowing] = useState(false);
+
+  // useNavigate
+  let navigate = useNavigate();
 
   // Axios
   const checkFollow = (
@@ -95,7 +100,13 @@ export const Header = (api: IHeader) => {
 
   return (
     <BackgroundImage src={api.backgroundSrc}>
-      <ProfileImage src={api.profileSrc} isDark={api.isDark} />
+      <div
+        onClick={() => {
+          navigate(`/artist/${api.artistSeq}`);
+        }}
+      >
+        <ProfileImage src={api.profileSrc} isDark={api.isDark} />
+      </div>
       <BadgeLayOut>
         {following === true ? (
           <div

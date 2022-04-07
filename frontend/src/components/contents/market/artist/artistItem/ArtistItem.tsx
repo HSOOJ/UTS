@@ -1,4 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../../recoil/theme";
 import Card from "../../../../containers/card";
@@ -12,50 +11,42 @@ import { Token } from "./Token";
 export const ArtistItem = (api: IArtistItem) => {
   const isDark = useRecoilValue(themeAtom).isDark;
 
-  // useNavigate
-  let navigate = useNavigate();
-
   return (
-    <div
-      onClick={() => {
-        navigate(`/artist/${api.artist_artist_seq}`);
-      }}
-    >
-      <Card isDark={isDark}>
-        <LayOut>
-          <Header
-            backgroundSrc={api.user_user_profile_image}
-            profileSrc={api.user_user_profile_image}
-            isDark={isDark}
-            userSeq={api.artist_user_seq}
-          />
-          <Profile
-            name={api.user_user_nickname}
-            followers={api.artist_artist_followers_total}
-          />
-          <Sales
-            Txs={api.artist_txs}
-            Volume={api.user_user_volume}
-            Highest={api.artist_max}
-            isDark={isDark}
-          />
-          <Token
-            // newestDrops={api.newestDrops}
-            newestDrops={{
-              tokenSrc: api.newest_edition_image,
-              tokenName: api.newest_edition_name,
-              price: api.latest_volume,
-            }}
-            bestSellers={{
-              tokenSrc: api.bestSeller_edition_image,
-              tokenName: api.bestSeller_edition_name,
-              price: api.volume,
-            }}
-            isDark={isDark}
-          />
-        </LayOut>
-      </Card>
-    </div>
+    <Card isDark={isDark}>
+      <LayOut>
+        <Header
+          backgroundSrc={api.user_user_profile_image}
+          profileSrc={api.user_user_profile_image}
+          isDark={isDark}
+          userSeq={api.artist_user_seq}
+          artistSeq={api.artist_artist_seq}
+        />
+        <Profile
+          name={api.user_user_nickname}
+          followers={api.artist_artist_followers_total}
+        />
+        <Sales
+          Txs={api.artist_txs}
+          Volume={api.user_user_volume}
+          Highest={api.artist_max}
+          isDark={isDark}
+        />
+        <Token
+          // newestDrops={api.newestDrops}
+          newestDrops={{
+            tokenSrc: api.newest_edition_image,
+            tokenName: api.newest_edition_name,
+            price: api.latest_volume,
+          }}
+          bestSellers={{
+            tokenSrc: api.bestSeller_edition_image,
+            tokenName: api.bestSeller_edition_name,
+            price: api.volume,
+          }}
+          isDark={isDark}
+        />
+      </LayOut>
+    </Card>
     // <Link to={api.id}>
     //   <Card isDark={isDark}>
     //     <LayOut>
