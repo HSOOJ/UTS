@@ -121,7 +121,7 @@ CREATE TABLE `nft` (
   `nft_owner_seq` int NOT NULL,
   `nft_num` int NOT NULL COMMENT '에디션 내부에서 번호',
   `nft_id` varchar(50) NOT NULL COMMENT '이더리움 상의 id',
-  `nft_transaction_id` varchar(50) NOT NULL,
+  `nft_transaction_id` varchar(200) NOT NULL,
   `nft_transaction_count` int NOT NULL,
   `nft_volume` varchar(45) NOT NULL,
   `reg_dt` datetime NOT NULL,
