@@ -35,6 +35,13 @@ router.get("/info", async (req: Request, res: Response) => {
   }
 });
 
+// userAddress로 정보 가져 오기
+router.get("/info/address", async (req, res, next) => {
+  const userWalletAddress = String(req.query.userWalletAddress);
+  const result = await userService.checkUser(userWalletAddress);
+  return res.status(200).json({ success: result });
+});
+
 // 닉네임 중복 확인
 router.get("/check/nickname", async (req: Request, res: Response) => {
   const inputNickname = String(req.query.userNickname);
