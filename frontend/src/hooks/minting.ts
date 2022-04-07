@@ -7,6 +7,7 @@ import Web3Modal from "web3modal";
 import { BigNumber, ethers } from "ethers";
 import { MARKET_ADDR, MARKET_ABI } from "../config";
 import axios from "axios";
+import { IBadge, Meta } from "../types/IBadge";
 
 const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -102,12 +103,25 @@ export const loadBadges = async () => {
   const provider = new ethers.providers.JsonRpcProvider(
     "https://ropsten.infura.io/v3/851bad79e47b4833a7c082d66c2bc4ab"
   );
-  console.log(provider);
   const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, provider);
-  console.log(market);
-
   const data = await market.fetchMarketBadges();
-  console.log(data);
+  const badges = await Promise.all<IBadge & Meta>(
+    data.map(async (badge: IBadge) => {
+      const tokenUri = await market.tokenURI(badge.badgeId);
+      const meta = await axios.get(tokenUri);
+      const price = ethers.utils.formatUnits(badge.price + "", "ether");
+      return {
+        price,
+        badgeId: badge.badgeId.toNumber(),
+        seller: badge.seller,
+        owner: badge.owner,
+        image: meta.data.editionImageUrl,
+        name: meta.data.editionName,
+        description: meta.data.editionDescription,
+      };
+    })
+  );
+  return badges;
 };
 
 export const listBadgeToBackEnd = async ({
@@ -144,21 +158,20 @@ export const listBadgeToBackEnd = async ({
     });
 };
 
-export const buyBadge = async () => {
+export const buyBadge = async (badge: IBadge & Meta) => {
   /* needs the user to sign the transaction, so will use Web3Provider and sign it */
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
   const provider = new ethers.providers.Web3Provider(connection);
   const signer = provider.getSigner();
-  const contract = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
-
+  const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
   /* user will be prompted to pay the asking proces to complete the transaction */
-  // const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
-  // const transaction = await contract.createMarketSale(nft.tokenId, {
-  //   value: price,
-  // });
-  // await transaction.wait();
-  // loadNFTs();
+  const price = ethers.utils.parseUnits(badge.price.toString(), "ether");
+  const transaction = await market.createMarketSale(badge.badgeId, {
+    value: price,
+  });
+  await transaction.wait();
+  loadBadges();
 };
 
 export const resellBadge = async (id: number, price: number) => {
