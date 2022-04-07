@@ -8,6 +8,7 @@ interface badgeDetailTypes {
   tokenURIKeyState: string;
   getURIState: string;
   tokenDescription: string;
+  editionImage: string;
 }
 
 export const badgeDetailState = atom<badgeDetailTypes>({
@@ -20,5 +21,6 @@ export const badgeDetailState = atom<badgeDetailTypes>({
     tokenURIKeyState: "",
     getURIState: "",
     tokenDescription: "",
+    editionImage: "",
   },
 });
