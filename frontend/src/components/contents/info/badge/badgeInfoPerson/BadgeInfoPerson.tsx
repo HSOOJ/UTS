@@ -67,6 +67,7 @@ export const BadgeInfoPerson = ({
     const owner = await marketContract.ownerOf(tokenId);
     setMyTokenCreator(creator);
     setMyTokenOwner(owner);
+    // 지갑주소확인하기 모달에서 확인용
   };
 
   const getUserInfo = async () => {
@@ -142,7 +143,7 @@ export const BadgeInfoPerson = ({
               Creator
             </LetterBox>
             <BadgeImg
-              src="https://picsum.photos/80/80"
+              src={creatorImage}
               onClick={() => {
                 navigate(`/artist/1`); // 고쳐야 합니다
               }}
@@ -161,7 +162,10 @@ export const BadgeInfoPerson = ({
             <Button styleVariant="primary" onClick={showModal}>
               지갑 주소 확인하기 : {myTokenCreator}
             </Button>
-            <WalletAddressModal isDark={isDark}></WalletAddressModal>
+            <WalletAddressModal
+              isDark={isDark}
+              address={myTokenCreator}
+            ></WalletAddressModal>
           </BadgeRight>
         </BadgeCenter>
       </div>
@@ -175,7 +179,7 @@ export const BadgeInfoPerson = ({
               onClick={() => {
                 navigate(`/artist/1`); // 고쳐야 합니다
               }}
-              src="https://picsum.photos/80/80"
+              src={ownerImage}
             />
           </BadgeLeft>
           <BadgeRight>
@@ -191,7 +195,10 @@ export const BadgeInfoPerson = ({
             <Button styleVariant="primary" onClick={showModal}>
               지갑 주소 확인하기 : {myTokenOwner}
             </Button>
-            <WalletAddressModal isDark={isDark}></WalletAddressModal>
+            <WalletAddressModal
+              isDark={isDark}
+              address={myTokenCreator}
+            ></WalletAddressModal>
           </BadgeRight>
         </BadgeCenter>
       </div>

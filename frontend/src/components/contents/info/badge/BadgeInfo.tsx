@@ -49,7 +49,9 @@ export const BadgeInfo = () => {
   const [myTokenDescpt, setMyTokenDescpt] = useState("");
   const [myTokenCreator, setMyTokenCreator] = useState("");
   const [myTokenPrice, setMyTokenPrice] = useState(0);
+  // ❤ tokenId를 선택해서 보도록 여기 수정!
   const tokenId = 3;
+  const nftSeq = 1;
 
   useEffect(() => {
     getInfo();
@@ -58,11 +60,10 @@ export const BadgeInfo = () => {
   }, []);
 
   useEffect(() => {
+    // getInfo();
     getTokenURI();
     // getTokenPrice();
   }, [myTokenURI]);
-
-  // ❤ tokenId를 선택해서 보도록 여기 수정!
 
   const getInfo = async () => {
     setEditName("");
@@ -120,7 +121,12 @@ export const BadgeInfo = () => {
         tokenId={tokenId}
         tokenURI={myTokenURI}
       ></BadgeInfoPerson>
-      <BadgeInfoPrice isDark={isDark} price={myTokenPrice}></BadgeInfoPrice>
+      <BadgeInfoPrice
+        isDark={isDark}
+        price={myTokenPrice}
+        tokenId={tokenId}
+        nftSeq={nftSeq}
+      ></BadgeInfoPrice>
       <BadgeDetail isDark={isDark}></BadgeDetail>
     </Layout>
   );
