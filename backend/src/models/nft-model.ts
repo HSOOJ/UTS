@@ -34,7 +34,7 @@ export class Nft {
   nft_num: number;
 
   @Column()
-  nft_id: string;
+  nft_id: number;
 
   @Column()
   nft_transaction_id: string;

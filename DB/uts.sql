@@ -9,14 +9,14 @@ CREATE TABLE `user` (
   `user_wallet_address` varchar(100) NOT NULL,
   `user_profile_image` varchar(100) NOT NULL,
   `user_role` int NOT NULL DEFAULT '0' COMMENT '0:회원, 1:아티스트, 2: 관리자',
-  `user_volume` DOUBLE NOT NULL,
-  `reg_dt` DATETIME NOT NULL,
-  `mod_dt` DATETIME NOT NULL,
-  `del_dt` DATETIME NULL,
+  `user_volume` double NOT NULL,
+  `reg_dt` datetime NOT NULL,
+  `mod_dt` datetime NOT NULL,
+  `del_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`user_seq`),
-  UNIQUE KEY `user_seq_UNIQUE` (`user_seq`),
-  UNIQUE KEY `user_wallet_address_UNIQUE` (`user_wallet_address`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `user_seq_UNIQUE` (`user_seq`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 -- 공통 코드 테이블
 CREATE TABLE `common_code` (

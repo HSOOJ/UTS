@@ -1,19 +1,23 @@
+import { type } from "os";
 import { FieldError } from "react-hook-form";
 
 export interface IMinting {
   userSeq: string;
   editionName: string;
   editionImage: File;
-  editionImageUrl?: string;
+  editionImageUrl: string;
   editionDescription: string;
   editionRoyalty: number;
   editionTotal: number;
   salePrice: number;
 }
 
-export interface IMintingBE extends IMinting {
-  nftId?: string;
-  nftTransactionId?: string;
+type OmitIminting = Omit<IMinting, "editionImage" | "editionImageUrl">;
+
+export interface IMintingBE extends OmitIminting {
+  editionImage: string;
+  nftId: string;
+  nftTransactionId: string;
 }
 
 export interface IMintingErrors {

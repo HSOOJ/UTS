@@ -1,3 +1,5 @@
+import { ethers } from "ethers";
+
 export const MARKET_ADDR = "0xf4Caa946EC52F7d0506ADE29CfF050E6a46bc28C";
 
 export const MARKET_ABI = [
@@ -573,3 +575,12 @@ export const MARKET_ABI = [
     type: "function",
   },
 ];
+
+export const myprovider = new ethers.providers.Web3Provider(window.ethereum);
+
+const signer = myprovider.getSigner();
+export const marketContract = new ethers.Contract(
+  MARKET_ADDR,
+  MARKET_ABI,
+  signer
+);

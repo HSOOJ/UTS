@@ -4,9 +4,10 @@ import {
   IMintingBE,
 } from "../components/contents/minting/Minting.types";
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { MARKET_ADDR, MARKET_ABI } from "../config";
 import axios from "axios";
+import { IBadge, Meta } from "../types/IBadge";
 
 const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -40,7 +41,6 @@ export const uploadToIPFS = async ({
   });
 
   try {
-    console.log("data:", data);
     const added = await ipfs.add(data);
     const url = `https://ipfs.infura.io/ipfs/${added.path}`;
     return url;
@@ -65,51 +65,129 @@ export const listBadgeForSale = async (props: IMinting) => {
   const transAction = await market.createBadge(url, price, props.editionTotal, {
     value: listingPrice,
   });
+
   const tx = await transAction.wait();
-  console.log(tx);
-  const beProps: IMintingBE = props;
-  // beProps.nftId =
-  // listBadgeToBackEnd(beProps);
-  loadBadges();
+  const events = tx.events;
+  const badgeIds: number[] = events
+    .filter((event: { event: string }) => event.event === "MarketBadgeCreated")
+    .map((event: { args: { badgeId: BigNumber } }) =>
+      event.args.badgeId.toNumber()
+    );
+
+  const beProps = ({
+    editionName,
+    editionImageUrl,
+    editionDescription,
+    editionRoyalty,
+    editionTotal,
+    salePrice,
+  }: IMinting) => ({
+    editionName,
+    editionImage: editionImageUrl,
+    editionDescription,
+    editionRoyalty,
+    editionTotal,
+    salePrice,
+  });
+
+  const data: IMintingBE = {
+    userSeq: localStorage.getItem("userSeq") as string,
+    ...beProps(props),
+    nftId: badgeIds[0].toString(),
+    nftTransactionId: events[0].transactionHash,
+  };
+  listBadgeToBackEnd(data);
 };
 
 export const loadBadges = async () => {
   const provider = new ethers.providers.JsonRpcProvider(
     "https://ropsten.infura.io/v3/851bad79e47b4833a7c082d66c2bc4ab"
   );
-  console.log(provider);
   const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, provider);
-  console.log(market);
-
   const data = await market.fetchMarketBadges();
-  console.log(data);
+  const badges = await Promise.all<IBadge & Meta>(
+    data.map(async (badge: IBadge) => {
+      const tokenUri = await market.tokenURI(badge.badgeId);
+      const meta = await axios.get(tokenUri);
+      const price = ethers.utils.formatUnits(badge.price + "", "ether");
+      return {
+        price,
+        badgeId: badge.badgeId.toNumber(),
+        seller: badge.seller,
+        owner: badge.owner,
+        image: meta.data.editionImageUrl,
+        name: meta.data.editionName,
+        description: meta.data.editionDescription,
+      };
+    })
+  );
+  return badges;
 };
 
-export const listBadgeToBackEnd = (props: IMintingBE) => {
-  const data = JSON.stringify(props);
-  axios
-    .post("http://j6a105.p.ssafy.io:8080/api/nft/minting", data)
-    .then(() => {
-      console.log(`SUCCESS sending\n${data}`);
+export const listBadgeToBackEnd = async ({
+  userSeq,
+  editionName,
+  editionImage,
+  editionDescription,
+  editionRoyalty,
+  editionTotal,
+  salePrice,
+  nftId,
+  nftTransactionId,
+}: IMintingBE) => {
+  axios({
+    method: "POST",
+    url: "http://j6a105.p.ssafy.io:8080/api/nft/minting",
+    data: {
+      userSeq,
+      editionName,
+      editionImage,
+      editionDescription,
+      editionRoyalty,
+      editionTotal,
+      salePrice,
+      nftId,
+      nftTransactionId,
+    },
+  })
+    .then((res) => {
+      console.log(res);
     })
     .catch((res) => {
       console.log(res);
     });
 };
 
-export const buyBadge = async () => {
+export const buyBadge = async (badge: IBadge & Meta) => {
   /* needs the user to sign the transaction, so will use Web3Provider and sign it */
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
   const provider = new ethers.providers.Web3Provider(connection);
   const signer = provider.getSigner();
-  const contract = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
-
+  const market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
   /* user will be prompted to pay the asking proces to complete the transaction */
-  // const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
-  // const transaction = await contract.createMarketSale(nft.tokenId, {
-  //   value: price,
-  // });
-  // await transaction.wait();
-  // loadNFTs();
+  const price = ethers.utils.parseUnits(badge.price.toString(), "ether");
+  const transaction = await market.createMarketSale(badge.badgeId, {
+    value: price,
+  });
+  await transaction.wait();
+  loadBadges();
+};
+
+export const resellBadge = async (id: number, price: number) => {
+  if (!price) return;
+  const web3Modal = new Web3Modal();
+  const connection = await web3Modal.connect();
+  const provider = new ethers.providers.Web3Provider(connection);
+  const signer = provider.getSigner();
+
+  const priceFormatted = ethers.utils.parseUnits(price + "", "ether");
+  let market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
+  let listingPrice = await market.calcFee(price);
+
+  listingPrice = listingPrice.toString();
+  let transaction = await market.resellToken(id, priceFormatted, {
+    value: listingPrice,
+  });
+  await transaction.wait();
 };
