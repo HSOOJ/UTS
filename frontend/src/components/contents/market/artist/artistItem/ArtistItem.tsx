@@ -27,6 +27,7 @@ export const ArtistItem = (api: IArtistItem) => {
             backgroundSrc={api.user_user_profile_image}
             profileSrc={api.user_user_profile_image}
             isDark={isDark}
+            userSeq={api.artist_user_seq}
           />
           <Profile
             name={api.user_user_nickname}
