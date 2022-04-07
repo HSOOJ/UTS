@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../../../../recoil/theme";
 import Card from "../../../../containers/card";
@@ -12,8 +12,15 @@ import { Token } from "./Token";
 export const ArtistItem = (api: IArtistItem) => {
   const isDark = useRecoilValue(themeAtom).isDark;
 
+  // useNavigate
+  let navigate = useNavigate();
+
   return (
-    <Link to={api.artist_artist_seq}>
+    <div
+      onClick={() => {
+        navigate(`/artist/${api.artist_artist_seq}`);
+      }}
+    >
       <Card isDark={isDark}>
         <LayOut>
           <Header
@@ -47,7 +54,7 @@ export const ArtistItem = (api: IArtistItem) => {
           />
         </LayOut>
       </Card>
-    </Link>
+    </div>
     // <Link to={api.id}>
     //   <Card isDark={isDark}>
     //     <LayOut>
