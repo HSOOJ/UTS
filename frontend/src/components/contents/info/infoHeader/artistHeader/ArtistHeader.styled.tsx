@@ -19,6 +19,7 @@ export const UserImg = styled.img`
   position: absolute;
   top: 100px;
   width: 200px;
+  height: 200px;
 `;
 
 export const BadgeList = styled.div`
