@@ -49,27 +49,16 @@ export const BadgeInfo = () => {
   const [myTokenDescpt, setMyTokenDescpt] = useState("");
   const [myTokenCreator, setMyTokenCreator] = useState("");
   const [myTokenPrice, setMyTokenPrice] = useState(0);
-  // ❤ tokenId를 선택해서 보도록 여기 수정!
-  const tokenId = 3;
-  const nftSeq = 1;
+  const [tokenInfo, setTokenInfo] = useState({});
 
-  useEffect(() => {
-    getInfo();
-    getTokenURI();
-    getTokenPrice();
-  }, []);
-
-  useEffect(() => {
-    // getInfo();
-    getTokenURI();
-    // getTokenPrice();
-  }, [myTokenURI]);
+  const [tokenId, setTokenId] = useState(0);
 
   const getInfo = async () => {
     setEditName("");
     setMyTokenURI("");
     setMyTokenDescpt("");
     setMyTokenCreator("");
+
     // 블록체인과 연결
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // Prompt user for account connections
@@ -82,7 +71,16 @@ export const BadgeInfo = () => {
     setMyTokenURI(tokenURI.slice(28));
     console.log("tokenURI", myTokenURI);
   };
-
+  const getNftInfo = async () => {
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+    }).then((res) => {
+      setTokenInfo(res.data.success)
+      setTokenId(res.data.success.nftinfo.nft_id)
+      console.log(res.data.success)
+    })
+  }
   const getTokenURI = async () => {
     await axios({
       method: "post",
@@ -104,6 +102,17 @@ export const BadgeInfo = () => {
     console.log("price", parseInt(price._hex));
     setMyTokenPrice(parseInt(price._hex));
   };
+
+  useEffect(() => {
+    getInfo();
+    getTokenURI();
+    getTokenPrice();
+    getNftInfo()
+  }, []);
+
+  useEffect(() => {
+    getTokenURI();
+  }, [myTokenURI, tokenId]);
   // 정현 여기까지
 
   return (
@@ -120,12 +129,13 @@ export const BadgeInfo = () => {
         badge_id={badge_id}
         tokenId={tokenId}
         tokenURI={myTokenURI}
+        tokenInfo={tokenInfo}
       ></BadgeInfoPerson>
       <BadgeInfoPrice
         isDark={isDark}
         price={myTokenPrice}
         tokenId={tokenId}
-        nftSeq={nftSeq}
+        nftSeq={Number(badge_id)}
       ></BadgeInfoPrice>
       <BadgeDetail isDark={isDark}></BadgeDetail>
     </Layout>

@@ -22,6 +22,7 @@ interface IBadgeInfoPerson extends ThemeType {
   badge_id: string;
   tokenId: number;
   tokenURI: string;
+  tokenInfo: any;
 }
 
 export const BadgeInfoPerson = ({
@@ -29,6 +30,7 @@ export const BadgeInfoPerson = ({
   badge_id,
   tokenId,
   tokenURI,
+  tokenInfo
 }: IBadgeInfoPerson) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
@@ -142,17 +144,17 @@ export const BadgeInfoPerson = ({
             <LetterBox size="h3" weight="bold" color="shade">
               Creator
             </LetterBox>
-            <BadgeImg
+            <BadgeImg width="100px"
               src={creatorImage}
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.nftinfo.nft_author_seq}`); // 고쳐야 합니다
               }}
             />
           </BadgeLeft>
           <BadgeRight>
             <div
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.nftinfo.nft_author_seq}`); // 고쳐야 합니다
               }}
             >
               <LetterBox size="h3" weight="extraBold">
@@ -175,9 +177,9 @@ export const BadgeInfoPerson = ({
             <LetterBox size="h3" weight="bold" color="shade">
               Owner
             </LetterBox>
-            <BadgeImg
+            <BadgeImg width="100px"
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
               }}
               src={ownerImage}
             />
@@ -185,7 +187,7 @@ export const BadgeInfoPerson = ({
           <BadgeRight>
             <div
               onClick={() => {
-                navigate(`/artist/1`); // 고쳐야 합니다
+                navigate(`/artist/${tokenInfo.nftinfo.nft_owner_seq}`); // 고쳐야 합니다
               }}
             >
               <LetterBox size="h3" weight="extraBold">
