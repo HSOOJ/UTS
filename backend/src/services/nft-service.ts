@@ -305,6 +305,18 @@ async function returnNFTOwner(editionSeq: number) {
   return res;
 }
 
+async function totalNFTforEdition(editionSeq: Number) {
+  const res = await getConnection()
+    .getRepository(Nft)
+    .createQueryBuilder()
+    .select("COUNT(Nft.edition_seq)", "count")
+    .where(`nft.edition_seq = ${editionSeq}`)
+    .withDeleted()
+    .getRawOne();
+
+  return res;
+}
+
 export default {
   getOwnNft,
   getHeartNft,
@@ -315,4 +327,5 @@ export default {
   editionMinting,
   returnHeartNft,
   returnNFTOwner,
+  totalNFTforEdition,
 } as const;
