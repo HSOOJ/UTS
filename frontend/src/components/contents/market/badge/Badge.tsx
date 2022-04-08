@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -27,6 +28,30 @@ const getBadgeList = () =>
 export const Badge = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
 
+  // useState
+  const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [idxLoad, setIdxLoad] = useState(24);
+
+  // Axios
+  const GetNftsMarket = () =>
+    axios({
+      method: "get",
+      url: "http://j6a105.p.ssafy.io:8080/api/market/nfts",
+      params: {
+        sortby: 0,
+        category: 0,
+      },
+    }).then((res) => {
+      console.log(res);
+      setDatas(res.data.success);
+      setLoading(false);
+    });
+
+  // useEffect
+  useEffect(() => {
+    GetNftsMarket();
+  }, []);
   const { isLoading, data: badges } = useQuery<IBadgeItem[]>(
     "badgeList",
     getBadgeList

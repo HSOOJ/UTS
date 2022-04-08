@@ -15,7 +15,7 @@ const borderColor = {
 
 export const LayOut = styled(motion.div)<ICard>`
   min-width: 280px;
-  height: 424px;
+  /* height: 420px; */
 
   border-radius: 10px;
   border: 1px solid

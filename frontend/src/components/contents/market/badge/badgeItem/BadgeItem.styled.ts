@@ -77,7 +77,7 @@ export const BottomBottomLayOut = styled.div`
   display: flex;
   justify-content: space-between;
   button {
-    width: 80%;
+    width: 205px;
   }
   align-items: center;
 `;
