@@ -66,12 +66,6 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
   return (
     <BadgeDetailDiv isDark={isDark}>
       <div>
-        {/* <LetterBox size="h1" weight="extraBold">
-          history
-        </LetterBox>
-        <LetterBox>역사 1</LetterBox>
-        <LetterBox>역사 2</LetterBox>
-        <LetterBox>역사 3</LetterBox> */}
       </div>
       <ButtonDiv>
         <Button styleVariant="primary" onClick={onClickBuy}>
@@ -90,7 +84,7 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
           Share with Friends
         </Button>
       </ButtonDiv>
-      <SellBadgeModal isDark={isDark}></SellBadgeModal>
+      <SellBadgeModal isDark={isDark} mybadgeid={badge_id}></SellBadgeModal>
     </BadgeDetailDiv>
   );
 };
