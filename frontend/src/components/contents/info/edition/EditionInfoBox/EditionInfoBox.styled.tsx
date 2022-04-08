@@ -32,7 +32,7 @@ export const EditionTitle = styled.div`
 
 export const EditionContent = styled.div`
   /* background-color: black; */
-  width: 470px;
+  width: 420px;
   overflow: scroll;
   word-break: break-all;
 `;

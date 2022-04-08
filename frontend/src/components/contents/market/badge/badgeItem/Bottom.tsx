@@ -28,15 +28,15 @@ export const Bottom = ({ badgeId, isDark, price }: IBottom) => {
   const [like, setLike] = useState(false);
 
   // Axios
-  const [nftSeq, setNftSeq] = useState(0)
+  const [nftSeq, setNftSeq] = useState(0);
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badgeId}`
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badgeId}`,
     }).then((res) => {
-      setNftSeq(res.data.success.nftinfo.nft_seq)
-    })
-  }
+      setNftSeq(res.data.success.nftinfo.nft_seq);
+    });
+  };
 
   const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
@@ -96,20 +96,29 @@ export const Bottom = ({ badgeId, isDark, price }: IBottom) => {
     checkLike(localStorage.getItem("userSeq"), badgeId);
   }, [badgeId]);
   useEffect(() => {
-    getNftInfo()
-  })
+    getNftInfo();
+  });
   return (
     <BottomLayOut>
-      <Link to={badgeId}>
-        <Button styleVariant={isDark ? "secondary" : "secondaryWeak"}>
-          <LetterBox color="light">자세한 혜택 보러가기</LetterBox>
-        </Button>
-      </Link>
       <BottomBottomLayOut>
+        <Link to={badgeId}>
+          <Button styleVariant="primary">
+            <LetterBox color="light"> 자세한 혜택 보러가기 </LetterBox>
+          </Button>
+        </Link>
         {/* badgeId자리에는 토큰 아이디, nftSeq자리가 우리가 알고 있는 badgeId 즉 이상하다.*/}
-        <Button onClick={() => buyBadge(badgeId, price, nftSeq)} styleVariant="primary">
-          <LetterBox weight="extraBold">Buy @ {price} ETH</LetterBox>
-        </Button>
+        {/* {price === null ? (
+          <Button styleVariant="secondary">
+            <LetterBox weight="extraBold">Already Sell</LetterBox>
+          </Button>
+        ) : (
+          <Button
+            onClick={() => buyBadge(badgeId, price, nftSeq)}
+            styleVariant="primary"
+          >
+            <LetterBox weight="extraBold">Buy @ {price} ETH</LetterBox>
+          </Button>
+        )} */}
         {login ? (
           <BadgeImageLayOut>
             {like ? (
