@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import UtsRouter from "./routes";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { GlobalStyle } from "./global/style";
 import { ThemeProvider } from "styled-components";
 
@@ -70,7 +69,6 @@ function App() {
         <GlobalStyle />
         <UtsRouter />
       </ThemeProvider>
-      <ReactQueryDevtools />
     </UtsContainer>
   );
 }

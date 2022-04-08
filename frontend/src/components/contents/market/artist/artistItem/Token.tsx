@@ -1,5 +1,5 @@
 import { ThemeType } from "../../../../../global/theme";
-import { camelToTitle } from "../../../../../utils/string";
+import { camelToTitle, shortenString } from "../../../../../utils/string";
 import LetterBox from "../../../../containers/letterBox/LetterBox";
 import {
   TokenItemBox,
@@ -24,8 +24,8 @@ export const Token = ({ isDark, ...api }: IToken) => {
           </LetterBox>
           <TokenItemBox isDark={isDark}>
             <TokenImage isDark={isDark} src={val.tokenSrc} />
-            <LetterBox color={isDark ? "light" : "dark"}>
-              {val.tokenName}
+            <LetterBox size="body2" color={"shade"}>
+              {val.tokenName && shortenString(val.tokenName, 15)}
             </LetterBox>
             <LetterBox size="body2" color={isDark ? "light" : "dark"}>
               {val.price} ETH
