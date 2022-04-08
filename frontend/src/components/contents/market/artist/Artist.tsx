@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import Palette from "../../../../foundation/color/Palette";
 import { themeAtom } from "../../../../recoil/theme";
 import { ButtonLoad } from "../../profile/nftBadgeList/NftBadgeList.style";
 import { GridLayOut } from "./Artist.styled";
@@ -365,6 +366,15 @@ export const Artist = () => {
             </ButtonLoad>
           ) : (
             <ButtonLoad
+              key={isDark + ""}
+              animate={{
+                backgroundColor: isDark ? Palette.Grigio400 : Palette.Blu100,
+              }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: 1,
+              }}
               isDark={isDark}
               onClick={() => setIdxLoad(idxLoad + 24)}
             >

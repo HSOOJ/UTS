@@ -24,7 +24,6 @@ export const ArtistInfoBox = ({
   artistSns,
   artistFollowersTotal,
 }: IArtistInfoBox) => {
-  const artistDetailStateVal = useRecoilValue(artistDetailState);
   const CategoryList = [
     "",
     "🎵 Music",
@@ -46,12 +45,13 @@ export const ArtistInfoBox = ({
         <InfoMoreDetailBox isDark={isDark}>
           {CategoryList[Number(category)]}
         </InfoMoreDetailBox>
+
         <InfoMoreDetailBoxa
           isDark={isDark}
           href={`https://${artistSns}`}
           target="_blank"
         >
-          {artistSns}
+          {artistSns.length > 20 ? artistSns.slice(0, 20) + "..." : artistSns}
         </InfoMoreDetailBoxa>
         <InfoMoreDetailBox isDark={isDark}>
           {artistFollowersTotal}명의 팔로워

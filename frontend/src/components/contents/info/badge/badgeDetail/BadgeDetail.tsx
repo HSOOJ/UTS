@@ -5,16 +5,13 @@ import { ThemeType } from "../../../../../global/theme";
 import { badgeDetailState } from "../../../../../recoil/BadgeDetail";
 import { profileState } from "../../../../../recoil/profile";
 import Button from "../../../../containers/button";
-import LetterBox from "../../../../containers/letterBox/LetterBox";
 import { BuyBadgeModal } from "../buyBadgeModal/BuyBadgeModal";
 import { SellBadgeModal } from "../sellBadgeModal/SellBadgeModal";
 import { BadgeDetailDiv, ButtonDiv } from "./BadgeDetail.styled";
-import { ethers } from "ethers";
-import { marketContract } from "../../../../../config";
 import axios from "axios";
 
 interface IBadgeDetail extends ThemeType {
-  badge_id: number
+  badge_id: number;
 }
 
 export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
@@ -37,17 +34,17 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`,
     }).then((res) => {
-      setNftPrice(res.data.success.salePrice.sale_price)
-    })
-  }
+      setNftPrice(res.data.success.salePrice.sale_price);
+    });
+  };
 
   const onClickBuy = () => {
     setBadgeDetailStateVal({
       ...badgeDetailStateVal,
       isOpenBuyModal: true,
-      badgeId: badge_id
+      badgeId: badge_id,
     });
   };
 
@@ -59,8 +56,8 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
   };
 
   useEffect(() => {
-    getNftInfo()
-  }, [])
+    getNftInfo();
+  }, []);
   // console.log(userDetailStateVal.userWallet); // badgeDetailStateVal.userWallet이랑 같으면 어떻게 하고 아니면 어떻게 하게 해결 해야함
 
   return (

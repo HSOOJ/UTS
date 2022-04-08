@@ -1,4 +1,5 @@
 import { useRecoilValue } from "recoil";
+import Palette from "../../../../foundation/color/Palette";
 import Ethereum from "../../../../foundation/Icon/assets/Ethereum";
 import { themeAtom } from "../../../../recoil/theme";
 import { shortenString } from "../../../../utils/string";
@@ -7,16 +8,24 @@ import {
   LayOut,
   Message,
   Modal,
+  ModalVariation,
   SVGBox,
   WalletBadge,
 } from "./Signature.styled";
 
-export const Signature = () => {
+export const Signature = (isSuccess: boolean) => {
   const isDark = useRecoilValue(themeAtom).isDark;
-  const wallet = localStorage.getItem("userAccount")?.replaceAll('"', "");
+  const userAccount = localStorage.getItem("userAccount");
+  const wallet = userAccount
+    ? userAccount.replaceAll('"', "")
+    : "사용자님의 지갑주소로부터 민팅";
   return (
     <LayOut>
-      <Modal isDark={isDark}>
+      <Modal
+        isDark={isDark}
+        variants={ModalVariation}
+        transition={{ delay: 10, duration: 10 }}
+      >
         <SVGBox
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1.5, repeatDelay: 0.5 }}

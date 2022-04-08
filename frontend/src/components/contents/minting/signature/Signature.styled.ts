@@ -7,6 +7,7 @@ import { bgColor, borderColor } from "../Minting.styled";
 export const LayOut = styled.div`
   z-index: 100;
   position: fixed;
+  left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -17,9 +18,9 @@ export const LayOut = styled.div`
   align-items: center;
 `;
 
-export const Modal = styled.div<ThemeType>`
+export const Modal = styled(motion.div)<ThemeType>`
   position: absolute;
-  top: 20vh;
+  top: 25vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -45,7 +46,7 @@ export const Message = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 `;
 
 export const WalletBadge = styled.div<ThemeType>`
@@ -59,3 +60,9 @@ export const WalletBadge = styled.div<ThemeType>`
   border: 1px solid
     ${({ isDark }) => (isDark ? Palette.Grigio400 : Palette.Blu100)};
 `;
+
+export const ModalVariation = {
+  success: {
+    backgroundColor: Palette.Blu200,
+  },
+};

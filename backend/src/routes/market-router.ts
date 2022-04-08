@@ -70,6 +70,7 @@ async function nfts(sortby: number, category: number) {
       const ownerImg = await userService.getAllUserProfileImage(
         cur.nft_nft_owner_seq
       );
+      if (cur.sale_sale_price != null)
       res.push({
         editionImage: editionInfo?.edition_image, // 뱃지 사진
         editionName: editionInfo?.edition_name, // 에디션 이름
