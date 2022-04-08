@@ -74,12 +74,12 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
       </ButtonDiv>
       <BuyBadgeModal isDark={isDark}></BuyBadgeModal>
       <ButtonDiv>
-        <Button styleVariant="primary" onClick={onClickSell}>
+        {/* <Button styleVariant="primary" onClick={onClickSell}>
           Sell this Badge
         </Button>
         <Button styleVariant="primary" onClick={copyCodeToClipboard}>
           Share with Friends
-        </Button>
+        </Button> */}
       </ButtonDiv>
       <SellBadgeModal isDark={isDark} mybadgeid={badge_id}></SellBadgeModal>
     </BadgeDetailDiv>

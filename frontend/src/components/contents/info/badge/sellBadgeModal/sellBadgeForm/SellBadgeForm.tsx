@@ -17,7 +17,6 @@ import { ISellBadge } from "../SellBadgeModal.types";
 import { resellBadge } from "../../../../../../hooks/minting";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FixedNumber } from "ethers";
 
 interface ISellBadgeForm extends ThemeType {
   handleSubmit: UseFormHandleSubmit<ISellBadge>;
