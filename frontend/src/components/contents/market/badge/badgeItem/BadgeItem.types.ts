@@ -25,16 +25,6 @@ interface IBadgeItemData {
   total: number;
   nftOwnerSeq: string;
   nftOwnerImage: string;
-  // id: string;
-  // badgeImgSrc: string;
-  // artistSrc: string;
-  // name: string;
-  // category: string;
-  // liked: boolean;
-  // like: number;
-  // price: number;
-  // edition: EditionDataType;
-  // owner: OwnerDataType;
 }
 
 export interface IBadgeItem extends IBadgeItemData, IReactNode {}

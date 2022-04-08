@@ -2,6 +2,7 @@ import Alarm from "./Alarm";
 import ArrowDownShortWide from "./ArrowDownShorWide";
 import ArrowUpWideShort from "./ArrowUpWideShort";
 import Check from "./Check";
+import CircleNotch from "./CircleNotch";
 import Exclamation from "./Exclamation";
 import Heart from "./Heart";
 import HeartSolid from "./HeartSolid";
@@ -18,6 +19,7 @@ const icon = {
   "arrow-up-wide-short": ArrowUpWideShort,
   "exclamation": Exclamation,
   "check": Check,
+  "circle-notch": CircleNotch,
   "heart": Heart,
   "heart-solid": HeartSolid,
   "image": Image,

@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
+import Palette from "../../../../foundation/color/Palette";
 import { ThemeType } from "../../../../global/theme";
 
 export const Container = styled.div`
@@ -33,13 +35,22 @@ export const TextNftNum = styled.p<ThemeType>`
   font-size: 18px;
   color: ${({ isDark }) => (isDark ? "white" : "black")};
 `;
-export const ButtonLoad = styled.button<ThemeType>`
+export const ButtonLoad = styled(motion.button)<ThemeType>`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
   background: none;
-  border: 1px solid #a8c1f8;
+  border: 1px solid
+    ${({ isDark }) => (isDark ? Palette.Grigio500 : Palette.Blu100)};
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  border-radius: 60px;
+  background-color: ${({ isDark }) =>
+    isDark ? Palette.Nero100 : Palette.BluOpacity100};
   color: ${({ isDark }) => (isDark ? "white" : "black")};
   display: inline;
   font-size: 17px;
