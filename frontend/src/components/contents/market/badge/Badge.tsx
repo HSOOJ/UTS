@@ -46,7 +46,7 @@ export const Badge = () => {
         category: 0,
       },
     }).then((res) => {
-      // console.log(res);
+      console.log(res);
       setDatas(res.data.success);
       setLoading(false);
     });
