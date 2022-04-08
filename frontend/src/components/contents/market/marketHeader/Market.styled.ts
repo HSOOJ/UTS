@@ -19,7 +19,7 @@ export const LayOut = styled.div<ThemeType>`
   border-radius: 110px;
   min-width: 500px;
   width: 67%;
-  height: 220px;
+  height: 280px;
   align-items: center;
   justify-content: space-evenly;
   margin-top: 1.5rem;
