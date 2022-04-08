@@ -120,7 +120,7 @@ export const BadgeInfo = () => {
         {editionName}
       </LetterBox>
       <Boxout>
-        <LetterBox size="h2">{myTokenDescpt}</LetterBox>
+        <LetterBox size="h3">{myTokenDescpt}</LetterBox>
       </Boxout>
       <BadgeInfoPerson
         isDark={isDark}
