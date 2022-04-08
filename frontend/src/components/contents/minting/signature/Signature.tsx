@@ -15,7 +15,10 @@ import {
 
 export const Signature = (isSuccess: boolean) => {
   const isDark = useRecoilValue(themeAtom).isDark;
-  const wallet = localStorage.getItem("userAccount")?.replaceAll('"', "");
+  const userAccount = localStorage.getItem("userAccount");
+  const wallet = userAccount
+    ? userAccount.replaceAll('"', "")
+    : "사용자님의 지갑주소로부터 민팅";
   return (
     <LayOut>
       <Modal

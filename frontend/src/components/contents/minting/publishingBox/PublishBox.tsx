@@ -78,7 +78,12 @@ export const PublishBox = () => {
             <Price isDark={isDark} />
             <LayOutFlexEnd>
               <Label isDark={isDark}>가스비 부담할게요</Label>
-              <Switch isDark={isDark} onToggle={() => {}} />
+              <Switch
+                isDark={isDark}
+                onToggle={async () => {
+                  alert("🚧 가스비 부담 이전 기능은 추후 도입 예정입니다 🚧");
+                }}
+              />
             </LayOutFlexEnd>
             <LayOutFlexEnd>
               <LetterBox color={isDark ? "light" : "primary"}>
