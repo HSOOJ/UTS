@@ -1,17 +1,23 @@
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { ThemeType } from "../../../../../../global/theme";
 import { IForm } from "../../../../../../types/IForm";
 import Input from "../../../../../containers/input";
 import { ISellBadge } from "../SellBadgeModal.types";
 
-interface IPrice extends IForm, ThemeType {}
+interface IPrice extends IForm, ThemeType {
+  setNftPrice: Dispatch<SetStateAction<number>>
+}
 
 export const Price = ({ isDark }: IPrice) => {
   const {
     register,
     formState: { errors },
   } = useFormContext<ISellBadge>();
+  useEffect(() => {
 
+    console.log(register)
+  }, [register])
   return (
     <Input
       register={register("salePrice", {
