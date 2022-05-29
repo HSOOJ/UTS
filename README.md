@@ -2,7 +2,7 @@
 
 <br/>
 
-<div align="center"><img src="/uploads/2cec13046a67b1fecde9b5117929fc49/logo.png" alt="logo" width="50%"/></div><br>
+<div align="center"><img src="./PIC/logo.png" alt="logo" width="50%"/></div><br>
 <div align="center">아티스트와 팬의 만남의 장, <b>UTS</b></div>
 <br/>
 
@@ -32,7 +32,7 @@
 
 ### - 팀 이름
 
-<img src ="/uploads/0eceae46dfba384899e8df0ad614b313/uts.png" alt="팀 소개" width="60%">
+<img src ="./PIC/uts.png" alt="팀 소개" width="60%">
 
 깊은 바닷속처럼 무한한 세상이 펼쳐질 NFT 거래소
 
@@ -83,18 +83,18 @@
 
 #### 아티스트 분류
 
-<img src ="/uploads/06cae7ec8e27c2de51d84ee9fbb9b432/artist.png" alt="artist" width="80%"/>
+<img src ="./PIC/artist.png" alt="artist" width="80%"/>
 <br>
 
 #### 팬 증명 뱃지 혜택
 
-<img src ="/uploads/39cfb285e49a2e4f9878460d0e7218d5/에디션.png" alt="뱃지 설명 1" width="80%"/>
+<img src ="./PIC/에디션.png" alt="뱃지 설명 1" width="80%"/>
 
 - 각 뱃지별로, 혜택 및 기한, 수량 등은 모두 아티스트의 선택 사항
 
 ### 3️⃣ 기술 스택
 
-<img src ="/uploads/e272333b0ad1573ca7d4fd18c41ebd30/아키텍쳐2.png" alt="아키텍쳐" width="80%"/>
+<img src ="./PIC/아키텍쳐2.png" alt="아키텍쳐" width="80%"/>
 
 <br>
 
@@ -246,4 +246,4 @@ uts-backend
 
 ## **프로젝트 영상**
 
-[![유튜브 링크](/uploads/0eceae46dfba384899e8df0ad614b313/uts.png)](https://youtu.be/7gjpJt1W428)
+[![유튜브 링크](./PIC/uts.png)](https://youtu.be/7gjpJt1W428)
