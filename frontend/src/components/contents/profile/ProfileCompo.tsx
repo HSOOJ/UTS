@@ -1,42 +1,199 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { profileState } from "../../../recoil/profile";
+import FollowList from "./followList";
+import ModifyModal from "./modify";
+import NftBadgeList from "./nftBadgeList";
+import TradeList from "./tradeList";
+import { Popover, Modal, Popconfirm, Alert } from "antd";
 import { userState } from "../../../recoil/user";
+import { Params, useParams } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+import {
+  ButtonModify,
+  ButtonSelect,
+  Container,
+  Image,
+  ImageContainer,
+  ProfileContainerInfo,
+  ProfileContainerModify,
+  ProfileDetail,
+  TextMain,
+} from "./Profile.style";
+import { themeAtom } from "../../../recoil/theme";
+import Button from "../../containers/button";
+
+interface ProfileParamTypes extends Params {
+  userSeq: string;
+}
 
 export const ProfileCompo = () => {
   // recoil
-  const [userStateVal, setUserStateVal] = useRecoilState(userState);
+  const [profileStateVal, setProfileStateVal] = useRecoilState(profileState);
+  const isDark = useRecoilValue(themeAtom).isDark;
 
-  // state
-  const token = localStorage.getItem("token");
+  // useParams
+  const { userSeq } = useParams() as ProfileParamTypes;
 
-  // router navigate
-  let navigate = useNavigate();
-  const moveUserUrl = () => {
-    if (!userStateVal.login) navigate("/user");
+  // useState
+  const [modifyBool, setModifyBool] = useState(true);
+  const [showAddr, SetShowAddr] = useState(false);
+
+  // function _ modal
+  const showModal = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      modalVisible: true,
+    });
   };
-  useEffect(moveUserUrl, [userStateVal.login]);
+
+  // Axios
+  const AxiosUserInfo = (seq: string | null) => {
+    axios
+      .get("http://j6a105.p.ssafy.io:8080/api/user/info", {
+        params: { userSeq: seq },
+      })
+      .then((res) => {
+        setProfileStateVal({
+          ...profileStateVal,
+          userNickname: res.data.success.userNickname,
+          modifyNickname: res.data.success.userNickname,
+          userProfileImage: res.data.success.userProfileImage,
+        });
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
 
   // click button
-  const clickDelete = () => {
-    console.log(`SUCCESS Delete Account\n${token}`);
-    localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
+  const clickAddr = () => {
+    SetShowAddr(!showAddr);
   };
-  const clickLogout = () => {
-    console.log(`LOGOUT & Clear localStorage\n${token}`);
-    localStorage.clear();
-    setUserStateVal({ ...userStateVal, login: false, loginForm: true });
+  const clickRegist = () => {
+    window.open("https://forms.gle/KJUHZF2AWpHVT1z29");
   };
+  const clickNftBadgeList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: true,
+      tradeList: false,
+      followList: false,
+    });
+  };
+  const clickTradeList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: false,
+      tradeList: true,
+      followList: false,
+    });
+  };
+  const clickfollowList = () => {
+    setProfileStateVal({
+      ...profileStateVal,
+      nftBadgeList: false,
+      tradeList: false,
+      followList: true,
+    });
+  };
+
+  // useEffect
+  useEffect(() => {
+    AxiosUserInfo(userSeq);
+  }, []);
+  useEffect(() => {
+    AxiosUserInfo(userSeq);
+    if (userSeq === localStorage.getItem("userSeq")) {
+      setModifyBool(true);
+    } else {
+      setModifyBool(false);
+    }
+  }, [profileStateVal.clickProfile]);
 
   return (
     <>
-      <h1>ProfileCompo</h1>
-      <h2>now LoggedIn</h2>
-      <button onClick={clickDelete}>Delete Account</button>
-      <button onClick={clickLogout}>Logout</button>
-      <button>닉네임 수정</button>
-      <button>프로필 사진 수정</button>
+      <Container isDark={isDark}>
+        <ProfileContainerModify>
+          <ImageContainer>
+            <Image
+              src={
+                profileStateVal.userProfileImage
+                  ? profileStateVal.userProfileImage
+                  : undefined
+              }
+            />
+          </ImageContainer>
+          <TextMain>{profileStateVal.userNickname}님의 컬렉션</TextMain>
+        </ProfileContainerModify>
+        <ProfileContainerModify>
+          {modifyBool ? (
+            <>
+              <ButtonModify>
+                <Button styleVariant="primary" onClick={clickAddr}>
+                  내 지갑 주소 보기
+                </Button>
+                <Button styleVariant="primary" onClick={clickRegist}>
+                  아티스트 등록하기
+                </Button>
+                <Button styleVariant="primary" onClick={showModal}>
+                  수정
+                </Button>
+              </ButtonModify>
+              {/* <ButtonModify isDark={isDark} onClick={clickAddr}>
+                내 지갑 주소 보기
+              </ButtonModify>
+              <ButtonModify isDark={isDark} onClick={clickRegist}>
+                아티스트 등록하기
+              </ButtonModify>
+              <ButtonModify isDark={isDark} onClick={showModal}>
+                수정
+              </ButtonModify> */}
+              {profileStateVal.modalVisible ? <ModifyModal /> : null}
+            </>
+          ) : null}
+        </ProfileContainerModify>
+        <ProfileDetail isDark={isDark}>
+          {showAddr ? (
+            <Alert
+              message={profileStateVal.userWallet}
+              type="info"
+              showIcon
+              closable
+              onClose={() => {
+                SetShowAddr(false);
+              }}
+            />
+          ) : null}
+          <ProfileContainerInfo>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.nftBadgeList}
+              onClick={clickNftBadgeList}
+            >
+              NFT 뱃지
+            </ButtonSelect>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.tradeList}
+              onClick={clickTradeList}
+            >
+              거래 내역
+            </ButtonSelect>
+            <ButtonSelect
+              isDark={isDark}
+              isSelected={profileStateVal.followList}
+              onClick={clickfollowList}
+            >
+              팔로잉
+            </ButtonSelect>
+          </ProfileContainerInfo>
+          {profileStateVal.nftBadgeList ? <NftBadgeList /> : null}
+          {profileStateVal.tradeList ? <TradeList /> : null}
+          {profileStateVal.followList ? <FollowList /> : null}
+        </ProfileDetail>
+      </Container>
     </>
   );
 };

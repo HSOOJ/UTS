@@ -3,7 +3,6 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import path from "path";
 import helmet from "helmet";
-
 import express, { NextFunction, Request, Response } from "express";
 import StatusCodes from "http-status-codes";
 import "express-async-errors";
@@ -13,9 +12,20 @@ import logger from "jet-logger";
 import { CustomError } from "@shared/errors";
 
 import cors from "cors";
+import http from "http";
+
+import swaggerUi from "swagger-ui-express";
+const swaggerFile = require("./swagger/swagger-output.json");
 
 // Constants
 const app = express();
+
+//Swagger
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, { explorer: true })
+);
 
 /***********************************************************************************
  *                                  Middlewares
@@ -25,9 +35,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// app.use(cors(CorsOptions))
 
 // CORS
-const allowedOrigins = ["http://localhost:3000", "*"];
+const allowedOrigins = [
+  "*",
+  "http://j6a105.p.ssafy.io:3000",
+  "http://localhost:3000",
+  "http://localhost:80",
+  "http://j6a105.p.ssafy.io:80",
+  "http://j6a105.p.ssafy.io",
+];
 const options: cors.CorsOptions = {
   allowedHeaders: [
     "Origin",
@@ -35,12 +53,14 @@ const options: cors.CorsOptions = {
     "Content-Type",
     "Accept",
     "X-Access-Token",
+    "Authorization",
   ],
   credentials: true,
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
   origin: allowedOrigins,
   preflightContinue: false,
 };
+
 app.use(cors(options));
 
 // Show routes called in console during development

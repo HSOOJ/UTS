@@ -1,43 +1,53 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from "typeorm";
+import { Artist } from "./Artist";
+import { Heart } from "./heart-model";
+import { Nft } from "./nft-model";
 
-// User schema
-export interface IUser {
-    id: number;
-    name: string;
-    email: string;
-}
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  user_seq: number;
 
+  @Column()
+  user_nickname: string;
 
-/**
- * Get a new User object.
- * 
- * @returns 
- */
-function getNew(name: string, email: string): IUser {
-    return {
-        id: -1,
-        email,
-        name,
-    };
-}
+  @Column()
+  user_wallet_address: string;
 
+  @Column()
+  user_profile_image: string;
 
-/**
- * Copy a user object.
- * 
- * @param user 
- * @returns 
- */
-function copy(user: IUser): IUser {
-    return {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-    }
-}
+  @Column()
+  user_role: number; //(0: 일반회원, 1: 아티스트, 2: 관리자)
 
+  @Column({ default: 0 })
+  user_volume: number;
 
-// Export default
-export default {
-    new: getNew,
-    copy,
+  @CreateDateColumn()
+  reg_dt: Date;
+
+  @UpdateDateColumn()
+  mod_dt: Date;
+
+  @DeleteDateColumn()
+  del_dt: Date;
+
+  @OneToMany(() => Heart, (heart) => heart.userSeq2)
+  hearts: Heart[];
+
+  @OneToMany(() => Nft, (nft) => nft.nftOwnerSeq2)
+  @JoinColumn({ name: "nfts" })
+  nfts: Nft[];
+  @OneToOne(() => Artist, (artist) => artist.user)
+  artist: Artist;
 }

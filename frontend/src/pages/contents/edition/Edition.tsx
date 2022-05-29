@@ -1,3 +1,5 @@
+import { EditionInfo } from "../../../components/contents/info/edition/EditionInfo";
+
 export const Edition = () => {
-  return <h1>Edition</h1>;
+  return <EditionInfo />;
 };

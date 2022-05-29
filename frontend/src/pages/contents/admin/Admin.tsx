@@ -1,3 +1,11 @@
+import { AdminCompo } from "../../../components/contents/admin/AdminCompo";
+
 export const Admin = () => {
-  return <h1>Admin</h1>;
+  // recoil
+
+  return (
+    <>
+      <AdminCompo />
+    </>
+  );
 };

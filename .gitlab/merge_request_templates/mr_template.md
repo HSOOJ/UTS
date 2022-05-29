@@ -1,11 +1,27 @@
 ## Merge Description :pencil2:
 
-무엇이 변경됐나요?
+following 목록
+
+결과 예시
+
+```{
+    "success": [
+        {
+            "userSeq": 1,
+            "userNickname": "유싸피",
+            "userProfileImage": "img",
+            "following": "y"
+        },
+        {
+            "userSeq": 4,
+            "userNickname": "가짜 아티스트",
+            "userProfileImage": "art.png",
+            "following": "y"
+        }
+    ]
+}
+```
 
 ## Issues :question:
 
-이건 했는데 이건 안돼요 ㅠ
-
 ## Discussion :card_box:
-
-이런건 어때요?

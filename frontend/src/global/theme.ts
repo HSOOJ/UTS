@@ -1,3 +1,1 @@
-import { DefaultTheme } from "styled-components";
-
-export const lightTheme: DefaultTheme = {};
+export type ThemeType = { isDark?: boolean };
