@@ -240,10 +240,10 @@ uts-backend
 
 ### 6️⃣ 프로젝트 제출물
 
-- [외부서비스](./exec/)
-- [시연시나리오](./exec/)
-- [빌드배포](./exec/)
+- [외부서비스](./exec/UTS_외부서비스.pdf)
+- [시연시나리오](./exec/A105_UTS_시연시나리오.pdf)
+- [빌드배포](./exec/UTS_빌드_배포_정리.pdf)
 
 ## **프로젝트 영상**
 
-[![유튜브 링크]()]()
+[![유튜브 링크](/uploads/0eceae46dfba384899e8df0ad614b313/uts.png)](https://youtu.be/7gjpJt1W428)

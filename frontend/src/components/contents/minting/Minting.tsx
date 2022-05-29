@@ -20,11 +20,13 @@ const Minting = ({ handleSubmit, children }: IMint) => {
     onError: (err) => {
       alert(`서명이 중단 되었습니다. \n${err}`);
     },
+    onSuccess: async () => {
+      setTimeout(() => navigate(`/`), 3000);
+      alert("민팅에 성공했습니다! 홈으로 이동합니다.");
+    },
   });
 
   const onSubmit: SubmitHandler<IMinting> = (data) => {
-    // tmp
-    console.log("transmitting to blockchain network...", data);
     mutate(data);
   };
 

@@ -7,12 +7,12 @@ import { ISellBadge } from "./SellBadgeModal.types";
 import { SellBadgeForm } from "./sellBadgeForm/SellBadgeForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { resellBadge } from "../../../../../hooks/minting";
 interface ISellBadgeModal extends ThemeType {
-
+  mybadgeid: number
 }
 
-export const SellBadgeModal = ({ isDark }: ISellBadgeModal) => {
+export const SellBadgeModal = ({ isDark, mybadgeid }: ISellBadgeModal) => {
   const badgeDetailStateVal = useRecoilValue(badgeDetailState);
   const forms = useForm<ISellBadge>();
   const [nftPrice, setNftPrice] = useState(0);
@@ -30,6 +30,11 @@ export const SellBadgeModal = ({ isDark }: ISellBadgeModal) => {
   useEffect(() => {
     getNftInfo()
   }, [])
+
+  useEffect(() => {
+    getNftInfo()
+  }, [badgeDetailStateVal.badgeId])
+
   return (
     <div>
       {badgeDetailStateVal.isOpenSellModal === true ? (
@@ -38,6 +43,7 @@ export const SellBadgeModal = ({ isDark }: ISellBadgeModal) => {
             <SellBadgeForm
               isDark={isDark}
               handleSubmit={forms.handleSubmit}
+              mybadgeid={mybadgeid}
             ></SellBadgeForm>
           </ModalDiv>
         </FormProvider>

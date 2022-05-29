@@ -14,33 +14,79 @@ import {
   SellBadgeFormDiv,
 } from "../SellBadgeModal.styled";
 import { ISellBadge } from "../SellBadgeModal.types";
+import { resellBadge } from "../../../../../../hooks/minting";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { FixedNumber } from "ethers";
 
 interface ISellBadgeForm extends ThemeType {
   handleSubmit: UseFormHandleSubmit<ISellBadge>;
+  mybadgeid: number
 }
 
-export const SellBadgeForm = ({ isDark, handleSubmit }: ISellBadgeForm) => {
+export const SellBadgeForm = ({ isDark, handleSubmit, mybadgeid }: ISellBadgeForm) => {
   const [badgeDetailStateVal, setBadgeDetailStateVal] =
     useRecoilState(badgeDetailState);
+  const [nftPrice, setNftPrice] = useState(0)
+  const [nftId, setNftId] = useState(0)
 
-  const onSubmit = (res: any) => {
+  const onSubmit = async (res: any) => {
     // tmp
     console.log(res.salePrice);
     console.log("transmitting to blockchain network...");
     // blockChain api 들어가야 함
+    console.log("here1")
+    console.log("mybadgeid", mybadgeid)
+    console.log("saleprice", typeof res.salePrice)
+    await resellBadge(Number(mybadgeid), Number(res.salePrice))
+    console.log("here2")                                
     message.success("해당 뱃지가 판매 상태로 변경되었습니다.");
+    await axios({
+      method: "post",
+      url: 'http://j6a105.p.ssafy.io:8080/api/nft',
+      params: {
+        userSeq: localStorage.getItem("userSeq"),
+        nftSeq: nftId
+      }
+    }).then((res) => {
+      console.log(res)
+      alert("판매 등록이 완료되었습니다! 🥰")
+    }).catch((err) => {
+      console.log(err)
+    })
+    
     setBadgeDetailStateVal({
       ...badgeDetailStateVal,
       isOpenSellModal: false,
     });
   };
 
+  const getNftInfo = async () => {
+     console.log("badgeId", mybadgeid)
+    await axios({
+      method: "get",
+      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${mybadgeid}`
+    }).then((res) => {
+      // setNftPrice(res.data.success.salePrice.sale_price)
+      setNftId(res.data.success.nftinfo.nft_id)
+      console.log("nftid", res.data.success.nftinfo.nft_id)
+    })
+  }
+  
   const onClickCancel = () => {
     setBadgeDetailStateVal({
       ...badgeDetailStateVal,
       isOpenSellModal: false,
     });
   };
+
+  useEffect(() => {
+    getNftInfo()
+  }, [])
+
+  useEffect(() => {
+    getNftInfo()
+  }, [badgeDetailStateVal.badgeId])
 
   return (
     <SellBadgeFormDiv isDark={isDark}>
@@ -53,7 +99,7 @@ export const SellBadgeForm = ({ isDark, handleSubmit }: ISellBadgeForm) => {
       <LetterBox size="h3" weight="extraBold" color="shade">
         Price
       </LetterBox>
-      <Price isDark={isDark}></Price>
+      <Price isDark={isDark} setNftPrice={setNftPrice}></Price>
       <UnderLine isDark={isDark}></UnderLine>
       <LetterBoxRight>
         <LetterBox size="body2">

@@ -9,6 +9,7 @@ import { BigNumber, ethers } from "ethers";
 import { MARKET_ADDR, MARKET_ABI } from "../config";
 import axios from "axios";
 import { IBadge, Meta } from "../types/IBadge";
+import { FixedFormat } from "@ethersproject/bignumber";
 
 const ipfs = create({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -178,13 +179,22 @@ export const listBadgeToBackEnd = async ({
     });
 };
 
+export const getLatestEdition = async () => {
+  return await axios.get("http://j6a105.p.ssafy.io:8080/api/edition/seq");
+  // .then((data) => {
+  //   // console.log(data.data.success.max);
+  //   return data.data.success.max;
+  // })
+  // .catch((err) => console.log(err));
+};
+
 export const resellBadge = async (id: number, price: number) => {
   if (!price) return;
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
   const provider = new ethers.providers.Web3Provider(connection);
   const signer = provider.getSigner();
-
+  // const myprice = ethers.FixedNumber.from(price)
   const priceFormatted = ethers.utils.parseUnits(price + "", "ether");
   let market = new ethers.Contract(MARKET_ADDR, MARKET_ABI, signer);
   let listingPrice = await market.calcFee(price);

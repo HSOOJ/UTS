@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -51,6 +52,10 @@ export const Badge = () => {
   useEffect(() => {
     GetNftsMarket();
   }, []);
+  const { isLoading, data: badges } = useQuery<IBadgeItem[]>(
+    "badgeList",
+    getBadgeList
+  );
 
   return (
     <GridLayOut>

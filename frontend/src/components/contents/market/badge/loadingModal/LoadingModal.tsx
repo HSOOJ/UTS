@@ -16,7 +16,10 @@ import {
 
 export const LoadingModal = () => {
   const isDark = useRecoilValue(themeAtom).isDark;
-  const wallet = localStorage.getItem("userAccount")?.replaceAll('"', "");
+  const userAccount = localStorage.getItem("userAccount");
+  const wallet = userAccount
+    ? userAccount.replaceAll('"', "")
+    : "구매를 하시려면 로그인을 해주세요";
   return (
     <LayOut>
       <Modal
