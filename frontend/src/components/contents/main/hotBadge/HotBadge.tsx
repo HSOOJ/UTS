@@ -63,7 +63,7 @@ export const HotBadge = () => {
   // Axios
   const GetHotBadges = () => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/main/nfts/popular")
+      .get("http://uts_url:8080/api/main/nfts/popular")
       .then((res: any) => {
         let updatedData = datas.slice(0);
         res.data.success.map((i: any, index: number) => {

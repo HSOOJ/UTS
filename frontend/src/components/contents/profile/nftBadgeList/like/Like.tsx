@@ -47,7 +47,7 @@ export const Like = () => {
   // Axios
   const AxiosUserLike = (seq: string | null) => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/user/likes", {
+      .get("http://uts_url:8080/api/user/likes", {
         params: { userSeq: seq },
       })
       .then((res) => {

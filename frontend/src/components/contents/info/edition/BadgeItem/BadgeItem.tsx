@@ -42,7 +42,7 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
   const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
+      url: "http://uts_url:8080/api/nft/check/heart", // 고쳐야 합니다
       params: {
         // userSeq: profileStateVal.userSeq,
         // nftSeq: badgeItem.nft_num,
@@ -61,7 +61,7 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
   const onClickLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
+      url: "http://uts_url:8080/api/nft/like",
       data: {
         // userSeq: profileStateVal.userSeq,
         // nftSeq: badgeItem.nft_seq,
@@ -79,7 +79,7 @@ export const BadgeItem = ({ isDark, badgeItem }: IBadgeItem) => {
   ) => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
+      url: "http://uts_url:8080/api/nft/unlike",
       data: {
         // userSeq: profileStateVal.userSeq,
         // nftSeq: badgeItem.nft_seq,

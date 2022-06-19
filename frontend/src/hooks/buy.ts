@@ -28,7 +28,7 @@ const reportToBE = async (nftSeq: number) => {
   console.log("buying check nftSeq", nftSeq)
   axios({
     method: "POST",
-    url: "http://j6a105.p.ssafy.io:8080/api/nft/buy",
+    url: "http://uts_url:8080/api/nft/buy",
     data: {
       userSeq: localStorage.getItem("userSeq") as string,
       nftSeq,

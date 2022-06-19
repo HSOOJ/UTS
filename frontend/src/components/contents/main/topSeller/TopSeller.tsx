@@ -63,7 +63,7 @@ export const TopSeller = () => {
   // Axios
   const GetTopSeller = () => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/main/topsellers")
+      .get("http://uts_url:8080/api/main/topsellers")
       .then((res: any) => {
         let updatedData = datas.slice(0);
         res.data.success.map((i: any, index: number) => {

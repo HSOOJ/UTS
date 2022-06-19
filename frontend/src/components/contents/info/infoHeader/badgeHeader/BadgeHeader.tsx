@@ -55,7 +55,7 @@ export const BadgeHeader = ({ badge_id, tokenInfo }: IBadgeHeader) => {
   const checkLike = (userSeq: string | null | undefined, nftSeq: string) => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/check/heart", // 고쳐야 합니다
+      url: "http://uts_url:8080/api/nft/check/heart", // 고쳐야 합니다
       params: {
         // userSeq: profileStateVal.userSeq,
         // nftSeq: badge_id,
@@ -73,7 +73,7 @@ export const BadgeHeader = ({ badge_id, tokenInfo }: IBadgeHeader) => {
   const onClickLike = () => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/like",
+      url: "http://uts_url:8080/api/nft/like",
       data: {
         userSeq: profileStateVal.userSeq, // 고쳐야 합니다.
         nftSeq: badge_id,
@@ -86,7 +86,7 @@ export const BadgeHeader = ({ badge_id, tokenInfo }: IBadgeHeader) => {
   const onClickDislike = () => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/nft/unlike",
+      url: "http://uts_url:8080/api/nft/unlike",
       data: {
         userSeq: profileStateVal.userSeq, // 고쳐야 합니다.
         nftSeq: badge_id,
@@ -99,7 +99,7 @@ export const BadgeHeader = ({ badge_id, tokenInfo }: IBadgeHeader) => {
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${badge_id}`
     }).then((res) => {
       setHeaderImage(res.data.success.editioninfo[0].Edition_edition_image)
       console.log("imageurl", res.data.success.editioninfo[0].Edition_edition_image)

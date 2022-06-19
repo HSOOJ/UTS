@@ -22,7 +22,7 @@ export const ModifyModal = () => {
   // Axios
   const PutWidthdraw = (userSeq: string | null) => {
     axios
-      .put("http://j6a105.p.ssafy.io:8080/api/user/withdraw", {
+      .put("http://uts_url:8080/api/user/withdraw", {
         userSeq,
       })
       .then(() => {
@@ -44,7 +44,7 @@ export const ModifyModal = () => {
   };
   const PutNickname = (userSeq: string | null, userNickname: string | null) => {
     axios
-      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/nickname", {
+      .put("http://uts_url:8080/api/user/edit/nickname", {
         userSeq,
         userNickname,
       })
@@ -60,7 +60,7 @@ export const ModifyModal = () => {
     userProfileImage: string | undefined | null
   ) => {
     axios
-      .put("http://j6a105.p.ssafy.io:8080/api/user/edit/image", {
+      .put("http://uts_url:8080/api/user/edit/image", {
         userSeq,
         userProfileImage,
       })

@@ -68,7 +68,7 @@ export const BadgeInfo = () => {
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${badge_id}`
     }).then((res) => {
       setTokenInfo(res.data.success)
       setTokenId(res.data.success.nftinfo.nft_id)

@@ -36,7 +36,7 @@ export const Selling = () => {
   // Axios
   const AxiosUserNftOnSale = (seq: string | null) => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/user/nfts/onsale", {
+      .get("http://uts_url:8080/api/user/nfts/onsale", {
         params: { userSeq: seq },
       })
       .then((res) => {

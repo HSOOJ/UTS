@@ -29,7 +29,7 @@ export const ManageUser = ({ isDark }: IManageUserMain) => {
   const AddArtist = () => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/artist/accept",
+      url: "http://uts_url:8080/api/admin/artist/accept",
       params: {
         userSeq: adminStateVal.userSeq,
         commonCodeSeq: 1,
@@ -49,7 +49,7 @@ export const ManageUser = ({ isDark }: IManageUserMain) => {
     let artistSeq = adminStateVal.artistSeq;
     axios({
       method: "PUT",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/artist/cancel",
+      url: "http://uts_url:8080/api/admin/artist/cancel",
       params: {
         userSeq: userSeq,
         artistSeq: artistSeq,

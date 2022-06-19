@@ -4,8 +4,8 @@ const options = {
     title: "Under the Sea",
     description: "싸피 서울 6기 특화 프로젝트 - UTS",
   },
-  host: "j6a105.p.ssafy.io:8080/api",
-  servers: [{ url: "http://j6a105.p.ssafy.io:8080" }],
+  host: "uts_url:8080/api",
+  servers: [{ url: "http://uts_url:8080" }],
   schemes: ["http"],
   // securityDefinitions: {
   //   bearerAuth: {

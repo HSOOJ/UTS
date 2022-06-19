@@ -158,7 +158,7 @@ export const listBadgeToBackEnd = async ({
 }: IMintingBE) => {
   axios({
     method: "POST",
-    url: "http://j6a105.p.ssafy.io:8080/api/nft/minting",
+    url: "http://uts_url:8080/api/nft/minting",
     data: {
       userSeq,
       editionName,
@@ -180,7 +180,7 @@ export const listBadgeToBackEnd = async ({
 };
 
 export const getLatestEdition = async () => {
-  return await axios.get("http://j6a105.p.ssafy.io:8080/api/edition/seq");
+  return await axios.get("http://uts_url:8080/api/edition/seq");
   // .then((data) => {
   //   // console.log(data.data.success.max);
   //   return data.data.success.max;

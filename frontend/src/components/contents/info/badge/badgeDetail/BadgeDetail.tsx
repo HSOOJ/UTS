@@ -34,7 +34,7 @@ export const BadgeDetail = ({ isDark, badge_id }: IBadgeDetail) => {
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`,
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${badge_id}`,
     }).then((res) => {
       setNftPrice(res.data.success.salePrice.sale_price);
     });

@@ -35,7 +35,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   const getArtistInfo = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/info",
+      url: "http://uts_url:8080/api/artist/info",
       params: {
         artistSeq: artistId,
       },
@@ -54,7 +54,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   const getEditionDetail = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/edition/info",
+      url: "http://uts_url:8080/api/edition/info",
       params: {
         editionSeq: editionId,
       },
@@ -76,7 +76,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   ) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
+      url: "http://uts_url:8080/api/artist/follow",
       data: {
         userTo,
         userFrom,
@@ -97,7 +97,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   ) => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
+      url: "http://uts_url:8080/api/artist/unfollow",
       data: {
         userTo,
         userFrom,
@@ -120,7 +120,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   ) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/report",
+      url: "http://uts_url:8080/api/artist/report",
       data: {
         userSeq,
         artistSeq,
@@ -135,7 +135,7 @@ export const ArtistHeader = ({ artistId, editionId }: PropsType) => {
   ) => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow",
+      url: "http://uts_url:8080/api/artist/check/follow",
       params: {
         userTo,
         userFrom,

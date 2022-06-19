@@ -31,7 +31,7 @@ function App() {
   const CheckRole = (walletAddress: string | undefined) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/user/join",
+      url: "http://uts_url:8080/api/user/join",
       data: {
         userWalletAddress: walletAddress,
       },

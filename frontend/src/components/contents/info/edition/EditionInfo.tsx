@@ -41,7 +41,7 @@ export const EditionInfo = () => {
   const getEditionDetail = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/edition/info",
+      url: "http://uts_url:8080/api/edition/info",
       params: {
         editionSeq: edition_id,
       },
@@ -72,7 +72,7 @@ export const EditionInfo = () => {
   const getBadgeList = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/edition/nfts",
+      url: "http://uts_url:8080/api/edition/nfts",
       params: {
         editionSeq: edition_id,
         userSeq: profileStateVal.userSeq,

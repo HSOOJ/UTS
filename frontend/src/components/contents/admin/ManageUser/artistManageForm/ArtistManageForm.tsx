@@ -28,7 +28,7 @@ export const ArtistManageForm = ({ isDark, handleSubmit }: IArtistManage) => {
     console.log(adminStateVal);
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/artist/accept",
+      url: "http://uts_url:8080/api/admin/artist/accept",
       data: {
         userSeq: adminStateVal.userSeq,
         commonCodeSeq: commonCodeSeq,

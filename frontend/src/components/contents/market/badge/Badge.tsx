@@ -12,7 +12,7 @@ import LoadingModal from "./loadingModal";
 const getBadgeList = () =>
   axios({
     method: "get",
-    url: "http://j6a105.p.ssafy.io:8080/api/market/nfts",
+    url: "http://uts_url:8080/api/market/nfts",
     params: {
       sortby: 0,
       category: 0,
@@ -37,7 +37,7 @@ export const Badge = () => {
   const GetNftsMarket = () =>
     axios({
       method: "get",
-      url: "http://j6a105.p.ssafy.io:8080/api/market/nfts",
+      url: "http://uts_url:8080/api/market/nfts",
       params: {
         sortby: 0,
         category: 0,

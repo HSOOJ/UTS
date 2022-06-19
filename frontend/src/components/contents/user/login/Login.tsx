@@ -56,7 +56,7 @@ export const Login = () => {
   };
   const AxiosSignup = (walletAddress: string) => {
     axios
-      .post("http://j6a105.p.ssafy.io:8080/api/user/join", {
+      .post("http://uts_url:8080/api/user/join", {
         userWalletAddress: walletAddress,
       })
       .then((res) => {

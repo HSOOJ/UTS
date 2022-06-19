@@ -41,7 +41,7 @@ export const BadgeInfoPrice = ({
   // const getNftInfo = async () => {
   //   const nftinfo = await axios({
   //     method: "get",
-  //     url: "http://j6a105.p.ssafy.io:8080/api/user/info",
+  //     url: "http://uts_url:8080/api/user/info",
   //     params: {
   //       userSeq: tokenInfo.editioninfo[0].user_user_seq,
   //     },
@@ -63,7 +63,7 @@ export const BadgeInfoPrice = ({
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${nftSeq}`
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${nftSeq}`
     }).then((res) => {
       setEditionImage(res.data.success.editioninfo[0].Edition_edition_image);
       setNftNum(res.data.success.nftinfo.nft_num);

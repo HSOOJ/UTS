@@ -51,7 +51,7 @@ export const ProfileCompo = () => {
   // Axios
   const AxiosUserInfo = (seq: string | null) => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/user/info", {
+      .get("http://uts_url:8080/api/user/info", {
         params: { userSeq: seq },
       })
       .then((res) => {

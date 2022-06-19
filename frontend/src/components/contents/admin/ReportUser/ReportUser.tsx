@@ -19,7 +19,7 @@ export const ReportUser = () => {
   const DeleteReport = (idx: any) => {
     axios({
       method: "PUT",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/report/cancel",
+      url: "http://uts_url:8080/api/admin/report/cancel",
       data: { reportSeq: idx.reportSeq },
     }).then(function () {
       message.success("해당 신고가 삭제되었습니다.");
@@ -29,7 +29,7 @@ export const ReportUser = () => {
   const DeleteArtist = (idx: any) => {
     axios({
       method: "PUT",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/artist/cancel",
+      url: "http://uts_url:8080/api/admin/artist/cancel",
       data: { userSeq: idx.userSeq, artistSeq: idx.artistSeq },
     }).then(function () {
       message.error("해당 아티스트의 권한이 삭제되었습니다.");
@@ -39,7 +39,7 @@ export const ReportUser = () => {
   const CheckReportUser = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/report",
+      url: "http://uts_url:8080/api/admin/report",
     }).then(function (res) {
       setAdminStateVal({
         ...adminStateVal,

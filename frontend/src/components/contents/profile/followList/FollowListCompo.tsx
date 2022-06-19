@@ -38,7 +38,7 @@ export const FollowListCompo = ({
   // Axios
   const PostFollow = (userTo: string, userFrom: string | null) => {
     axios
-      .post("http://j6a105.p.ssafy.io:8080/api/artist/follow", {
+      .post("http://uts_url:8080/api/artist/follow", {
         userTo,
         userFrom,
       })
@@ -54,7 +54,7 @@ export const FollowListCompo = ({
   };
   const DelFollow = (userTo: string, userFrom: string | null) => {
     axios
-      .delete("http://j6a105.p.ssafy.io:8080/api/artist/unfollow", {
+      .delete("http://uts_url:8080/api/artist/unfollow", {
         data: {
           userTo,
           userFrom,

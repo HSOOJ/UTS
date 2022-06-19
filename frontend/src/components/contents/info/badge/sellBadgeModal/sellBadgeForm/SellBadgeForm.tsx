@@ -43,7 +43,7 @@ export const SellBadgeForm = ({ isDark, handleSubmit, mybadgeid }: ISellBadgeFor
     message.success("해당 뱃지가 판매 상태로 변경되었습니다.");
     await axios({
       method: "post",
-      url: 'http://j6a105.p.ssafy.io:8080/api/nft',
+      url: 'http://uts_url:8080/api/nft',
       params: {
         userSeq: localStorage.getItem("userSeq"),
         nftSeq: nftId
@@ -65,7 +65,7 @@ export const SellBadgeForm = ({ isDark, handleSubmit, mybadgeid }: ISellBadgeFor
      console.log("badgeId", mybadgeid)
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${mybadgeid}`
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${mybadgeid}`
     }).then((res) => {
       // setNftPrice(res.data.success.salePrice.sale_price)
       setNftId(res.data.success.nftinfo.nft_id)

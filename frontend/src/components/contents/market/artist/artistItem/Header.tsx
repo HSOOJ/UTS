@@ -34,7 +34,7 @@ export const Header = (api: IHeader) => {
   ) => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/check/follow",
+      url: "http://uts_url:8080/api/artist/check/follow",
       params: {
         userTo,
         userFrom,
@@ -55,7 +55,7 @@ export const Header = (api: IHeader) => {
   ) => {
     axios({
       method: "POST",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/follow",
+      url: "http://uts_url:8080/api/artist/follow",
       data: {
         userTo,
         userFrom,
@@ -77,7 +77,7 @@ export const Header = (api: IHeader) => {
   ) => {
     axios({
       method: "DELETE",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/unfollow",
+      url: "http://uts_url:8080/api/artist/unfollow",
       data: {
         userTo,
         userFrom,

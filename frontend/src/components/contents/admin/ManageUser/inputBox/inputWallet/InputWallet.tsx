@@ -25,7 +25,7 @@ export const InputWallet = ({ isDark, handleSubmit }: IInputWallet) => {
     let userWalletAddress = res.userWalletAddress;
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/admin/search/user",
+      url: "http://uts_url:8080/api/admin/search/user",
       params: {
         userWalletAddress: userWalletAddress,
       },

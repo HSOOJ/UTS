@@ -15,7 +15,7 @@ export const ModifyModalNickname = () => {
   // Axios
   const GetCheckNickname = (userNickname: string) => {
     axios
-      .get("http://j6a105.p.ssafy.io:8080/api/user/check/nickname", {
+      .get("http://uts_url:8080/api/user/check/nickname", {
         params: { userNickname },
       })
       .then(() => {

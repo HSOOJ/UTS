@@ -322,7 +322,7 @@ export const Artist = () => {
   const GetArtistMarket = () =>
     axios({
       method: "get",
-      url: "http://j6a105.p.ssafy.io:8080/api/market/artists",
+      url: "http://uts_url:8080/api/market/artists",
       params: {
         sortby: 0,
         category: 0,

@@ -69,7 +69,7 @@ export const BadgeInfoPerson = ({
     // creator 주소로 정보 받아오기
     const userinfo = await axios({
       method: "get",
-      url: "http://j6a105.p.ssafy.io:8080/api/user/info/address",
+      url: "http://uts_url:8080/api/user/info/address",
       params: {
         userWalletAddress: myTokenCreator,
       },
@@ -88,7 +88,7 @@ export const BadgeInfoPerson = ({
   const getUserName = async () => {
     await axios({
       method: "get",
-      url: "http://j6a105.p.ssafy.io:8080/api/user/info/address",
+      url: "http://uts_url:8080/api/user/info/address",
       params: {
         userWalletAddress: myTokenOwner,
       },
@@ -105,7 +105,7 @@ export const BadgeInfoPerson = ({
   const getNftInfo = async () => {
     await axios({
       method: "get",
-      url: `http://j6a105.p.ssafy.io:8080/api/nft/info?nftSeq=${badge_id}`
+      url: `http://uts_url:8080/api/nft/info?nftSeq=${badge_id}`
     }).then((res) => {
       setCreatorImage(res.data.success.editioninfo[0].user_user_profile_image)
       setCreatorName(res.data.success.editioninfo[0].user_user_nickname)

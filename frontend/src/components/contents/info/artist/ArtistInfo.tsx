@@ -44,7 +44,7 @@ export const ArtistInfo = () => {
   const getArtistInfo = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/info",
+      url: "http://uts_url:8080/api/artist/info",
       params: {
         artistSeq: artist_id,
       },
@@ -67,7 +67,7 @@ export const ArtistInfo = () => {
   const getArtistEdition = () => {
     axios({
       method: "GET",
-      url: "http://j6a105.p.ssafy.io:8080/api/artist/editions",
+      url: "http://uts_url:8080/api/artist/editions",
       params: {
         artistSeq: artist_id,
       },
