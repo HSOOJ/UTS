@@ -98,11 +98,11 @@
 
 <br>
 
-- `FrontEnd` : TypeScript, Node, React, Recoil
-- `BackEnd` : TypeScript, Express, TypeORM, MySQL
-- `BlockChain` : Solidity, Hardhat, Ethers
-- `DevOps` : GitLab, Jenkins, Docker, JIRA, AWS EC2
-- `UI` : Ant Design, Story Book, Framer
+- `FrontEnd` : <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/tsnode-3178C6?style=for-the-badge&logo=tsnode&logoColor=white">, <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Recoil-3374DE?style=for-the-badge&logoColor=white">
+- `BackEnd` : <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"> <img src="https://img.shields.io/badge/TypeORM-FE0902?style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
+- `BlockChain` : <img src="https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=Solidity&logoColor=white"> <img src="https://img.shields.io/badge/Hardhat-F0D500?style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/Ethers-26298D?style=for-the-badge&logoColor=white">
+- `DevOps` : <img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=GitLab&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> <img src="https://img.shields.io/badge/Jira Software-0052CC?style=for-the-badge&logo=Jira Software&logoColor=white"> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"><br>
+- `UI` : <img src="https://img.shields.io/badge/Ant Design-0170FE?style=for-the-badge&logo=Ant Design&logoColor=white"> <img src="https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=Storybook&logoColor=white"> <img src="https://img.shields.io/badge/Framer-0055FF?style=for-the-badge&logo=Framer&logoColor=white">
 
 ### 4️⃣ 프로젝트 구조
 
