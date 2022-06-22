@@ -246,4 +246,4 @@ uts-backend
 
 ## **프로젝트 영상**
 
-[![유튜브 링크](/uploads/0eceae46dfba384899e8df0ad614b313/uts.png)](https://youtu.be/7gjpJt1W428)
+[![유튜브 링크](./pic/uts.png)](https://youtu.be/7gjpJt1W428)
